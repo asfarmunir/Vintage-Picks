@@ -81,12 +81,12 @@ const page = () => {
     });
     console.log("🚀 ~ onSubmit ~ result:", result);
     if (result?.status !== 200) {
-      setToggle(!toggle);
+      setToggle(true);
 
       setAuthError("Incorrect credentials please try again!");
     } else {
       router.push("/");
-      setToggle(toggle);
+      setToggle(false);
     }
     setIsLoading(false);
   }

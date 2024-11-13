@@ -14,6 +14,7 @@ import { ChevronsUpDownIcon, LoaderCircle } from "lucide-react";
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
+import { IoChevronDownCircle } from "react-icons/io5";
 
 const UserAccount = ({
   setUserHasAccounts,
@@ -24,8 +25,8 @@ const UserAccount = ({
   const { data: userAccounts, isPending, isError } = useGetAccounts();
 
   const challengeColorClasses = {
-    CHALLENGE: "text-[#C02FF5]/70 border-[#C02FF5]/80 bg-[#C02FF5]/10",
-    FUNDED: "text-[#53FC18]/70 border-[#53FC18]/80 bg-[#53FC18]/10",
+    CHALLENGE: "text-white  bg-[#1973D3]",
+    FUNDED: "text-white  bg-[#1973D3]",
     BREACHED: "text-[#F74418]/70 border-[#F74418]/80 bg-[#F74418]/10",
   };
 
@@ -65,38 +66,32 @@ const UserAccount = ({
   }, [userAccounts]);
 
   return (
-    <div className=" w-full md:w-fit py-4  md:p-4">
+    <div className=" w-full md:w-fit px-4">
       <DropdownMenu>
-        <DropdownMenuTrigger className=" data-[state=open]:border-2  data-[state=open]:shadow data-[state=open]:shadow-primary-50/30 data-[state=open]:border-primary-50/50   bg-[#272837]  font-bold   justify-center text-nowrap w-full md:w-fit  text-xs md:text-sm px-1.5 md:px-4 py-2  rounded-lg inline-flex items-center gap-2">
+        <DropdownMenuTrigger className=" data-[state=open]:border-2 bg-[#FFFFFF1A]  data-[state=open]:shadow  data-[state=open]:border-vintage-50/50   bg-[#272837]  font-bold   justify-center text-nowrap w-full md:w-fit  text-xs md:text-sm px-1.5 md:px-1.5 py-1.5 2xl:py-1.5  rounded-full inline-flex items-center gap-2">
           {(!isPending && userAccounts.length === 0) || isError ? (
-            <span className="uppercase text-gray-400 flex gap-2 items-center text-xs 2xl:text-base pr-1.5">
-              No Account <ChevronsUpDownIcon className="w-4 h-4" />
+            <span className="  text-gray-400 flex gap-2 items-center text-xs 2xl:text-sm  px-4 py-2">
+              No Account <IoChevronDownCircle className="w-5 text-white h-5" />
             </span>
           ) : (
             <>
-              <span className=" text-white text-xs 2xl:text-base border-r border-gray-600 pr-1.5 md:pr-4">
+              <span className=" text-vintage-50 bg-[#EBCD3F] text-xs 2xl:text-base rounded-full border-r border-gray-600 px-4 py-2.5 md:pr-4">
                 ${activeAccount.balance}
               </span>
-              <span className=" text-[#848BAC] px-1 md:px-2 text-xs 2xl:text-base">
-                ACCOUNT
-              </span>
-              <span className=" text-white text-xs 2xl:text-base border-r border-gray-600 pr-1.5 md:pr-4">
-                {`#${activeAccount.accountNumber}`}
-              </span>
+              <p className=" text-[#FFFFFF99]  text-xs bg-[#F4F4F41A] inline-flex items-center rounded-full 2xl:text-base py-2.5 px-4">
+                Account
+                <span className=" px-1 pl-2 text-white font-semibold">
+                  {`#${activeAccount.accountNumber}`}
+                </span>
+                <IoChevronDownCircle className=" text-2xl text-white pb-1" />
+              </p>
               <span
-                className={`border inline-flex items-center gap-x-1 md:gap-x-1.5 text-xs 2xl:text-base  p-1 px-1 md:px-2 rounded-sm
+                className={` inline-flex items-center gap-x-1 md:gap-x-1.5 text-xs 2xl:text-base capitalize   px-4 py-2.5 rounded-full
             ${challengeColorClasses[activeAccount.status]}
             `}
               >
-                <Image
-                  src={`/icons/account-${activeAccount.status.toLowerCase()}.svg`}
-                  alt="Arrow Icon"
-                  width={13}
-                  height={13}
-                />
-                {activeAccount.status.toUpperCase()}
+                {activeAccount.status}
               </span>
-              <LuChevronsUpDown className=" md:text-lg text-white" />
             </>
           )}
         </DropdownMenuTrigger>
@@ -145,10 +140,10 @@ const UserAccount = ({
           )}
         </DropdownMenuContent>
       </DropdownMenu>
-      {(!isPending && userAccounts.length === 0) && (
+      {!isPending && userAccounts.length === 0 && (
         <Link
           href={"/create-account"}
-          className="ml-4 uppercase font-bold text-white w-fit text-sm rounded-xl inner-shadow px-6 py-2.5 inline-flex items-center gap-3 hover:opacity-95"
+          className="ml-4  font-bold text-white w-fit text-sm rounded-full bg-[#1973D3] px-6 py-2.5 2xl:py-3 inline-flex items-center gap-3 hover:opacity-95"
         >
           Add Account
         </Link>

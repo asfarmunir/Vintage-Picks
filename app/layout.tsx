@@ -39,7 +39,7 @@ export default function RootLayout({
         <AuthProvider>
           <body className={roboto.className}>
             <NextTopLoader
-              color="green"
+              color="blue"
               initialPosition={0.08}
               crawlSpeed={200}
               height={2}

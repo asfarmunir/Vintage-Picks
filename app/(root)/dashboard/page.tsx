@@ -114,7 +114,9 @@ const page = () => {
                     $
                     {account.balance - getOriginalAccountValue(account) < 0
                       ? "0"
-                      : (account.balance - getOriginalAccountValue(account)).toFixed(2)}
+                      : (
+                          account.balance - getOriginalAccountValue(account)
+                        ).toFixed(2)}
                   </h2>
                 </div>{" "}
                 <div className="flex flex-col ">
