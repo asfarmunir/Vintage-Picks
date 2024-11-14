@@ -25,11 +25,21 @@ import { useMarkNotification } from "@/app/hooks/useMarkNotification";
 import toast from "react-hot-toast";
 import UserAccount from "./UserAccount";
 import { IoChevronDownCircle } from "react-icons/io5";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetClose,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+import { HiMenu } from "react-icons/hi";
+import { useRouter } from "next/navigation";
 
 const Sidebar = () => {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const pathname = usePathname();
-
+  const closeRef = React.useRef(null);
+  const router = useRouter();
   const handleCollapseToggle = () => {
     setIsCollapsed(!isCollapsed);
   };
@@ -90,9 +100,9 @@ const Sidebar = () => {
   return (
     <>
       <div
-        className={`relative m-3 first-letter: rounded-3xl bg-vintage-50 w-[98.5%]  transition-all duration-300 
-
-          flex items-center justify-between  gap-7 2xl:gap-10 p-4 2xl:p-6`}
+        className={`relative mt-3   rounded-3xl bg-vintage-50 w-full  transition-all duration-300 
+ 
+          flex items-center justify-between  gap-7 2xl:gap-10 p-3 md:p-4 2xl:p-6`}
       >
         <div className="flex items-center gap-5">
           <Image
@@ -103,7 +113,7 @@ const Sidebar = () => {
             priority
           />
 
-          <div className="flex  gap-1.5">
+          <div className="hidden md:flex  gap-1.5">
             {navlinks.map((link, index) => (
               <Link
                 key={index}
@@ -123,7 +133,7 @@ const Sidebar = () => {
           </div>
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="hidden md:flex items-center gap-3">
           <UserAccount />
           <button className=" data-[state=open]:border-2 bg-[#FFFFFF1A]  data-[state=open]:shadow  data-[state=open]:border-vintage-50/50   bg-[#272837]  font-semibold   justify-center text-nowrap w-full md:w-fit  text-xs md:text-sm px-1.5 md:px-1.5 py-1.5 2xl:py-1.5  rounded-full inline-flex items-center gap-2">
             <Image
@@ -228,6 +238,144 @@ const Sidebar = () => {
             <IoIosSettings className=" border-t border-gray-600 rounded-full bg-[#FFFFFF1A] hover:cursor-pointer  p-1.5 px-2 text-white text-4xl" />
           </Link>
         </div>
+        <Sheet>
+          <SheetTrigger className=" block  lg:hidden">
+            <HiMenu className=" text-white text-3xl" />
+          </SheetTrigger>
+          <SheetContent className=" bg-primary text-white py-7 px-4 border-none">
+            <SheetClose ref={closeRef} />
+            <SheetHeader>
+              <div className=" relative h-full min-h-screen flex flex-col items-start gap-7">
+                <Image
+                  src="/vintage/images/logo.svg"
+                  alt="logo"
+                  width={200}
+                  height={200}
+                  className=" w-[60px] 2xl:w-[70px] "
+                />
+                <div className="flex  w-full gap-3">
+                  <Image
+                    src="/images/hello.png"
+                    alt="Client"
+                    width={46}
+                    height={46}
+                    className="2xl:w-14 2xl:h-14"
+                  />
+                  <div className="flex items-start flex-col w-full">
+                    <button className=" data-[state=open]:border-2  bg-[#FFFFFF1A]  data-[state=open]:shadow  data-[state=open]:border-vintage-50/50   bg-[#272837]  font-semibold   justify-center text-nowrap w-full md:w-fit  text-xs md:text-sm px-1.5 md:px-1.5 py-1.5 2xl:py-1.5  rounded-full inline-flex items-center gap-2">
+                      <Image
+                        src={"/vintage/images/avatar.svg"}
+                        alt="User Avatar"
+                        width={35}
+                        height={35}
+                        className="rounded-full hover:cursor-pointer"
+                      />
+                      <span className="  text-white capitalize flex gap-2 items-center text-xs 2xl:text-sm  px-1 py-2">
+                        {`${user.firstName} ${user.lastName}`}
+                      </span>
+                    </button>
+                  </div>
+                </div>
+                <div className="flex flex-col w-full md:w-fit  gap-3.5">
+                  {navlinks.map((link, index) => (
+                    <button
+                      key={index}
+                      onClick={() => {
+                        // @ts-ignore
+                        closeRef.current.click();
+                        router.push(link.link);
+                      }}
+                      className={`  text-start  capitalize w-full md:w-fit  
+                  text-base   
+                ${
+                  pathname === link.link
+                    ? "text-white  bg-[#FFFFFF33] font-semibold px-5 py-2 2xl:px-6  2xl:py-2  rounded-md md:rounded-3xl"
+                    : "text-[#FFFFFFCC] font-normal hover:bg-white/10 px-3 py-1 2xl:px-4  2xl:py-2  rounded-md md:rounded-3xl"
+                }
+                items-center gap-2 `}
+                    >
+                      {link.title}
+                    </button>
+                  ))}
+                </div>
+                <div className="absolute bottom-14  w-full  gap-7 flex-col flex">
+                  <Link
+                    href={"/settings"}
+                    className={`inline-flex  font-bold uppercase text-sm  2xl:text-lg 
+                ${
+                  pathname === "/settings"
+                    ? "text-white inner-left-shadow p-3 2xl:p-4 bg-[#181926] rounded-2xl"
+                    : "text-[#848BAC] p-3 2xl:p-4  rounded-lg hover:bg-[#27283197]"
+                }
+                items-center gap-2 `}
+                  >
+                    <Image
+                      src={
+                        pathname === "/settings"
+                          ? "/icons/setting.svg"
+                          : "/icons/setting.svg"
+                      }
+                      alt="Help"
+                      width={16}
+                      className="2xl:w-[20px]"
+                      height={16}
+                      priority
+                    />
+                    <p>SETTINGS</p>
+                  </Link>
+                  <Link
+                    href={"/user/profile"}
+                    className={`inline-flex  font-bold uppercase text-sm  2xl:text-lg 
+                ${
+                  pathname === "/user/profile"
+                    ? "text-white inner-left-shadow p-3 2xl:p-4 bg-[#181926] rounded-2xl"
+                    : "text-[#848BAC] p-3 2xl:p-4  rounded-lg hover:bg-[#27283197]"
+                }
+                items-center gap-2 `}
+                  >
+                    <Image
+                      src={
+                        pathname === "/user/profile"
+                          ? "/icons/profile.svg"
+                          : "/icons/profile.svg"
+                      }
+                      alt="Help"
+                      width={16}
+                      className="2xl:w-[20px]"
+                      height={16}
+                      priority
+                    />
+                    <p>PROFILE</p>
+                  </Link>
+                  <Link
+                    href={"/help"}
+                    className={`inline-flex  font-bold uppercase text-sm  2xl:text-lg 
+                ${
+                  pathname === "/help"
+                    ? "text-white inner-left-shadow p-3 2xl:p-4 bg-[#181926] rounded-2xl"
+                    : "text-[#848BAC] p-3 2xl:p-4  rounded-lg hover:bg-[#27283197]"
+                }
+                items-center gap-2 `}
+                  >
+                    <Image
+                      src={
+                        pathname === "/help"
+                          ? "/icons/help.png"
+                          : "/icons/help.svg"
+                      }
+                      alt="Help"
+                      width={16}
+                      className="2xl:w-[20px]"
+                      height={16}
+                      priority
+                    />
+                    <p>HELP</p>
+                  </Link>
+                </div>
+              </div>
+            </SheetHeader>
+          </SheetContent>
+        </Sheet>
       </div>
     </>
   );

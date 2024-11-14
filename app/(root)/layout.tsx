@@ -64,14 +64,22 @@ const layout = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <>
-      <main className={`h-screen flex bg-primary`}>
+      <main className={` flex bg-vintage-default`}>
         {status === "authenticated" && (
           <>
             {/* <Sidebar /> */}
-            <main className="flex relative flex-col  items-start overflow-hidden  max-h-screen  w-full">
-              <Nav />
-              <MobileNav />
-              <section className="  h-full w-full relative">
+            <main className="flex relative flex-col px-3  overflow-x-hidden  items-start   w-full">
+              <div
+                className=" block sticky 
+        top-0
+        z-50
+        w-full
+        "
+              >
+                <Nav />
+              </div>
+              {/* <MobileNav /> */}
+              <section className="  h-full w-full pt-2 md:pt-0 relative">
                 {/* {!hasAccount && <CreateAccountModal />} */}
                 {children}
               </section>
