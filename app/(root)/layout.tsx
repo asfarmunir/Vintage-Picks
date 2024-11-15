@@ -79,14 +79,27 @@ const layout = ({ children }: { children: React.ReactNode }) => {
                 <Nav />
               </div>
               {/* <MobileNav /> */}
-              <section className="  h-full w-full pt-2 md:pt-0 relative">
+              <section className="  h-full w-full py-2.5  relative">
                 {/* {!hasAccount && <CreateAccountModal />} */}
                 {children}
               </section>
             </main>
           </>
         )}
-        {status === "loading" && <p>isLoading...</p>}
+        {status === "loading" && (
+          <div className=" w-full flex items-center animate-pulse flex-col justify-center gap-3 h-screen">
+            <Image
+              src={"/vintage/images/logo.svg"}
+              alt="logo"
+              width={150}
+              height={150}
+              priority
+            />
+            <p className=" text-[1.1rem]  text-vintage-50 font-semibold ">
+              Lets Place Some Trades{" "}
+            </p>
+          </div>
+        )}
       </main>
     </>
   );

@@ -86,18 +86,23 @@ const page = () => {
 
   return (
     <>
-      <div className=" w-full  rounded-3xl flex flex-col-reverse  bg-vintage-50  text-white  md:mt-3 gap-4 p-2 md:p-3  mb-8 max-h-full overflow-auto">
+      <div className=" w-full  rounded-2xl flex flex-col-reverse  bg-vintage-50  text-white   gap-4 p-2 md:p-3   max-h-full overflow-auto">
         {loading ? (
-          <div className=" w-full  min-h-[85vh]  md:w-[65%] h-full shadow-inner shadow-gray-800 flex flex-col items-center justify-center gap-5  bg-[#181926] p-4 md:p-8 rounded-xl">
+          <div className=" w-full   h-full  bg-white flex flex-col items-center justify-center gap-3 py-12 min-h-[50svh]   p-4 md:p-8 rounded-xl">
             <Image
               src="/images/trophy.png"
               alt="loading"
               width={50}
+              className=" invert mb-4"
               height={50}
             />
-            <h3 className=" font-bold text-lg text-[#848BAC]">
+            <h3 className=" font-bold text-lg 2xl:text-xl text-[#3E4347]">
               Leaderboards coming soon....
             </h3>
+            <p className=" text-sm text-[#3E4347] px-3">
+              Maximize your earnings with minimal risk. Bet confidently using
+              our capital and unlock higher rewards!
+            </p>
           </div>
         ) : (
           <div className=" w-full  bg-white rounded-xl p-5  flex flex-col">
@@ -267,7 +272,7 @@ const page = () => {
         )}
 
         <div
-          className=" w-full  bg-blue-900 px-5 py-10 h-[23rem]  flex flex-col items-center md:items-end justify-between  gap-2.5 rounded-xl   relative"
+          className=" w-full  bg-blue-900 px-5 py-10 h-[23rem]  flex flex-col md:flex-row items-center md:items-end justify-between  gap-2.5 rounded-xl   relative"
           style={{
             backgroundImage: "url('/vintage/images/bgCom.png')",
             backgroundSize: "cover",
