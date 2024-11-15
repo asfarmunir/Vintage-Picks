@@ -1,5 +1,4 @@
 "use client";
-import Navbar from "@/components/shared/Navbar";
 import {
   Dialog,
   DialogContent,
@@ -7,14 +6,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
+
 import { MAX_PROFIT_THRESHOLD, profileLevels, tabs } from "@/lib/constants";
 import Image from "next/image";
 
@@ -85,24 +77,36 @@ const page = () => {
 
   return (
     <>
-      <div
-        className=" hidden md:block sticky 
-        top-0
-        z-50
-        w-full
-        "
-      >
-        <div className=" w-[99%] bg-primary justify-between flex items-center absolute">
-          <h1 className=" ml-4  text-white inline-flex items-center gap-2 font-thin 2xl:text-lg">
+      <div className=" w-full p-2 md:p-3 rounded-2xl bg-vintage-50 space-y-2">
+        <div className="flex flex-col md:flex-row gap-6 items-start md:items-center justify-between bg-white p-4 md:p-6 rounded-2xl">
+          <div className="">
+            <h2 className="text-lg 2xl:text-xl text-vintage-50 font-bold">
+              Account Profile
+            </h2>
+          </div>
+        </div>
+
+        <div className=" w-full grid grid-cols-1 md:grid-cols-2  gap-2 ">
+          <div className=" bg-white  p-4 md:p-6 rounded-2xl h-[230px] relative ">
+            <ImageUpload />
+          </div>
+          <div className=" bg-white  p-4 md:p-6 rounded-2xl h-[230px] relative ">
             <Image
-              src="/icons/profile-green.svg"
-              alt="Logo"
-              width={20}
-              height={20}
+              src="/vintage/images/star.svg"
+              alt="User"
+              width={50}
+              height={50}
+              className=" mb-4"
             />
-            Profile
-          </h1>
-          <Navbar />
+            <p className="text-lg 2xl:text-xl font-semibold mb-1">
+              Upgrade your profile level{" "}
+            </p>
+            <p>
+              Upgrade your profile level and get exclusive access to discrod
+              roles.
+            </p>
+            <ProfileLevel />
+          </div>
         </div>
       </div>
       <div className=" w-full  flex gap-4  text-white mt-1 md:mt-9 p-5 md:p-8 pb-24 max-h-full overflow-auto">
@@ -128,10 +132,11 @@ const page = () => {
               <button
                 key={index}
                 className={`border  
-             px-5 text-xs 2xl:text-lg py-2 flex-grow md:flex-grow-0 rounded-full ${tab === curr.name
-                    ? "border-[#52FC18] bg-[#1A5B0B]"
-                    : " border-gray-700 text-[#848BAC] border-2"
-                  } font-semibold uppercase`}
+             px-5 text-xs 2xl:text-lg py-2 flex-grow md:flex-grow-0 rounded-full ${
+               tab === curr.name
+                 ? "border-[#52FC18] bg-[#1A5B0B]"
+                 : " border-gray-700 text-[#848BAC] border-2"
+             } font-semibold uppercase`}
                 onClick={() => changeTab(curr.name)}
               >
                 {curr.name}
@@ -143,25 +148,202 @@ const page = () => {
           {tab === "payouts" && <PayoutsSection />}
           {tab === "certificates" && <CertificaeSection />}
         </div>
-        <div className=" hidden md:block md:w-[30%]  ">
-          <Image
-            src="/images/profile-hero.png"
-            alt="Ads"
-            width={470}
-            priority
-            height={450}
-            className=" rounded-lg  
-             h-full w-full
-            
-              "
-          />
-        </div>
       </div>
     </>
   );
 };
 
 export default page;
+
+const ImageUpload = () => {
+  const imageRef = useRef<HTMLInputElement>(null);
+  const [image, setImage] = useState<File | null>(null);
+  const { data, isPending, refetch } = useGetUser();
+
+  const handleImageUpload = () => {
+    imageRef.current?.click();
+  };
+
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0] || null;
+    if (file) {
+      setImage(file);
+    }
+  };
+
+  const { mutate: postAvatar, isPending: uploading } = usePostAvatar({
+    onSuccess: (data) => {
+      toast.success("Avatar uploaded successfully");
+      refetch();
+    },
+    onError: (error) => {
+      toast.error("Failed to upload avatar");
+    },
+  });
+
+  useEffect(() => {
+    if (image) {
+      postAvatar(image);
+    }
+  }, [image]);
+
+  if (isPending) {
+    return (
+      <div className=" p-4 shadow-inner shadow-gray-700 rounded-xl flex items-center justify-center bg-[#272837]">
+        <LoaderCircle className="animate-spin" />
+        Loading...
+      </div>
+    );
+  }
+
+  return (
+    <>
+      <div className="  flex items-center justify-between ">
+        <div className="flex gap-3 items-center">
+          <div className=" relative">
+            {data?.user?.avatar ? (
+              <Image
+                src={data.user.avatar}
+                alt="User"
+                width={50}
+                height={50}
+                className="rounded-full object-cover object-center !w-16 2xl:!w-20 !h-16 2xl:!h-20"
+              />
+            ) : (
+              <div className="w-16 h-16 rounded-full bg-gray-700 border border-gray-500 flex justify-center items-center text-xl text-gray-400">
+                {`${data.user?.firstName[0]}${data.user?.lastName[0]}`}
+              </div>
+            )}
+            <button
+              disabled={uploading}
+              className=" inline-flex items-center absolute right-0 bottom-1   disabled:opacity-20"
+              onClick={handleImageUpload}
+            >
+              <Image
+                src="/vintage/images/edit.svg"
+                alt="Edit"
+                width={32}
+                height={32}
+              />
+              {/* {uploading ? "Uploading..." : "Edit Avatar"} */}
+            </button>
+          </div>
+          <div className="flex flex-col-reverse">
+            <p className=" text-sm font-bold text-[#848BAC] ">Username</p>
+            <h3 className="font-semibold text-2xl capitalize text-vintage-50">
+              {`${data.user?.firstName} ${data.user?.lastName}`}
+            </h3>
+          </div>
+        </div>
+        <input
+          type="file"
+          className="hidden"
+          ref={imageRef}
+          accept="image/*"
+          onChange={handleImageChange}
+        />
+        {uploading && (
+          <div className="flex items-center gap-2">
+            <LoaderCircleIcon className="animate-spin" />
+            <p className="text-sm text-vintage-50">Uploading...</p>
+          </div>
+        )}
+      </div>
+      <div className=" p-4  mt-5 rounded-xl flex items-start justify-between bg-[#2160EB38]">
+        <div className="flex gap-3 items-center">
+          <div className="">
+            <Image
+              src={
+                profileLevels[data?.user?.profileLevel as ProfileLevel]?.icon
+              }
+              alt="User"
+              width={50}
+              height={50}
+            />
+          </div>
+          <div className="flex flex-col-reverse">
+            <p className=" text-sm font-bold text-[#848BAC] ">Profile Level</p>
+            <h3 className="font-semibold text-2xl">
+              {isPending ? "Loading..." : data.user?.profileLevel}
+            </h3>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+};
+
+const ProfileLevel = () => {
+  const imageRef = useRef<HTMLInputElement>(null);
+  const [image, setImage] = useState<File | null>(null);
+  const { data, isPending, refetch } = useGetUser();
+
+  const handleImageUpload = () => {
+    imageRef.current?.click();
+  };
+
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0] || null;
+    if (file) {
+      setImage(file);
+    }
+  };
+
+  const { mutate: postAvatar, isPending: uploading } = usePostAvatar({
+    onSuccess: (data) => {
+      toast.success("Avatar uploaded successfully");
+      refetch();
+    },
+    onError: (error) => {
+      toast.error("Failed to upload avatar");
+    },
+  });
+
+  useEffect(() => {
+    if (image) {
+      postAvatar(image);
+    }
+  }, [image]);
+
+  if (isPending) {
+    return (
+      <div className=" p-4 shadow-inner shadow-gray-700 rounded-xl flex items-center justify-center bg-[#272837]">
+        <LoaderCircle className="animate-spin" />
+        Loading...
+      </div>
+    );
+  }
+
+  return (
+    <>
+      <div className="  ">
+        <div className="flex items-center justify-between mt-4 mb-2">
+          <h4 className="2xl:text-base text-sm font-semibold">
+            Progress to next level
+          </h4>
+          <h4 className="2xl:text-base text-sm font-semibold">
+            {data?.user?.picksWon}/
+            {profileLevels[data?.user?.profileLevel as ProfileLevel]?.target}{" "}
+            Picks Won
+          </h4>
+        </div>
+        <div className=" w-full h-3 bg-[#A879FD1A] rounded-3xl">
+          <div
+            className="bg-gradient-to-r from-[#A879FD] to-[#773EFD] shadow-inner rounded-md shadow-gray-200 h-full"
+            style={{
+              width: `${
+                (data?.user?.picksWon /
+                  profileLevels[data?.user?.profileLevel as ProfileLevel]
+                    ?.target) *
+                100
+              }%`,
+            }}
+          ></div>
+        </div>
+      </div>
+    </>
+  );
+};
 
 const ProfileSection = () => {
   const imageRef = useRef<HTMLInputElement>(null);
@@ -284,11 +466,12 @@ const ProfileSection = () => {
           <div
             className="bg-[#00B544] shadow-inner rounded-md shadow-gray-500 h-full"
             style={{
-              width: `${(data?.user?.picksWon /
-                profileLevels[data?.user?.profileLevel as ProfileLevel]
-                  ?.target) *
+              width: `${
+                (data?.user?.picksWon /
+                  profileLevels[data?.user?.profileLevel as ProfileLevel]
+                    ?.target) *
                 100
-                }%`,
+              }%`,
             }}
           ></div>
         </div>
@@ -395,17 +578,17 @@ type sortFilterType = "ALL" | "FUNDED" | "BREACHED" | "CHALLENGE";
 const AccountsSection = ({ accounts }: { accounts: Account[] }) => {
   const [tab, setTab] = useState("hide");
   const [sortFilter, setSortFilter] = useState<sortFilterType>("ALL");
-  
+
   // Search Params
   const searchParams = useSearchParams();
   const status = searchParams.get("status");
 
-  useEffect(()=>{
-    if(status){
+  useEffect(() => {
+    if (status) {
       setSortFilter(status.toUpperCase() as sortFilterType);
     }
-  }, [status])
-  
+  }, [status]);
+
   // Sort Filter
   const changeSortFilter = (sortFilter: sortFilterType) => {
     setSortFilter(sortFilter);
@@ -488,16 +671,28 @@ const AccountsSection = ({ accounts }: { accounts: Account[] }) => {
               SORT
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-48  bg-[#181926] text-white border-none  mt-1  p-3 rounded-lg text-xs 2xl:text-base">
-              <DropdownMenuItem className="flex items-center justify-between " onClick={() => changeSortFilter("ALL")} >
+              <DropdownMenuItem
+                className="flex items-center justify-between "
+                onClick={() => changeSortFilter("ALL")}
+              >
                 <p>ALL</p>
               </DropdownMenuItem>
-              <DropdownMenuItem className="flex items-center justify-between " onClick={() => changeSortFilter("CHALLENGE")}>
+              <DropdownMenuItem
+                className="flex items-center justify-between "
+                onClick={() => changeSortFilter("CHALLENGE")}
+              >
                 <p>CHALLENGE</p>
               </DropdownMenuItem>
-              <DropdownMenuItem className="flex items-center justify-between " onClick={() => changeSortFilter("FUNDED")}>
+              <DropdownMenuItem
+                className="flex items-center justify-between "
+                onClick={() => changeSortFilter("FUNDED")}
+              >
                 <p>FUNDED</p>
               </DropdownMenuItem>
-              <DropdownMenuItem className="flex items-center justify-between " onClick={() => changeSortFilter("BREACHED")}>
+              <DropdownMenuItem
+                className="flex items-center justify-between "
+                onClick={() => changeSortFilter("BREACHED")}
+              >
                 <p>BREACHED</p>
               </DropdownMenuItem>
             </DropdownMenuContent>
@@ -518,7 +713,9 @@ const AccountsSection = ({ accounts }: { accounts: Account[] }) => {
       </div>
       <div className="flex flex-col  items-center gap-4">
         {filteredData?.length === 0 && (
-          <p className="text-white text-center capitalize">No {sortFilter} accounts found</p>
+          <p className="text-white text-center capitalize">
+            No {sortFilter} accounts found
+          </p>
         )}
         {filteredData?.map((account, index) => (
           <div
@@ -579,12 +776,12 @@ const PayoutsSection = () => {
   const getTotalPayoutProfit = () => {
     const profit = account.balance - accountSize;
 
-    if (profit < 0 || account.status !== "FUNDED" ) {
+    if (profit < 0 || account.status !== "FUNDED") {
       return 0;
-    } 
-    
+    }
+
     return Math.min(profit, monthlyProfitCap);
-  }
+  };
 
   return (
     <>
@@ -615,9 +812,10 @@ const PayoutsSection = () => {
               height={45}
             />
             <p className="flex flex-col md:mt-0 text-3xl  2xl:text-4xl font-semibold">
-              $ { getTotalPayoutProfit().toFixed(2) }
+              $ {getTotalPayoutProfit().toFixed(2)}
               <span className="text-sm text-gray-400">
-                You can only request payount once in 14 days. You max monthly profit cap is ${monthlyProfitCap}. 
+                You can only request payount once in 14 days. You max monthly
+                profit cap is ${monthlyProfitCap}.
               </span>
             </p>
           </div>
@@ -630,7 +828,8 @@ const PayoutsSection = () => {
 
 const CertificaeSection = () => {
   const account = accountStore((state) => state.account);
-  const { data: payoutHistory, isPending: fetchingPayoutHistory } = useGetFundedPayout(account.id);
+  const { data: payoutHistory, isPending: fetchingPayoutHistory } =
+    useGetFundedPayout(account.id);
   const { data: accounts, isPending: fetchingAccounts } = useGetAccounts();
   const { mutate: sendCertificate, isPending } = useSendCertificate({
     onSuccess: () => {
@@ -659,15 +858,14 @@ const CertificaeSection = () => {
   return (
     <div
       className={`w-full flex flex-col space-y-5 py-6  md:p-3  rounded-2xl 2xl:p-5  mb-8 transition-opacity
-      ${isPending
+      ${
+        isPending
           ? " opacity-20 pointer-events-none "
           : " opacity-100 pointer-events-auto"
-        }
+      }
     `}
     >
-      <button
-        className=" bg-[#272837] shadow-inner shadow-gray-700 p-3 pb-8 md:p-7 text-center  overflow-hidden relative min-h-32 2xl:min-h-44 items-center rounded-2xl w-full  flex flex-col gap-3"
-      >
+      <button className=" bg-[#272837] shadow-inner shadow-gray-700 p-3 pb-8 md:p-7 text-center  overflow-hidden relative min-h-32 2xl:min-h-44 items-center rounded-2xl w-full  flex flex-col gap-3">
         <div className=" flex items-center gap-2">
           <Image
             src="/icons/funded_c.svg"
@@ -758,7 +956,11 @@ const CertificaeSection = () => {
       <button
         className=" bg-[#272837] shadow-inner shadow-gray-700 p-3 pb-8 md:p-7 text-center overflow-hidden relative min-h-32 2xl:min-h-44 items-center rounded-2xl w-full  flex flex-col gap-3 disabled:opacity-20 disabled:cursor-not-allowed"
         disabled={!(account.status === "FUNDED" && payoutHistory.length > 0)}
-        onClick={() => account.status === "FUNDED" && payoutHistory.length > 0 && handleSendCertificate("PAYOUT")}
+        onClick={() =>
+          account.status === "FUNDED" &&
+          payoutHistory.length > 0 &&
+          handleSendCertificate("PAYOUT")
+        }
       >
         <div className=" flex items-center gap-2">
           <Image
@@ -780,7 +982,11 @@ const CertificaeSection = () => {
       <button
         className=" bg-[#272837] shadow-inner shadow-gray-700 p-3 pb-8 md:p-7 text-center overflow-hidden relative min-h-32 2xl:min-h-44 items-center rounded-2xl w-full  flex flex-col gap-3 disabled:opacity-20 disabled:cursor-not-allowed"
         disabled={!(account.status === "FUNDED" && payoutHistory.length > 0)}
-        onClick={() => account.status === "FUNDED" && payoutHistory.length > 0 && handleSendCertificate("LIFETIME_PAYOUT")}
+        onClick={() =>
+          account.status === "FUNDED" &&
+          payoutHistory.length > 0 &&
+          handleSendCertificate("LIFETIME_PAYOUT")
+        }
       >
         <div className=" flex items-center gap-2">
           <Image
