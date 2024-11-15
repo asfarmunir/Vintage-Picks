@@ -125,17 +125,33 @@ async function checkForUpdates(wss) {
               (game) => game.id === bet.eventId[i]
             );
             if (game) {
-              let isHomeTeam = bet.team[i] === game.home_team;
-              let matchWon =
-                (isHomeTeam &&
-                  Number(game.scores[0].score) >
-                    Number(game.scores[1].score)) ||
-                (!isHomeTeam &&
-                  Number(game.scores[0].score) < Number(game.scores[1].score));
+              // Determine scores for the home and away teams by checking names
+              let homeScore = null;
+              let awayScore = null;
 
-              if (!matchWon) {
-                allMatchesWon = false; // If any match is lost, mark the entire bet as lost
-                break;
+              for (let score of game.scores) {
+                if (score.name === game.home_team) {
+                  homeScore = Number(score.score);
+                } else if (score.name === game.away_team) {
+                  awayScore = Number(score.score);
+                }
+              }
+
+              // Check if the home and away scores were correctly assigned
+              if (homeScore !== null && awayScore !== null) {
+                let isHomeTeam = bet.team[i] === game.home_team;
+
+                // Determine if the selected team won based on their home/away status
+                let matchWon =
+                  (isHomeTeam && homeScore > awayScore) ||
+                  (!isHomeTeam && homeScore < awayScore);
+
+                if (!matchWon) {
+                  allMatchesWon = false; // If any match is lost, mark the entire bet as lost
+                  break;
+                }
+              } else {
+                console.error("Scores for home or away team not found");
               }
             }
           }
@@ -163,7 +179,10 @@ async function checkForUpdates(wss) {
               data: {
                 balance: { increment: bet.pick + bet.winnings },
                 totalFundedAmount: {
-                  increment: (account.status === "FUNDED" && !discardBet) ? bet.winnings : 0,
+                  increment:
+                    account.status === "FUNDED" && !discardBet
+                      ? bet.winnings
+                      : 0,
                 },
               },
             });
@@ -187,8 +206,12 @@ async function checkForUpdates(wss) {
                 },
               },
             });
-            
-            await sendAppNotification(bet.userId, "WIN", `Congratulations! You won ${bet.winnings} picks.`);
+
+            await sendAppNotification(
+              bet.userId,
+              "WIN",
+              `Congratulations! You won ${bet.winnings} picks.`
+            );
             await sendPickResultEmail(bet.userId, "WIN");
 
             if (account.status === "CHALLENGE") {
@@ -199,8 +222,10 @@ async function checkForUpdates(wss) {
 
                 if(account.accountType === "TWO_STEP" && newPhase === 3) {
                   goFunded = true;
-                }
-                else if (account.accountType === "THREE_STEP" && newPhase === 4) {
+                } else if (
+                  account.accountType === "THREE_STEP" &&
+                  newPhase === 4
+                ) {
                   goFunded = true;
                 }
 
@@ -215,7 +240,11 @@ async function checkForUpdates(wss) {
                     },
                   });
                   await sendFundedAccountEmail(account.id);
-                  await sendAppNotification(bet.userId, "UPDATE", "Congratulations! Your account has been funded.");
+                  await sendAppNotification(
+                    bet.userId,
+                    "UPDATE",
+                    "Congratulations! Your account has been funded."
+                  );
                 } else {
                   await prisma.account.update({
                     where: {
@@ -226,9 +255,12 @@ async function checkForUpdates(wss) {
                     },
                   });
                   await sendPhaseUpdateEmail(account.id, newPhase);
-                  await sendAppNotification(bet.userId, "UPDATE", `Your account is upgraded to phase ${newPhase}`);
+                  await sendAppNotification(
+                    bet.userId,
+                    "UPDATE",
+                    `Your account is upgraded to phase ${newPhase}`
+                  );
                 }
-
               }
             }
           } else {
@@ -259,7 +291,11 @@ async function checkForUpdates(wss) {
               });
 
               await sendBreachedEmail("BREACHED", account.id);
-              await sendAppNotification(bet.userId, "ALERT", "Your account has been breached.");
+              await sendAppNotification(
+                bet.userId,
+                "ALERT",
+                "Your account has been breached."
+              );
             }
             if (
               account.totalLoss + bet.pick >=
@@ -275,7 +311,11 @@ async function checkForUpdates(wss) {
               });
 
               await sendBreachedEmail("BREACHED", account.id);
-              await sendAppNotification(bet.userId, "ALERT", "Your account has been breached.");
+              await sendAppNotification(
+                bet.userId,
+                "ALERT",
+                "Your account has been breached."
+              );
             }
           }
         } catch (error) {

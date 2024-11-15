@@ -25,6 +25,20 @@ export async function POST(req: NextRequest) {
             return NextResponse.json({ error: "User not found" }, { status: 404 });
         }
 
+         const response = await fetch(`${process.env.BG_SERVICES_URL}/generate-notification`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                userId: userId,
+                message: message,
+            }),
+        });
+        if (!response.ok) {
+            return NextResponse.json({ error: "Failed to send notification" }, { status: 500 });
+        }
+        
         const notification = await prisma.notification.create({
             data: {
                 content: message,
