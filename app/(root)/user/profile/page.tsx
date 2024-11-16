@@ -28,11 +28,12 @@ import { signOut, useSession } from "next-auth/react";
 import { CertificateType, User } from "@prisma/client";
 import FundedPayoutRequestsTable from "./payout-requests";
 import { useSearchParams } from "next/navigation";
-import { LoaderCircle, LoaderCircleIcon } from "lucide-react";
+import { ChevronDown, LoaderCircle, LoaderCircleIcon } from "lucide-react";
 import { useSendCertificate } from "@/app/hooks/useSendCertificate";
 import toast from "react-hot-toast";
 import { usePostAvatar } from "@/app/hooks/usePostAvatar";
 import { useGetFundedPayout } from "@/app/hooks/useGetFundedPayout";
+import { FaCircleCheck } from "react-icons/fa6";
 
 interface Account {
   id: string;
@@ -46,12 +47,6 @@ interface Account {
   createdAt: string; // Alternatively, use `Date` if parsing to Date object is needed
   updatedAt: string; // Same as above, use `Date` if necessary
 }
-
-const ACCOUNT_STATUS_ICON_DICT = {
-  CHALLENGE: "/icons/challenge.svg",
-  FUNDED: "/icons/fund.svg",
-  BREACHED: "/icons/breach.svg",
-};
 
 type ProfileLevel =
   | "NEWBIE"
@@ -108,42 +103,24 @@ const page = () => {
             <ProfileLevel />
           </div>
         </div>
-      </div>
-      <div className=" w-full  flex gap-4  text-white mt-1 md:mt-9 p-5 md:p-8 pb-24 max-h-full overflow-auto">
-        <div className=" w-full  md:w-[70%] h-full shadow-inner shadow-gray-800 flex flex-col gap-4 bg-[#181926] p-4 md:p-6 rounded-xl">
-          <div className=" w-full items-center flex justify-between">
-            <h2 className=" text-xl font-bold text-white">PROFILE</h2>
-            <button
-              className=" text-white uppercase text-sm bg-[#333547]  px-5 py-2 rounded-lg inline-flex items-center gap-3"
-              onClick={() => signOut()}
-            >
-              <Image
-                src="/icons/logout.png"
-                alt="Edit"
-                width={16}
-                height={16}
-              />
-              Sign Out
-            </button>
-          </div>
-          {/* T A B S  */}
-          <div className="flex mt-4 items-center justify-evenly md:justify-start flex-wrap gap-2 mb-3">
+        <div className=" bg-white p-4 md:p-6 rounded-2xl">
+          <div className="flex items-center justify-evenly md:justify-start flex-wrap gap-2 mb-8">
             {tabs.map((curr, index) => (
               <button
                 key={index}
                 className={`border  
-             px-5 text-xs 2xl:text-lg py-2 flex-grow md:flex-grow-0 rounded-full ${
+             px-5 text-xs 2xl:text-sm py-2 flex-grow md:flex-grow-0 rounded-full ${
                tab === curr.name
-                 ? "border-[#52FC18] bg-[#1A5B0B]"
-                 : " border-gray-700 text-[#848BAC] border-2"
-             } font-semibold uppercase`}
+                 ? "border-[#001e4500] bg-[#001E451A] text-black"
+                 : "  bg-transparent border-none text-[#848BAC] "
+             } font-semibold capitalize  `}
                 onClick={() => changeTab(curr.name)}
               >
                 {curr.name}
               </button>
             ))}
           </div>
-          {tab === "profile" && <ProfileSection />}
+          {tab === "profile" && <ProfileMilestone />}
           {tab === "accounts" && <AccountsSection accounts={userAccounts} />}
           {tab === "payouts" && <PayoutsSection />}
           {tab === "certificates" && <CertificaeSection />}
@@ -189,7 +166,7 @@ const ImageUpload = () => {
 
   if (isPending) {
     return (
-      <div className=" p-4 shadow-inner shadow-gray-700 rounded-xl flex items-center justify-center bg-[#272837]">
+      <div className=" p-4  rounded-xl flex items-center justify-center ">
         <LoaderCircle className="animate-spin" />
         Loading...
       </div>
@@ -307,7 +284,7 @@ const ProfileLevel = () => {
 
   if (isPending) {
     return (
-      <div className=" p-4 shadow-inner shadow-gray-700 rounded-xl flex items-center justify-center bg-[#272837]">
+      <div className="rounded-xl pt-8 flex items-center justify-center ">
         <LoaderCircle className="animate-spin" />
         Loading...
       </div>
@@ -345,232 +322,109 @@ const ProfileLevel = () => {
   );
 };
 
-const ProfileSection = () => {
-  const imageRef = useRef<HTMLInputElement>(null);
-  const [image, setImage] = useState<File | null>(null);
-  const { data, isPending, refetch } = useGetUser();
-
-  const handleImageUpload = () => {
-    imageRef.current?.click();
-  };
-
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0] || null;
-    if (file) {
-      setImage(file);
-    }
-  };
-
-  const { mutate: postAvatar, isPending: uploading } = usePostAvatar({
-    onSuccess: (data) => {
-      toast.success("Avatar uploaded successfully");
-      refetch();
+const ProfileMilestone = () => {
+  const milestones = [
+    {
+      title: "Affiliate",
+      milestone: "Win 150 Picks Across all of your accounts",
+      rewards: [
+        "Exclusive discord role",
+        "Special giveaway entries",
+        "Secret discounts",
+        "First access to features",
+        "Premium bonuses",
+        "Event invitations",
+        "Priority support",
+      ],
     },
-    onError: (error) => {
-      toast.error("Failed to upload avatar");
+    {
+      title: "Superviser ",
+      milestone: "Win 150 Picks Across all of your accounts",
+      rewards: [
+        "Exclusive discord role",
+        "Special giveaway entries",
+        "Secret discounts",
+        "First access to features",
+        "Premium bonuses",
+        "Event invitations",
+        "Priority support",
+      ],
     },
-  });
-
-  useEffect(() => {
-    if (image) {
-      postAvatar(image);
-    }
-  }, [image]);
-
-  if (isPending) {
-    return (
-      <div className=" p-4 shadow-inner shadow-gray-700 rounded-xl flex items-center justify-center bg-[#272837]">
-        <LoaderCircle className="animate-spin" />
-        Loading...
-      </div>
-    );
-  }
+    {
+      title: "Affiliate Manager",
+      milestone: "Win 150 Picks Across all of your accounts",
+      rewards: [
+        "Exclusive discord role",
+        "Special giveaway entries",
+        "Secret discounts",
+        "First access to features",
+        "Premium bonuses",
+        "Event invitations",
+        "Priority support",
+      ],
+    },
+    {
+      title: "Top Tier",
+      milestone: "Win 150 Picks Across all of your accounts",
+      rewards: [
+        "Exclusive discord role",
+        "Special giveaway entries",
+        "Secret discounts",
+        "First access to features",
+        "Premium bonuses",
+        "Event invitations",
+        "Priority support",
+      ],
+    },
+    {
+      title: "Regional Affiliate",
+      milestone: "Win 150 Picks Across all of your accounts",
+      rewards: [
+        "Exclusive discord role",
+        "Special giveaway entries",
+        "Secret discounts",
+        "First access to features",
+        "Premium bonuses",
+        "Event invitations",
+        "Priority support",
+      ],
+    },
+  ];
 
   return (
-    <>
-      <div className=" p-4 shadow-inner shadow-gray-700 rounded-xl flex items-start justify-between bg-[#272837]">
-        <div className="flex gap-3 items-center">
-          {data?.user?.avatar ? (
-            <Image
-              src={data.user.avatar}
-              alt="User"
-              width={50}
-              height={50}
-              className="rounded-full object-cover !w-12 !h-12"
-            />
-          ) : (
-            <div className="w-16 h-16 rounded-full bg-gray-700 border border-gray-500 flex justify-center items-center text-xl text-gray-400">
-              {`${data.user?.firstName[0]}${data.user?.lastName[0]}`}
-            </div>
-          )}
-          <div className="flex flex-col">
-            <p className=" text-sm font-bold text-[#848BAC] uppercase">
-              Username
-            </p>
-            <h3 className="font-bold text-xl">
-              {`${data.user?.firstName} ${data.user?.lastName}`}
-            </h3>
-          </div>
-        </div>
-        <input
-          type="file"
-          className="hidden"
-          ref={imageRef}
-          accept="image/*"
-          onChange={handleImageChange}
-        />
-        <button
-          disabled={uploading}
-          className=" inline-flex uppercase text-xs text-[#52FC18] items-center gap-2 disabled:opacity-20"
-          onClick={handleImageUpload}
+    <div className=" w-full grid grid-cols-1 pb-8  sm:grid-cols-2 md:grid-cols-3  2xl:grid-cols-5 gap-4">
+      {milestones.map((milestone, index) => (
+        <div
+          className=" bg-[#F8F8F8] rounded-2xl overflow-hidden shadow-md"
+          key={index}
         >
-          <Image src="/icons/edit.png" alt="Edit" width={16} height={16} />
-          {uploading ? "Uploading..." : "Edit Avatar"}
-        </button>
-      </div>
-      <div className=" p-4 shadow-inner shadow-gray-700 rounded-xl flex items-start justify-between bg-[#272837]">
-        <div className="flex gap-3 items-center">
-          <Image
-            src={profileLevels[data?.user?.profileLevel as ProfileLevel]?.icon}
-            alt="User"
-            width={50}
-            height={50}
-          />
-          <div className="flex flex-col">
-            <p className=" text-sm font-bold text-[#848BAC] uppercase">
-              PROFILE LEVEL
+          <div className="flex flex-col p-6 items-center gap-4">
+            <Image
+              src={`/vintage/images/${index + 1}.svg`}
+              alt="Role Icon"
+              width={60}
+              height={60}
+            />
+            <h2 className="text-xl 2xl:text-2xl font-semibold text-vintage-50">
+              {milestone.title}
+            </h2>
+            <p className="text-sm text-center 2xl:text-base">
+              {milestone.milestone}
             </p>
-            <h3 className="font-bold text-xl">
-              {isPending ? "Loading..." : data.user?.profileLevel}
-            </h3>
+          </div>
+          <div className=" mt-4 bg-white p-4 flex flex-col pb-6  space-y-1.5">
+            {milestone.rewards.map((milestone, index) => (
+              <p className=" inline-flex items-center gap-2" key={index}>
+                <FaCircleCheck className="text-vintage-50 2xl:text-lg" />
+                <span className="text-sm 2xl:text-base capitalize text-gray-700">
+                  {milestone}
+                </span>
+              </p>
+            ))}
           </div>
         </div>
-      </div>
-      <div className=" mb-8 p-4 shadow-inner gap-2 bg-[#52FC18]/10 text-[#52FC18] shadow-gray-700 rounded-xl flex flex-col  ">
-        <h2 className="  text-xl 2xl:text-2xl font-bold">
-          Upgrade your PROFILE Level
-        </h2>
-        <p className=" text-sm font-thin text-green-600">
-          Upgrade your PROFILE Level and get exclusive access to discord roles,
-          events, prizes and discounts.
-        </p>
-        <div className="flex items-center justify-between mt-4">
-          <h4 className="2xl:text-lg font-bold">PROGRESS TO NEXT LEVEL</h4>
-          <h4 className="2xl:text-lg font-bold">
-            {data?.user?.picksWon}/
-            {profileLevels[data?.user?.profileLevel as ProfileLevel]?.target}{" "}
-            PICKS WON
-          </h4>
-        </div>
-        <div className=" w-full h-5 bg-[#393C53] rounded-md">
-          <div
-            className="bg-[#00B544] shadow-inner rounded-md shadow-gray-500 h-full"
-            style={{
-              width: `${
-                (data?.user?.picksWon /
-                  profileLevels[data?.user?.profileLevel as ProfileLevel]
-                    ?.target) *
-                100
-              }%`,
-            }}
-          ></div>
-        </div>
-      </div>
-      <div className=" p-4 w-[60%] mx-auto shadow-inner shadow-gray-700 rounded-xl flex items-center flex-col gap-3 py-6  bg-[#272837]">
-        <Image
-          src={profileLevels[data?.user?.profileLevel as ProfileLevel]?.icon}
-          alt="User"
-          width={50}
-          height={50}
-        />
-        <h3 className="font-bold text-xl 2xl:text-2xl">
-          {isPending ? "Loading..." : data.user?.profileLevel}
-        </h3>
-        <p className=" font-bold text-xs uppercase">
-          Win {profileLevels[data?.user?.profileLevel as ProfileLevel]?.target}{" "}
-          Picks across all of your Accounts
-        </p>
-        <div className=" my-4 bg-[#181926] p-5 space-y-2 rounded-xl shadow-inner w-[90%]">
-          <div className="flex items-center gap-2">
-            <Image
-              src="/icons/role.png"
-              alt="Coin Icon"
-              width={26}
-              height={26}
-            />
-            <h4 className=" font-bold uppercase text-xs 2xl:text-base">
-              Exclusive discord role
-            </h4>
-          </div>
-          <div className="flex items-center gap-2">
-            <Image
-              src="/icons/entry.png"
-              alt="Coin Icon"
-              width={26}
-              height={26}
-            />
-            <h4 className=" font-bold uppercase text-xs 2xl:text-base">
-              special giveaway ENTRIES
-            </h4>
-          </div>
-          <div className="flex items-center gap-2">
-            <Image
-              src="/icons/discount.png"
-              alt="Coin Icon"
-              width={26}
-              height={26}
-            />
-            <h4 className=" font-bold uppercase text-xs 2xl:text-base">
-              secret discounts
-            </h4>
-          </div>
-          <div className="flex items-center gap-2">
-            <Image
-              src="/icons/feature.png"
-              alt="Coin Icon"
-              width={26}
-              height={26}
-            />
-            <h4 className=" font-bold uppercase text-xs 2xl:text-base">
-              FIRST ACCESS TO FEATURES
-            </h4>
-          </div>
-          <div className="flex items-center gap-2">
-            <Image
-              src="/icons/bonus.png"
-              alt="Coin Icon"
-              width={26}
-              height={26}
-            />
-            <h4 className=" font-bold uppercase text-xs 2xl:text-base">
-              PREMIUM BONUSES
-            </h4>
-          </div>
-          <div className="flex items-center gap-2">
-            <Image
-              src="/icons/invitation.png"
-              alt="Coin Icon"
-              width={26}
-              height={26}
-            />
-            <h4 className=" font-bold uppercase text-xs 2xl:text-base">
-              EVENT INVITATIONS
-            </h4>
-          </div>
-          <div className="flex items-center gap-2">
-            <Image
-              src="/icons/support.png"
-              alt="Coin Icon"
-              width={26}
-              height={26}
-            />
-            <h4 className=" font-bold uppercase text-xs 2xl:text-base">
-              PRIORITY SUPPORT
-            </h4>
-          </div>
-        </div>
-      </div>
-    </>
+      ))}
+    </div>
   );
 };
 
@@ -629,31 +483,32 @@ const AccountsSection = ({ accounts }: { accounts: Account[] }) => {
   }, [tab, accounts, sortFilter]);
 
   return (
-    <div className=" w-full space-y-5 bg-primary-100 py-6 px-2 md:p-3  rounded-2xl 2xl:p-5 mb-8">
-      <div className=" w-full flex flex-col gap-3 md:flex-row items-center  justify-between">
-        <h2 className=" 2xl:text-xl font-bold"> OVERVIEW</h2>
+    <div className=" w-full space-y-5 md:-mt-[4.85rem] mb-8">
+      <div className=" w-full flex flex-col gap-3 md:flex-row items-center  justify-end ">
         <div className="flex flex-col md:flex-row items-center gap-2 w-full md:w-fit">
           {tab !== "show" ? (
             <button
               onClick={() => setTab("show")}
-              className=" bg-[#272837]   justify-center  w-full md:w-fit text-sm px-3.5 py-2 rounded-xl inline-flex items-center gap-2"
+              className="  text-vintage-50  w-full md:w-fit text-sm font-semibold px-3.5 py-2 rounded-xl inline-flex items-center justify-center gap-2"
             >
               <Image
                 src="/icons/check.png"
                 alt="Arrow Icon"
                 width={18}
                 height={18}
+                className=" invert"
               />
               SHOW BREACHED
             </button>
           ) : (
             <button
               onClick={() => setTab("hide")}
-              className=" bg-[#272837]   justify-center  w-full md:w-fit text-sm px-3.5 py-2 rounded-xl inline-flex items-center gap-2"
+              className=" text-vintage-50 w-full md:w-fit text-sm font-semibold px-3.5 py-2 rounded-xl inline-flex items-center justify-center gap-2"
             >
               <Image
                 src="/icons/hide.png"
                 alt="Arrow Icon"
+                className=" invert"
                 width={18}
                 height={18}
               />
@@ -661,16 +516,10 @@ const AccountsSection = ({ accounts }: { accounts: Account[] }) => {
             </button>
           )}
           <DropdownMenu>
-            <DropdownMenuTrigger className=" bg-[#272837]    justify-center w-full md:w-fit  text-xs 2xl:text-base px-3.5 py-2 rounded-xl inline-flex items-center gap-2">
-              <Image
-                src="/icons/sort.png"
-                alt="Arrow Icon"
-                width={18}
-                height={18}
-              />
-              SORT
+            <DropdownMenuTrigger className=" text-slate-700   justify-center w-full md:w-fit  text-xs 2xl:text-base px-3.5 py-2 rounded-xl inline-flex items-center gap-2">
+              SORT : {sortFilter} <ChevronDown className="pb-0.5" />
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-48  bg-[#181926] text-white border-none  mt-1  p-3 rounded-lg text-xs 2xl:text-base">
+            <DropdownMenuContent className="w-48  bg-vintage-50 text-white border-none  mt-1  p-3 rounded-lg text-xs 2xl:text-base">
               <DropdownMenuItem
                 className="flex items-center justify-between "
                 onClick={() => changeSortFilter("ALL")}
@@ -699,7 +548,7 @@ const AccountsSection = ({ accounts }: { accounts: Account[] }) => {
           </DropdownMenu>
           <Link
             href="/create-account"
-            className="shadow-green-400 font-bold   justify-center w-full md:w-fit inner-shadow text-sm px-3.5 py-2 rounded-xl inline-flex items-center gap-2"
+            className=" bg-vintage-50 text-white outline-fuchsia-50 font-bold  rounded-full   justify-center w-full md:w-fit text-sm px-4 py-2.5  inline-flex items-center gap-2"
           >
             <Image
               src="/icons/add.png"
@@ -713,41 +562,66 @@ const AccountsSection = ({ accounts }: { accounts: Account[] }) => {
       </div>
       <div className="flex flex-col  items-center gap-4">
         {filteredData?.length === 0 && (
-          <p className="text-white text-center capitalize">
-            No {sortFilter} accounts found
-          </p>
+          <>
+            <Image
+              src="/vintage/images/logo.svg"
+              alt="Arrow Icon"
+              width={100}
+              height={100}
+              className=" pt-8"
+            />
+            {sortFilter === "ALL" ? (
+              <p className="text-center capitalize font-semibold tracking-wide bg-vintage-50 text-white px-8 py-3 mb-12 rounded-lg">
+                No accounts found
+              </p>
+            ) : (
+              <p className="text-center capitalize font-semibold tracking-wide bg-vintage-50 text-white px-8 py-3 mb-12 rounded-lg">
+                No {sortFilter} accounts found
+              </p>
+            )}
+          </>
         )}
         {filteredData?.map((account, index) => (
           <div
             key={index}
-            className=" bg-[#272837] p-3 pb-8 md:p-7  overflow-hidden relative  rounded-2xl w-full  flex flex-col gap-1 "
+            className="   overflow-hidden relative   w-full  flex flex-col gap-1 "
           >
             <div className=" w-full flex items-center justify-between">
-              <p className=" text-white mb-3 mt-4 md:mt-0 2xl:text-lg font-semibold">
+              <p className=" text-vintage-50 mb-3 mt-4 md:mt-0 2xl:text-xl text-lg font-semibold">
                 ${account.accountSize.replace("K", "000")}
               </p>
-              <Image
-                src={`${ACCOUNT_STATUS_ICON_DICT[account.status]}`}
-                alt="Arrow Icon"
-                width={100}
-                height={100}
-              />
+              <p
+                className={` px-8 py-2.5 2xl:py-3 rounded-full 
+ ${
+   account.status === "FUNDED"
+     ? "  bg-[#0F840C1F] text-[##0F840C3D] border border-[#0F840C3D] "
+     : account.status === "BREACHED"
+     ? " bg-[#FF00001F] text-[#ff00009e] border border-[#FF00003D] "
+     : " bg-[#FFA5001F] text-[#ffa600fa] border border-[#FFA5003D] "
+ }
+             
+              `}
+              >
+                {account.status}
+              </p>
             </div>
-            <div className=" w-full flex items-center justify-between">
-              <p className=" text-xs md:text-sm text-[#AFB2CA]  mb-3 mt-4 md:mt-1 2xl:text-lg ">
-                ACCOUNT BALANCE
-              </p>
-              <p className=" text-white mb-3 mt-4 text-xs  md:mt-0 2xl:text-lg font-semibold">
-                ${account.balance}
-              </p>
-            </div>
-            <div className=" w-full flex items-center justify-between">
-              <p className=" text-[#AFB2CA] text-xs md:text-sm mb-3 mt-4 md:mt-1 2xl:text-lg ">
-                ACCOUNT NUMBER
-              </p>
-              <p className=" text-white mb-3 mt-4 text-xs md:text-sm md:mt-0 2xl:text-lg font-semibold">
-                #{account.accountNumber}
-              </p>
+            <div className=" w-full flex items-center gap-4">
+              <div className=" w-full p-7 rounded-lg  bg-[#F8F8F8] flex flex-col-reverse items-center justify-between">
+                <p className=" text-xs md:text-sm text-[#848697]   md:mt-1 2xl:text-lg ">
+                  Account Balance
+                </p>
+                <p className=" text-vintage-50 mb-1 mt-4   md:mt-0 2xl:text-2xl text-xl font-semibold">
+                  ${account.balance}
+                </p>
+              </div>
+              <div className=" w-full p-7 rounded-lg  bg-[#F8F8F8] flex flex-col-reverse items-center justify-between">
+                <p className=" text-xs md:text-sm text-[#848697]   md:mt-1 2xl:text-lg ">
+                  Account Number
+                </p>
+                <p className=" text-vintage-50 mb-1 mt-4   md:mt-0 2xl:text-2xl text-xl font-semibold">
+                  #{account.accountNumber}
+                </p>
+              </div>{" "}
             </div>
           </div>
         ))}
@@ -790,8 +664,8 @@ const PayoutsSection = () => {
         onClose={closeModal}
         handlePayoutSuccess={handlePayoutSuccess}
       />
-      <div className=" w-full space-y-5 bg-primary-100 py-6  md:p-3  rounded-2xl 2xl:p-5 mb-8">
-        <div className=" bg-[#272837] p-3 pb-8 md:p-7  overflow-hidden relative min-h-32 2xl:min-h-44 rounded-2xl w-full  flex flex-col gap-1 ">
+      <div className=" w-full space-y-5 mb-8">
+        {/* <div className=" bg-[#272837] p-3 pb-8 md:p-7  overflow-hidden relative min-h-32 2xl:min-h-44 rounded-2xl w-full  flex flex-col gap-1 ">
           <div className=" text-[#AFB2CA] mb-3 mt-4 md:mt-0 2xl:text-lg font-semibold flex justify-between items-center">
             Total Payout Amount
             {account.status === "FUNDED" && (
@@ -819,7 +693,7 @@ const PayoutsSection = () => {
               </span>
             </p>
           </div>
-        </div>
+        </div> */}
         <FundedPayoutRequestsTable shouldRefetch={shouldRefetch} />
       </div>
     </>
@@ -857,104 +731,104 @@ const CertificaeSection = () => {
 
   return (
     <div
-      className={`w-full flex flex-col space-y-5 py-6  md:p-3  rounded-2xl 2xl:p-5  mb-8 transition-opacity
+      className={`w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4   gap-4    mb-8 transition-opacity
       ${
         isPending
-          ? " opacity-20 pointer-events-none "
+          ? " opacity-50 pointer-events-none "
           : " opacity-100 pointer-events-auto"
       }
     `}
     >
-      <button className=" bg-[#272837] shadow-inner shadow-gray-700 p-3 pb-8 md:p-7 text-center  overflow-hidden relative min-h-32 2xl:min-h-44 items-center rounded-2xl w-full  flex flex-col gap-3">
-        <div className=" flex items-center gap-2">
-          <Image
-            src="/icons/funded_c.svg"
-            alt="Arrow Icon"
-            width={40}
-            height={40}
-            className=" mt-1"
-          />
-          <p className=" text-xl  2xl:text-3xl text-[#52FC18] font-semibold">
-            FUNDED
+      <button className=" bg-[#F4F4F4] p-3 md:p-6 text-center  overflow-hidden relative min-h-32 2xl:min-h-44 items-start rounded-2xl w-full  flex flex-col gap-3">
+        <Image
+          src="/vintage/images/certificateBadge1.svg"
+          alt="Arrow Icon"
+          width={45}
+          height={45}
+          className=" absolute bottom-3 right-3 "
+        />
+        <div className=" flex items-center justify-between w-full ">
+          <p className=" text-lg  2xl:text-xl text-vintage-50 font-semibold">
+            Funded
           </p>
-        </div>
-        <p className=" uppercase tracking-wide text-[#848BAC] mb-3 mt-4 md:mt-0 2xl:text-lg font-semibold">
-          Click to get your certificate
-        </p>
-        <Dialog>
-          {!fetchingAccounts && filteredAccounts.length > 0 ? (
-            <DialogTrigger className=" flex items-center px-4 py-1.5  shadow-inner shadow-gray-600 rounded-xl gap-1 text-white font-bold 2xl:text-lg ">
-              <Image
-                src="/icons/certificate.svg"
-                alt="Arrow Icon"
-                width={20}
-                height={20}
-              />
-              VIEW {filteredAccounts.length} CERTIFICATES
-            </DialogTrigger>
-          ) : !fetchingAccounts && filteredAccounts.length === 0 ? (
-            <div className="flex items-center px-4 py-1.5  shadow-inner shadow-gray-600 rounded-xl gap-1 text-white font-bold 2xl:text-lg">
-              No funded accounts
-            </div>
-          ) : (
-            <div className="flex items-center px-4 py-1.5  shadow-inner shadow-gray-600 rounded-xl gap-1 text-white font-bold 2xl:text-lg">
-              <LoaderCircleIcon className="animate-spin mr-2" />
-              Loading...
-            </div>
-          )}
-          <DialogContent className=" bg-primary-100 text-white p-8 border-none">
-            <DialogHeader>
-              <DialogTitle className=" text-xl font-bold mb-4">
-                FUNDED CERTIFICATES
-              </DialogTitle>
-              <div className="flex flex-col gap-2 w-full">
-                {filteredAccounts.length === 0 && (
-                  <div className=" p-4 bg-[#272837] rounded-xl py-8 shadow-inner shadow-gray-700 flex items-center justify-between">
-                    <div className="flex items-center ">
-                      <div className="w-12 h-12 rounded-xl mr-2.5 bg-gray-700"></div>
-                      <div className=" flex flex-col  gap-1">
-                        <h2 className=" text-sm md:text-base font-bold">
-                          No funded accounts
-                        </h2>
-                      </div>
-                    </div>
-                  </div>
-                )}
-                {!fetchingAccounts &&
-                  filteredAccounts.map((account: Account) => (
+          <Dialog>
+            {!fetchingAccounts && filteredAccounts.length > 0 ? (
+              <DialogTrigger className=" flex items-center px-4 py-1.5  shadow-inner shadow-gray-600 rounded-xl gap-1 text-white font-bold 2xl:text-lg ">
+                <Image
+                  src="/icons/certificate.svg"
+                  alt="Arrow Icon"
+                  width={20}
+                  height={20}
+                />
+                VIEW {filteredAccounts.length} CERTIFICATES
+              </DialogTrigger>
+            ) : !fetchingAccounts && filteredAccounts.length === 0 ? (
+              <div className="flex items-center px-4 py-1.5   rounded-full gap-1 text-white bg-vintage-50 font-bold text-xs 2xl:text-sm">
+                No funded accounts
+              </div>
+            ) : (
+              <div className="flex items-center px-4 py-1.5   rounded-full gap-1 text-white bg-vintage-50 font-bold text-xs 2xl:text-sm">
+                <LoaderCircleIcon className="animate-spin mr-2" />
+                Loading...
+              </div>
+            )}
+            <DialogContent className=" bg-primary-100 text-white p-8 border-none">
+              <DialogHeader>
+                <DialogTitle className=" text-xl font-bold mb-4">
+                  FUNDED CERTIFICATES
+                </DialogTitle>
+                <div className="flex flex-col gap-2 w-full">
+                  {filteredAccounts.length === 0 && (
                     <div className=" p-4 bg-[#272837] rounded-xl py-8 shadow-inner shadow-gray-700 flex items-center justify-between">
                       <div className="flex items-center ">
+                        <div className="w-12 h-12 rounded-xl mr-2.5 bg-gray-700"></div>
                         <div className=" flex flex-col  gap-1">
                           <h2 className=" text-sm md:text-base font-bold">
-                            {account.accountNumber}
+                            No funded accounts
                           </h2>
                         </div>
                       </div>
-                      <button
-                        className="inline-flex items-center gap-2"
-                        onClick={() =>
-                          handleSendCertificate("FUNDED", account.id)
-                        }
-                      >
-                        <Image
-                          src="/icons/download.png"
-                          alt="Arrow Icon"
-                          width={15}
-                          height={15}
-                        />
-                        <p className="text-xs text-[#52FC18] font-bold">
-                          DOWNLOAD
-                        </p>
-                      </button>
                     </div>
-                  ))}
-              </div>
-            </DialogHeader>
-          </DialogContent>
-        </Dialog>
+                  )}
+                  {!fetchingAccounts &&
+                    filteredAccounts.map((account: Account) => (
+                      <div className=" p-4 bg-[#272837] rounded-xl py-8 shadow-inner shadow-gray-700 flex items-center justify-between">
+                        <div className="flex items-center ">
+                          <div className=" flex flex-col  gap-1">
+                            <h2 className=" text-sm md:text-base font-bold">
+                              {account.accountNumber}
+                            </h2>
+                          </div>
+                        </div>
+                        <button
+                          className="inline-flex items-center gap-2"
+                          onClick={() =>
+                            handleSendCertificate("FUNDED", account.id)
+                          }
+                        >
+                          <Image
+                            src="/icons/download.png"
+                            alt="Arrow Icon"
+                            width={15}
+                            height={15}
+                          />
+                          <p className="text-xs text-[#52FC18] font-bold">
+                            DOWNLOAD
+                          </p>
+                        </button>
+                      </div>
+                    ))}
+                </div>
+              </DialogHeader>
+            </DialogContent>
+          </Dialog>
+        </div>
+        <p className="   text-[#848BAC]  2xl:text-sm text-xs ">
+          Click to get your certificate
+        </p>
       </button>
       <button
-        className=" bg-[#272837] shadow-inner shadow-gray-700 p-3 pb-8 md:p-7 text-center overflow-hidden relative min-h-32 2xl:min-h-44 items-center rounded-2xl w-full  flex flex-col gap-3 disabled:opacity-20 disabled:cursor-not-allowed"
+        className=" bg-[#F4F4F4] p-3 md:p-6 text-center overflow-hidden relative min-h-32 2xl:min-h-44 items-start rounded-2xl w-full  flex flex-col gap-3 disabled:opacity-20 disabled:cursor-not-allowed"
         disabled={!(account.status === "FUNDED" && payoutHistory.length > 0)}
         onClick={() =>
           account.status === "FUNDED" &&
@@ -962,25 +836,25 @@ const CertificaeSection = () => {
           handleSendCertificate("PAYOUT")
         }
       >
-        <div className=" flex items-center gap-2">
-          <Image
-            src="/icons/payout_c.svg"
-            alt="Arrow Icon"
-            width={40}
-            height={40}
-            className=" mt-1"
-          />
-          <p className=" text-xl  2xl:text-3xl text-[#52FC18] font-semibold">
-            PAYOUT
+        <Image
+          src="/vintage/images/certificateBadge2.svg"
+          alt="Arrow Icon"
+          width={45}
+          height={45}
+          className=" absolute bottom-3 right-3 "
+        />
+        <div className=" flex items-center ">
+          <p className=" text-lg  2xl:text-xl text-vintage-50 font-semibold">
+            Payout
           </p>
         </div>
-        <p className=" uppercase tracking-wide text-[#848BAC] mb-3 mt-4 md:mt-0 2xl:text-lg font-semibold">
+        <p className="   text-[#848BAC]  2xl:text-sm text-xs ">
           Click to get your certificate
         </p>
       </button>
 
       <button
-        className=" bg-[#272837] shadow-inner shadow-gray-700 p-3 pb-8 md:p-7 text-center overflow-hidden relative min-h-32 2xl:min-h-44 items-center rounded-2xl w-full  flex flex-col gap-3 disabled:opacity-20 disabled:cursor-not-allowed"
+        className=" bg-[#F4F4F4] p-3 md:p-6 text-center overflow-hidden relative min-h-32 2xl:min-h-44 items-start rounded-2xl w-full  flex flex-col gap-3 disabled:opacity-20 disabled:cursor-not-allowed"
         disabled={!(account.status === "FUNDED" && payoutHistory.length > 0)}
         onClick={() =>
           account.status === "FUNDED" &&
@@ -988,40 +862,40 @@ const CertificaeSection = () => {
           handleSendCertificate("LIFETIME_PAYOUT")
         }
       >
-        <div className=" flex items-center gap-2">
-          <Image
-            src="/icons/lifetime_c.svg"
-            alt="Arrow Icon"
-            width={40}
-            height={40}
-            className=" mt-1"
-          />
-          <p className=" text-xl  2xl:text-3xl text-[#52FC18] font-semibold">
-            LIFETIME PAYOUT
+        <Image
+          src="/vintage/images/certificateBadge3.svg"
+          alt="Arrow Icon"
+          width={45}
+          height={45}
+          className=" absolute bottom-3 right-3 "
+        />
+        <div className=" flex items-center ">
+          <p className=" text-lg  2xl:text-xl text-vintage-50 font-semibold">
+            Lifetime Payout
           </p>
         </div>
-        <p className=" uppercase tracking-wide text-[#848BAC] mb-3 mt-4 md:mt-0 2xl:text-lg font-semibold">
+        <p className="   text-[#848BAC]  2xl:text-sm text-xs ">
           Click to get your certificate
         </p>
       </button>
       <div
-        className=" bg-[#272837]  shadow-inner shadow-gray-700 p-3 pb-8 md:p-7 text-center overflow-hidden relative min-h-32 2xl:min-h-44 items-center rounded-2xl w-full  flex flex-col gap-3 "
+        className=" bg-[#F4F4F4] p-3 md:p-6 text-center overflow-hidden relative min-h-32 2xl:min-h-44 items-start rounded-2xl w-full  flex flex-col gap-3 "
         role="button"
         onClick={() => handleSendCertificate("PROFILE_LEVEL")}
       >
-        <div className=" flex items-center gap-2">
-          <Image
-            src="/icons/funded_c.svg"
-            alt="Arrow Icon"
-            width={40}
-            height={40}
-            className=" mt-1"
-          />
-          <p className=" text-xl  2xl:text-3xl text-[#52FC18] font-semibold">
-            PROFILE LEVEL
+        <Image
+          src="/vintage/images/certificateBadge4.svg"
+          alt="Arrow Icon"
+          width={45}
+          height={45}
+          className=" absolute bottom-3 right-3 "
+        />
+        <div className=" flex items-center ">
+          <p className=" text-lg  2xl:text-xl text-vintage-50 font-semibold">
+            Profile Level
           </p>
         </div>
-        <p className=" uppercase tracking-wide text-[#848BAC] mb-3 mt-4 md:mt-0 2xl:text-lg font-semibold">
+        <p className="   text-[#848BAC]  2xl:text-sm text-xs ">
           Click to get your certificate
         </p>
       </div>

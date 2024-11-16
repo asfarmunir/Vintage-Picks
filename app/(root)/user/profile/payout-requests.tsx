@@ -33,7 +33,7 @@ export default function FundedPayoutRequestsTable({
     data: payoutHistoryData,
     isPending,
     refetch,
-    isError
+    isError,
   } = useGetFundedPayout(account.id);
 
   useEffect(() => {
@@ -122,22 +122,22 @@ export default function FundedPayoutRequestsTable({
     if (currentPage > 1) setCurrentPage(currentPage - 1);
   };
 
-
   return (
     <div className=" w-full border border-gray-700 rounded-xl  flex flex-col">
       <div className="flex items-center justify-between w-full p-6 ">
         <h3 className=" font-bold">PAYOUT HISTORY</h3>
         <DropdownMenu>
-          <DropdownMenuTrigger className=" bg-[#272837] shadow-inner shadow-gray-700   justify-center  md:w-fit  text-xs 2xl:text-sm px-3.5 py-2 rounded-xl inline-flex items-center gap-2">
+          <DropdownMenuTrigger className=" bg-[#F8F8F8]    justify-center  md:w-fit  text-xs 2xl:text-sm px-8 py-2.5 rounded-full inline-flex items-center gap-2">
             <Image
               src="/icons/filter.svg"
               alt="Arrow Icon"
-              width={13}
-              height={13}
+              width={12}
+              height={12}
+              className=" invert"
             />
-            FILTER
+            Sort
           </DropdownMenuTrigger>
-          <DropdownMenuContent className="w-48  bg-[#181926] text-white border-none  mt-1  p-3 rounded-lg shadow-sm">
+          <DropdownMenuContent className="w-48  bg-vintage-50 text-white border-none  mt-1  p-3 rounded-lg shadow-sm">
             <DropdownMenuItem
               className="flex text-xs 2xl:text-base items-center justify-between "
               onClick={() => sortHistory("LAST_7_DAYS")}
@@ -163,23 +163,15 @@ export default function FundedPayoutRequestsTable({
       </div>
       <Table>
         {/* <TableCaption>A list of your recent invoices.</TableCaption> */}
-        <TableHeader className=" bg-[#333547] text-[#848BAC] border-none">
+        <TableHeader className=" bg-[#F8F8F8] text-black border-none">
           <TableRow className=" border-none">
-            <TableHead className="uppercase  font-bold text-center">
-              Date
+            <TableHead className="  font-bold text-center">Date</TableHead>
+            <TableHead className=" font-bold text-center">
+              Invoice Number
             </TableHead>
-            <TableHead className="uppercase font-bold text-center">
-              INVOICE NUMBER
-            </TableHead>
-            <TableHead className="uppercase font-bold text-center">
-              invoice
-            </TableHead>
-            <TableHead className="uppercase font-bold text-center">
-              STATUS
-            </TableHead>
-            <TableHead className="uppercase font-bold text-center">
-              amount
-            </TableHead>
+            <TableHead className=" font-bold text-center">Invoice</TableHead>
+            <TableHead className=" font-bold text-start">Status</TableHead>
+            <TableHead className=" font-bold text-start">Amount</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -194,15 +186,17 @@ export default function FundedPayoutRequestsTable({
             </TableRow>
           )}
 
-          {(!isPending && !isError && currentHistory.length===0) || isError && (
-            <TableRow>
-              <TableCell colSpan={5} className="text-center">
-                No payout history found.
-              </TableCell>
-            </TableRow>
-          )}
+          {(!isPending && !isError && currentHistory.length === 0) ||
+            (isError && (
+              <TableRow>
+                <TableCell colSpan={5} className="text-center">
+                  No payout history found.
+                </TableCell>
+              </TableRow>
+            ))}
 
-          {!isPending && currentHistory &&
+          {!isPending &&
+            currentHistory &&
             currentHistory.map((payout: FundedPayoutRequests) => (
               <TableRow className=" border-none">
                 <TableCell className=" font-semibold max-w-[100px] capitalize text-xs 2xl:text-base text-center truncate">
@@ -216,17 +210,17 @@ export default function FundedPayoutRequestsTable({
                 </TableCell>
                 <TableCell className=" font-semibold max-w-[100px] capitalize text-xs 2xl:text-base flex items-center justify-center truncate">
                   {payout.status === "PENDING" && (
-                    <p className="uppercase px-2 py-1 bg-yellow-500/20 text-yellow-500 border border-yellow-500 rounded-full">
+                    <p className=" px-2 py-1 bg-yellow-500/20 text-yellow-500 border border-yellow-500 rounded-full">
                       pending
                     </p>
                   )}
                   {payout.status === "PAID" && (
-                    <p className="uppercase px-2 py-1 bg-green-500/20 text-green-500 border border-green-500 rounded-full">
+                    <p className=" px-2 py-1 bg-green-500/20 text-green-500 border border-green-500 rounded-full">
                       paid
                     </p>
                   )}
                   {payout.status === "DECLINED" && (
-                    <p className="uppercase px-2 py-1 bg-red-500/20 text-red-500 border border-red-500 rounded-full">
+                    <p className=" px-2 py-1 bg-red-500/20 text-red-500 border border-red-500 rounded-full">
                       rejected
                     </p>
                   )}
@@ -257,7 +251,7 @@ export default function FundedPayoutRequestsTable({
           >
             <TiArrowLeft />
           </button>
-          <button className="text-[white] text-2xl" onClick={goToNextPage}>
+          <button className=" text-2xl" onClick={goToNextPage}>
             <TiArrowRight />
           </button>
         </div>
