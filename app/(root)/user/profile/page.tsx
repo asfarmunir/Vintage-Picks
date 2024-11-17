@@ -517,32 +517,32 @@ const AccountsSection = ({ accounts }: { accounts: Account[] }) => {
           )}
           <DropdownMenu>
             <DropdownMenuTrigger className=" text-slate-700   justify-center w-full md:w-fit  text-xs 2xl:text-base px-3.5 py-2 rounded-xl inline-flex items-center gap-2">
-              SORT : {sortFilter} <ChevronDown className="pb-0.5" />
+              Sort : {sortFilter} <ChevronDown className="pb-0.5" />
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-48  bg-vintage-50 text-white border-none  mt-1  p-3 rounded-lg text-xs 2xl:text-base">
               <DropdownMenuItem
                 className="flex items-center justify-between "
                 onClick={() => changeSortFilter("ALL")}
               >
-                <p>ALL</p>
+                <p>All</p>
               </DropdownMenuItem>
               <DropdownMenuItem
                 className="flex items-center justify-between "
                 onClick={() => changeSortFilter("CHALLENGE")}
               >
-                <p>CHALLENGE</p>
+                <p>Challenge</p>
               </DropdownMenuItem>
               <DropdownMenuItem
                 className="flex items-center justify-between "
                 onClick={() => changeSortFilter("FUNDED")}
               >
-                <p>FUNDED</p>
+                <p>Funded</p>
               </DropdownMenuItem>
               <DropdownMenuItem
                 className="flex items-center justify-between "
                 onClick={() => changeSortFilter("BREACHED")}
               >
-                <p>BREACHED</p>
+                <p>Breached</p>
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
@@ -592,13 +592,13 @@ const AccountsSection = ({ accounts }: { accounts: Account[] }) => {
               </p>
               <p
                 className={` px-8 py-2.5 2xl:py-3 rounded-full 
- ${
-   account.status === "FUNDED"
-     ? "  bg-[#0F840C1F] text-[##0F840C3D] border border-[#0F840C3D] "
-     : account.status === "BREACHED"
-     ? " bg-[#FF00001F] text-[#ff00009e] border border-[#FF00003D] "
-     : " bg-[#FFA5001F] text-[#ffa600fa] border border-[#FFA5003D] "
- }
+                  ${
+                    account.status === "FUNDED"
+                      ? "  bg-[#0F840C1F] text-[##0F840C3D] border border-[#0F840C3D] "
+                      : account.status === "BREACHED"
+                      ? " bg-[#FF00001F] text-[#ff00009e] border border-[#FF00003D] "
+                      : " bg-[#FFA5001F] text-[#ffa600fa] border border-[#FFA5003D] "
+                  }
              
               `}
               >
