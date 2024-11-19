@@ -40,77 +40,62 @@ const page = () => {
   return (
     <>
       <PayoutsExplained open={open} setOpen={setOpen} />
-      <div
-        className=" hidden md:block sticky 
-        top-0
-        z-50
-        w-full
-        "
-      >
-        <div className=" w-[99%] bg-primary justify-between flex items-center absolute">
-          {/* <h1 className=" ml-4  text-white inline-flex items-center gap-2 font-thin 2xl:text-lg">
-            <Image src="/icons/help.png" alt="Logo" width={20} height={20} />
-            HELP
-          </h1> */}
-          <UserAccount />
-          <Navbar />
-        </div>
-      </div>
 
-      <div className=" pt-6 md:pt-20 relative px-3 md:px-5 2xl:px-8 2xl:mt-4 pb-24 text-white  max-h-full overflow-auto space-y-6 ">
-        <div className=" w-full flex md:hidden items-center justify-between">
-          <UserAccount />
-        </div>
-
-        <div className="w-full flex-col md:flex-row  flex items-center justify-between gap-4">
-          <div className="flex flex-col  items-start justify-start  w-full md:w-fit  ">
-            <h3 className="text-lg 2xl:text-2xl font-bold">
+      <div className=" w-full p-2 md:p-3 rounded-2xl bg-vintage-50 space-y-2 2xl:space-y-3">
+        <div className="flex flex-col md:flex-row gap-6 items-start md:items-center justify-between bg-white p-4 md:p-6 rounded-2xl">
+          <div>
+            <h2 className="text-lg 2xl:text-xl text-vintage-50 font-bold">
               Account Dashboard
-            </h3>
-            <p className=" text-sm 2xl:text-base text-[#848BAC]">
-              Track performance and review your data.
-            </p>
+            </h2>
+            <p className="text-sm">Track performance and review your data</p>
           </div>
           <div className="flex w-full md:w-fit items-center gap-2 flex-col md:flex-row">
             <button
-              className="flex justify-center items-center gap-2 px-4 py-2 text-sm w-full md:w-fit 2xl:text-base font-bold bg-[#333547] shadow-inner shadow-gray-600 rounded-lg"
+              className="text-vintage-50 px-4  text-sm w-full md:w-fit 2xl:text-base font-semibold  "
               onClick={openExplanation}
             >
-              <Image
-                src="/icons/help-white.svg"
-                alt="Arrow Icon"
-                width={20}
-                height={20}
-              />
-              PAYOUTS EXPLAINED
+              Payout Explained
             </button>
             <Link
               href={"/user/profile?tab=payouts"}
-              className="flex justify-center uppercase items-center gap-2 px-4 py-2 text-sm w-full md:w-fit 2xl:text-base font-bold bg-[#333547] inner-shadow rounded-lg"
+              className="flex text-white justify-center  items-center gap-2 px-4 py-3 text-sm w-full md:w-fit 2xl:text-base font-semibold bg-vintage-50 rounded-full"
             >
-              <Image
-                src="/icons/stack.png"
-                alt="Arrow Icon"
-                width={18}
-                height={18}
-              />
               Request Payout
             </Link>
           </div>
         </div>
-        <div className=" w-full bg-[#181926] rounded-lg shadow-inner shadow-gray-800">
-          <div className=" w-full flex flex-col md:flex-row gap-5  items-start justify-between  p-5">
-            <div className="flex flex-col gap-1">
-              <p className=" font-bold  text-primary-200">ACCOUNT BALANCE</p>
-              <h2 className=" text-3xl 2xl:text-4xl font-bold text-white">
-                ${account.balance.toLocaleString()}
-              </h2>
-              <div className="flex items-center my-3 gap-3 md:gap-10">
-                <div className="flex flex-col ">
-                  <p className="   text-xs 2xl:text-sm text-primary-200">
-                    PROFIT
+        <div className=" w-full grid grid-cols-1 md:grid-cols-2 gap-2">
+          <div
+            className=" min-h-96 flex items-center bg-vintage-50 flex-col justify-center gap-4 rounded-2xl"
+            style={{
+              backgroundImage: "url('/vintage/images/dashboardBg.svg')",
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              backgroundRepeat: "no-repeat",
+            }}
+          >
+            <p className=" font-semibold text-white">Total Balance</p>
+            <h2 className=" text-4xl 2xl:text-5xl font-bold text-white">
+              ${account.balance.toLocaleString()}
+            </h2>
+          </div>
+          <div className=" bg-white rounded-2xl p-4 md:p-6 ">
+            <div className=" w-full flex items-start justify-between  ">
+              <div className="flex flex-col gap-1">
+                <p className=" font-bold 2xl:text-lg  text-vintage-50">
+                  Account overview
+                </p>
+                <p className="  text-xs max-w-[18rem]  text-primary-600 ">
+                  provides a summarized view of an account's key details and
+                  activities.
+                </p>
+              </div>{" "}
+              <div className="flex items-start gap-3 md:gap-5">
+                <div className="flex items-center gap-2.5 ">
+                  <p className="   text-xs 2xl:text-sm text-primary-700">
+                    Profit
                   </p>
-                  <h2 className="  2xl:text-lg font-semibold text-white">
+                  <h2 className="  2xl:text-lg font-semibold ">
                     $
                     {account.balance - getOriginalAccountValue(account) < 0
                       ? "0"
@@ -119,17 +104,11 @@ const page = () => {
                         ).toFixed(2)}
                   </h2>
                 </div>{" "}
-                <div className="flex flex-col ">
-                  <p className="   text-xs 2xl:text-sm text-primary-200">
-                    RETURN
+                <div className="flex gap-2.5 items-center ">
+                  <p className="   text-xs 2xl:text-sm text-primary-700">
+                    Returns
                   </p>
-                  <h2 className="  2xl:text-lg text-green-600 font-semibold  inline-flex items-center ">
-                    <Image
-                      src="/icons/retrun.svg"
-                      alt="Arrow Icon"
-                      width={23}
-                      height={23}
-                    />
+                  <h2 className="  bg-[#1CC0531A] p-1  px-4 rounded-full text-sm text-green-600 font-semibold  gap-2 inline-flex items-center ">
                     {account.balance - getOriginalAccountValue(account) < 0
                       ? 0
                       : (
@@ -140,95 +119,83 @@ const page = () => {
                           100
                         ).toFixed(2)}
                     %
+                    <Image
+                      src="/icons/retrun.svg"
+                      alt="Arrow Icon"
+                      width={23}
+                      height={23}
+                    />
                   </h2>
                 </div>{" "}
               </div>
-            </div>{" "}
-            <div className="flex w-full md:w-fit justify-center items-center bg-primary uppercase text-xs 2xl:text-sm rounded-md text-white px-2 py-0.5">
-              <span
-                className={`px-2 flex-grow text-center  py-0.5 font-bold text-primary-200 rounded ${
-                  filter === "24H" && "bg-primary-200/60 text-white"
-                }`}
-                role="button"
-                onClick={() => changeFilter("24H")}
-              >
-                24 h
-              </span>
-              <span
-                className={`px-2 flex-grow text-center  py-0.5 font-bold text-primary-200 rounded ${
-                  filter === "7D" && "bg-primary-200/60 text-white"
-                }`}
-                onClick={() => changeFilter("7D")}
-                role="button"
-              >
-                7d
-              </span>
-              <span
-                className={`px-2 flex-grow text-center  py-0.5 font-bold text-primary-200 rounded ${
-                  filter === "1M" && "bg-primary-200/60 text-white"
-                }`}
-                onClick={() => changeFilter("1M")}
-                role="button"
-              >
-                1 m
-              </span>
-              <span
-                className={`px-2 flex-grow text-center  py-0.5 font-bold text-primary-200 rounded ${
-                  filter === "3M" && "bg-primary-200/60 text-white"
-                }`}
-                onClick={() => changeFilter("3M")}
-                role="button"
-              >
-                3 m
-              </span>
+              <div className="flex w-full md:w-fit justify-center items-center text-xs  rounded-full  px-0.5 py-0.5 border ">
+                <span
+                  className={`px-2 flex-grow text-center  py-0.5 font-semibold   ${
+                    filter === "24H" && "border rounded-full "
+                  }`}
+                  role="button"
+                  onClick={() => changeFilter("24H")}
+                >
+                  24 h
+                </span>
+                <span
+                  className={`px-2 flex-grow text-center  py-0.5 font-semibold   ${
+                    filter === "7D" && "border rounded-full "
+                  }`}
+                  onClick={() => changeFilter("7D")}
+                  role="button"
+                >
+                  7d
+                </span>
+                <span
+                  className={`px-2 flex-grow text-center  py-0.5 font-semibold   ${
+                    filter === "1M" && "border rounded-full "
+                  }`}
+                  onClick={() => changeFilter("1M")}
+                  role="button"
+                >
+                  1 m
+                </span>
+                <span
+                  className={`px-2 flex-grow text-center  py-0.5 font-semibold  ${
+                    filter === "3M" && "border rounded-full "
+                  }`}
+                  onClick={() => changeFilter("3M")}
+                  role="button"
+                >
+                  3 m
+                </span>
+              </div>
+            </div>
+            <div className="p-1 bg-primary">
+              <AccountGraph filter={filter} />
             </div>
           </div>
-          <div className="p-1 md:p4">
-            <AccountGraph filter={filter} />
-          </div>
         </div>
-        <div className="flex items-center justify-between">
-          <div className="flex mt-4 items-center justify-evenly md:justify-start flex-wrap gap-2 mb-3">
+        <div className="flex items-center justify-between p-4 md:p-6 rounded-2xl bg-white">
+          <div className="flex items-center justify-evenly md:justify-start flex-wrap gap-2 mb-3">
             {dashboardTabs.map((curr, index) => (
               <button
                 key={index}
-                className={`border  
-             px-4 text-xs 2xl:text-lg py-2 flex w-full md:w-fit justify-center  items-center flex-grow md:flex-grow-0 rounded-full ${
+                className={`  
+             text-xs 2xl:text-base py-2.5  w-full md:w-fit  flex-grow md:flex-grow-0 rounded-full ${
                tab === curr.tab
-                 ? "border-[#52FC18] bg-[#1A5B0B]"
-                 : " border-gray-700 text-[#848BAC] border-2"
-             } font-semibold uppercase`}
+                 ? "border-[#0a0a202c] border  px-6 bg-[#0A0A201A]"
+                 : " bg-transparent  px-3 capitalize"
+             } font-semibold `}
                 onClick={() => changeTab(curr.tab)}
               >
-                <Image
-                  src={tab === curr.tab ? curr.icon[0] : curr.icon[1]}
-                  alt="Icon"
-                  width={18}
-                  height={18}
-                  className="mr-2"
-                />
                 {curr.title}
               </button>
             ))}
           </div>
           <Link
             href={"/picks"}
-            className="hidden md:flex justify-center uppercase items-center gap-2 px-4 py-2 text-sm w-full md:w-fit 2xl:text-base font-bold bg-[#333547] inner-shadow rounded-lg"
+            className=" px-7 py-2.5 font-semibold text-white text-sm w-full md:w-fit 2xl:text-base  rounded-full bg-vintage-50 "
           >
-            <Image
-              src="/icons/pick.png"
-              alt="Arrow Icon"
-              width={18}
-              height={18}
-            />
-            PLACE PICK
+            Place Pick
           </Link>
         </div>
-
-        {/* <stats /> */}
-        {/* <BetHistory /> */}
-        {/* <Objectives /> */}
-
         {
           {
             stats: <Stats />,
@@ -259,31 +226,31 @@ const Stats = () => {
   if (isError) {
     toast.error("Error fetching account stats");
     return (
-      <div className="w-full h-36 flex justify-center items-center bg-[#181926] shadow-inner shadow-gray-700 rounded-lg">
-        <p className="text-white">Error fetching account stats</p>
+      <div className="w-full h-44 flex justify-center items-center bg-[#F4F4F4] rounded-lg">
+        <p className=" font-semibold">Error fetching account stats</p>
       </div>
     );
   }
 
   if (isPending) {
     return (
-      <div className="w-full h-36 flex justify-center items-center bg-[#181926] shadow-inner shadow-gray-700 rounded-lg">
+      <div className="w-full h-44 flex justify-center items-center bg-[#F4F4F4] rounded-lg">
         <LoaderCircle className="animate-spin" />
       </div>
     );
   }
 
   return (
-    <div className=" w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 ">
+    <div className=" w-full grid bg-white p-4 md:p-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 ">
       {accountStats.map((stat: any, index: number) => (
         <div
           key={index}
-          className=" bg-[#181926] shadow-inner shadow-gray-700 font-bold rounded-lg text-white p-5 flex flex-col gap-2"
+          className=" bg-[#F4F4F4]   rounded-lg  p-5 flex flex-col gap-1"
         >
-          <p className="uppercase text-[#848BAC] text-xs 2xl:text-sm font-bold">
-            {stat.title}
-          </p>
-          <h2 className="text-2xl 2xl:text-3xl ">{stat.value}</h2>
+          <h2 className="text-3xl 2xl:text-4xl font-bold text-vintage-50 ">
+            {stat.value}
+          </h2>
+          <p className=" text-gray-700 text-xs 2xl:text-sm ">{stat.title}</p>
         </div>
       ))}
     </div>

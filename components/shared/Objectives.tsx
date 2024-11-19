@@ -58,15 +58,15 @@ const Objectives = () => {
   if (isError) {
     toast.error("Error fetching account stats");
     return (
-      <div className="w-full h-36 flex justify-center items-center bg-[#181926] shadow-inner shadow-gray-700 rounded-lg">
-        <p className="text-white">Error fetching account stats</p>
+      <div className="w-full h-44 flex justify-center items-center bg-[#F4F4F4] rounded-lg">
+        <p className=" font-semibold">Error fetching account stats</p>
       </div>
     );
   }
 
   if (isPending) {
     return (
-      <div className="w-full h-36 flex justify-center items-center bg-[#181926] shadow-inner shadow-gray-700 rounded-lg">
+      <div className="w-full h-44 flex justify-center items-center bg-[#F4F4F4] rounded-lg">
         <LoaderCircle className="animate-spin" />
       </div>
     );
@@ -74,235 +74,230 @@ const Objectives = () => {
 
   if (!account) {
     return (
-      <div className="w-full h-36 flex justify-center items-center bg-[#181926] shadow-inner shadow-gray-700 rounded-lg">
-        <p className="text-white">Account not found</p>
+      <div className="w-full h-44 flex justify-center items-center bg-[#F4F4F4] rounded-lg">
+        <p className="">Account not found</p>
       </div>
     );
   }
 
   return (
-    <div className=" w-full space-y-4">
-      <div className="w-full flex-col bg-[#181926] shadow-inner p-5 rounded-xl shadow-gray-700 md:flex-row  flex items-center justify-between gap-4">
-        <h3 className="text-lg 2xl:text-xl font-bold flex items-center gap-1.5">
-          <Image
-            src="/icons/stack.png"
-            alt="Arrow Icon"
-            width={23}
-            height={23}
-          />
+    <div className=" w-full space-y-4 bg-white p-4 md:p-6 rounded-2xl ">
+      <div className="w-full flex-col md:flex-row  bg-[#F4F4F4] p-3 rounded-lg flex items-center justify-between gap-4">
+        <h3 className="text-lg 2xl:text-xl  font-bold flex items-center gap-1.5">
           ${account.accountSize.replace("K", "000")}
-          <span className=" text-primary-200">ACCOUNT</span>
+          <span className=" text-primary-700 text-sm">Account</span>
         </h3>
         <div className="flex w-full md:w-fit items-center gap-2 flex-col md:flex-row">
-          <button className="flex justify-center items-center gap-2 px-4 py-1.5 text-xs w-full md:w-fit 2xl:text-base font-bold bg-[#333547] shadow-inner shadow-gray-600 rounded-lg">
+          <button className="flex justify-center items-center gap-2 px-4  text-xs w-full md:w-fit 2xl:text-base  ">
             <Image
               src="/icons/calender.svg"
               alt="Arrow Icon"
               width={20}
+              className=" invert mb-0.5"
               height={20}
             />
-            <span className="text-primary-200 uppercase">start date</span>
-            {new Date(account.createdAt).toLocaleDateString()}
+            <span className="text-primary-700 ">Start Date:</span>
+            {/* {new Date(account.createdAt).toLocaleDateString()} */}
+            01/01/2021
           </button>
-          <button className="flex justify-center text-primary-50 uppercase items-center gap-2 px-4 py-2 text-xs w-full md:w-fit 2xl:text-base font-bold  bg-[#52FC18]/10 rounded-lg">
-            <Image
-              src="/icons/moon.png"
-              alt="Arrow Icon"
-              width={18}
-              height={18}
-            />
-            PHASE {account.phase} / {account.accountType === "TWO_STEP" ? 2 : 3}
+          <button className="flex justify-center text-vintage-50  items-center gap-2 px-4 py-2 text-xs w-full md:w-fit 2xl:text-base font-semibold  bg-[#001E451A] rounded-lg">
+            {/* PHASE {account.phase} / {account.accountType === "TWO_STEP" ? 2 : 3} */}
+            PHASE 1 / 2
           </button>
         </div>
       </div>
       <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div className="w-full flex-col bg-[#181926] shadow-inner p-5 py-6 rounded-xl shadow-gray-700 md:flex-row  flex items-start md:items-center justify-between gap-4">
+        <div className="w-full flex-col bg-[#F4F4F4] rounded-lg p-5    flex items-starth gap-4">
           <div className="flex items-start gap-2.5">
-            <Image
-              src="/images/profit.svg"
-              alt="Arrow Icon"
-              width={43}
-              height={43}
-            />
             <div className="  font-bold flex flex-col  gap-1">
-              <p className=" text-base 2xl:text-lg ">
+              <p className=" text-lg textvin 2xl:text-xl ">
                 $
                 {account.balance - getOriginalAccountValue(account) < 0
                   ? 0
                   : (
-                    account.balance - getOriginalAccountValue(account)
-                  ).toFixed(2)}{" "}
+                      account.balance - getOriginalAccountValue(account)
+                    ).toFixed(2)}{" "}
                 / $
                 {getOriginalAccountValue(account) *
                   ALL_STEP_CHALLENGES.profitTarget}{" "}
               </p>
-              <span className=" text-xs 2xl:text-sm text-primary-200">
-                PROFIT TARGET
-              </span>
             </div>
           </div>
-          <div className=" hidden md:flex flex-col items-end gap-2">
-            <p className=" text-green-600 font-thin text-sm">
-              {(account.balance - getOriginalAccountValue(account) < 0
-                ? 0
-                : ((account.balance - getOriginalAccountValue(account)) /
-                getOriginalAccountValue(account)) * 100).toFixed(2)}{" "}
-              %
-            </p>
-            <div className=" w-36 h-4 bg-[#393C53] rounded-sm border-gray-700">
+          <div className=" w-full hidden md:flex flex-col items-end gap-4">
+            <div className="flex items-center justify-between w-full">
+              <span className=" text-xs 2xl:text-base text-slate-500  font-normal text-primary-700">
+                Profit Target
+              </span>
+              <p className=" text-green-600 font-thin text-sm">
+                {(account.balance - getOriginalAccountValue(account) < 0
+                  ? 0
+                  : ((account.balance - getOriginalAccountValue(account)) /
+                      getOriginalAccountValue(account)) *
+                    100
+                ).toFixed(2)}{" "}
+                %
+              </p>
+            </div>
+
+            <div className=" w-full h-2 bg-slate-200  border-gray-400">
               <div
-                className="h-full bg-[#00B544] rounded-sm shadow-inner shadow-gray-700"
+                className="h-full bg-[#0F840C]  "
                 style={{
-                  width: `${(account.balance - getOriginalAccountValue(account) < 0
+                  width: `${
+                    (account.balance - getOriginalAccountValue(account) < 0
                       ? 0
                       : ((account.balance - getOriginalAccountValue(account)) /
-                        getOriginalAccountValue(account)) * 100) > 100 ? 100 : (
-                      (account.balance - getOriginalAccountValue(account)) /
-                      getOriginalAccountValue(account) * 100
-                    )
-                    }%`,
+                          getOriginalAccountValue(account)) *
+                        100) > 100
+                      ? 100
+                      : ((account.balance - getOriginalAccountValue(account)) /
+                          getOriginalAccountValue(account)) *
+                        100
+                  }%`,
                 }}
               ></div>
             </div>
           </div>
         </div>
-        <div className="w-full flex-col bg-[#181926] shadow-inner p-5 py-6 rounded-xl shadow-gray-700 md:flex-row  flex items-start md:items-center justify-between gap-4">
+        <div className="w-full flex-col bg-[#F4F4F4] rounded-lg p-5    flex items-starth gap-4">
           <div className="flex items-start gap-2.5">
-            <Image
-              src="/images/loss.svg"
-              alt="Arrow Icon"
-              width={43}
-              height={43}
-            />
             <div className="  font-bold flex flex-col  gap-1">
-              <p className=" text-base 2xl:text-lg ">
+              <p className=" text-lg textvin 2xl:text-xl ">
                 -${account.dailyLoss || 0} / -$
                 {getOriginalAccountValue(account) *
                   ALL_STEP_CHALLENGES.maxDailyLoss}
               </p>
-              <span className=" text-xs 2xl:text-sm uppercase text-primary-200">
-                Maximum daily loss
-              </span>
             </div>
           </div>
-          <div className=" hidden md:flex flex-col items-end gap-2">
-            <p className=" text-red-600 font-thin text-sm">
-              {(
-                (account.dailyLoss / getOriginalAccountValue(account)) *
-                100
-              ).toFixed(2)}
-              %
-            </p>
-            <div className=" w-36 h-4 bg-[#393C53] rounded-sm border-gray-700">
+          <div className=" w-full hidden md:flex flex-col items-end gap-4">
+            <div className="flex items-center justify-between w-full">
+              <span className=" text-xs 2xl:text-base text-slate-500  font-normal text-primary-700">
+                Maximum daily loss
+              </span>
+              <p className=" text-red-600 font-thin text-sm">
+                {(
+                  (account.dailyLoss / getOriginalAccountValue(account)) *
+                  100
+                ).toFixed(2)}
+              </p>
+            </div>
+
+            <div className=" w-full h-2 bg-slate-200  border-gray-400">
               <div
-                className="h-full bg-[#F74418] rounded-sm shadow-inner shadow-gray-700 "
+                className="h-full bg-[#C41718]   "
                 style={{
-                  width: `${(account.dailyLoss / getOriginalAccountValue(account)) *
+                  width: `${
+                    (account.dailyLoss / getOriginalAccountValue(account)) *
                       100 >
-                      100
+                    100
                       ? 100
                       : (account.dailyLoss / getOriginalAccountValue(account)) *
-                      100
-                    }%`,
+                        100
+                  }%`,
                 }}
               ></div>
             </div>
           </div>
         </div>
-        <div className="w-full flex-col bg-[#181926] shadow-inner p-5 py-6 rounded-xl shadow-gray-700 md:flex-row  flex items-start md:items-center justify-between gap-4">
+        <div className="w-full flex-col bg-[#F4F4F4] rounded-lg p-5    flex items-starth gap-4">
           <div className="flex items-start gap-2.5">
-            <Image
-              src="/images/max-loss.svg"
-              alt="Arrow Icon"
-              width={43}
-              height={43}
-            />
             <div className="  font-bold flex flex-col  gap-1">
-              <p className=" text-base 2xl:text-lg ">
+              <p className=" text-lg textvin 2xl:text-xl ">
                 -${account.totalLoss} / -$
                 {getOriginalAccountValue(account) * ALL_STEP_CHALLENGES.maxLoss}
               </p>
-              <span className=" text-xs 2xl:text-sm uppercase text-primary-200">
+            </div>
+          </div>
+          <div className=" w-full hidden md:flex flex-col items-end gap-4">
+            <div className="flex items-center justify-between w-full">
+              <span className=" text-xs 2xl:text-base text-slate-500  font-normal text-primary-700">
                 Maximum loss
               </span>
+              <p className=" text-red-600 font-thin text-sm">
+                {(account.totalLoss / getOriginalAccountValue(account)) * 100 >
+                100
+                  ? 100
+                  : (account.totalLoss / getOriginalAccountValue(account)) *
+                    100}
+                %
+              </p>
             </div>
-          </div>
-          <div className=" hidden md:flex flex-col items-end gap-2">
-            <p className=" text-red-600 font-thin text-sm">
-              {((account.totalLoss / getOriginalAccountValue(account)) * 100) > 100 ? 100 : (account.totalLoss / getOriginalAccountValue(account)) * 100}
-              %
-            </p>
-            <div className=" w-36 h-4 bg-[#393C53] rounded-sm border-gray-700">
+
+            <div className=" w-full h-2 bg-slate-200  border-gray-400">
               <div
-                className="h-full bg-[#F74418] rounded-sm shadow-inner shadow-gray-700 "
+                className="h-full bg-[#C41718]   "
                 style={{
-                  width: `${((account.totalLoss / getOriginalAccountValue(account)) * 100) > 100 ? 100 : (account.totalLoss / getOriginalAccountValue(account)) * 100
-                    }%`,
+                  width: `${
+                    (account.totalLoss / getOriginalAccountValue(account)) *
+                      100 >
+                    100
+                      ? 100
+                      : (account.totalLoss / getOriginalAccountValue(account)) *
+                        100
+                  }%`,
                 }}
               ></div>
             </div>
           </div>
         </div>
-        <div className="w-full flex-col bg-[#181926] shadow-inner p-5 py-6 rounded-xl shadow-gray-700 md:flex-row  flex items-start md:items-center justify-between gap-4">
+        <div className="w-full flex-col bg-[#F4F4F4] rounded-lg p-5    flex items-starth gap-4">
           <div className="flex items-start gap-2.5">
-            <Image
-              src="/images/min-picks.svg"
-              alt="Arrow Icon"
-              width={43}
-              height={43}
-            />
             <div className="  font-bold flex flex-col  gap-1">
-              <p className=" text-base 2xl:text-lg ">
+              <p className=" text-lg textvin 2xl:text-xl ">
                 {account.picks}/{ALL_STEP_CHALLENGES.minPicks}
               </p>
-              <span className=" text-xs 2xl:text-sm text-primary-200">
-                MINIMUM NUMBER OF PICKS
-              </span>
             </div>
           </div>
-          <div className=" hidden md:flex flex-col items-end gap-2">
-            <p className=" text-green-600 font-thin text-sm">
-              {((account.picks / ALL_STEP_CHALLENGES.minPicks) * 100) > 100 ? 100 : (account.picks / ALL_STEP_CHALLENGES.minPicks) * 100}%
-            </p>
-            <div className=" w-36 h-4 bg-[#393C53] rounded-sm border-gray-700">
+          <div className=" w-full hidden md:flex flex-col items-end gap-4">
+            <div className="flex items-center justify-between w-full">
+              <span className=" text-xs capitalize 2xl:text-base text-slate-500  font-normal text-primary-700">
+                Minimum number of picks
+              </span>
+              <p className=" text-green-600 font-thin text-sm">
+                {(account.picks / ALL_STEP_CHALLENGES.minPicks) * 100 > 100
+                  ? 100
+                  : (account.picks / ALL_STEP_CHALLENGES.minPicks) * 100}
+              </p>
+            </div>
+
+            <div className=" w-full h-2 bg-slate-200  border-gray-400">
               <div
-                className="h-full bg-[#00B544] rounded-sm shadow-inner shadow-gray-700 "
+                className="h-full bg-[#0F840C]   "
                 style={{
-                  width: `${((account.picks / ALL_STEP_CHALLENGES.minPicks) * 100) > 100 ? 100 : (account.picks / ALL_STEP_CHALLENGES.minPicks) * 100
-                    }%`,
+                  width: `${
+                    (account.picks / ALL_STEP_CHALLENGES.minPicks) * 100 > 100
+                      ? 100
+                      : (account.picks / ALL_STEP_CHALLENGES.minPicks) * 100
+                  }%`,
                 }}
               ></div>
             </div>
           </div>
         </div>
-        <div className="w-full flex-col bg-[#181926] shadow-inner p-5 py-6 rounded-xl shadow-gray-700 md:flex-row  flex items-start md:items-center justify-between gap-4">
+        <div className="w-full flex-col bg-[#F4F4F4] rounded-lg p-5    flex items-starth gap-4">
           <div className="flex items-start gap-2.5">
-            <Image
-              src="/images/sports.svg"
-              alt="Arrow Icon"
-              width={43}
-              height={43}
-            />
             <div className="  font-bold flex flex-col  gap-1">
-              <p className=" text-base 2xl:text-lg ">
+              <p className=" text-lg textvin 2xl:text-xl ">
                 {account.minBetPeriod ? minBetCountdown : `0 Days`} Remaining
               </p>
-              <span className=" text-xs 2xl:text-sm text-primary-200">
-                MINIMUM BET PERIOD
-              </span>
             </div>
           </div>
-          <div className=" hidden md:flex flex-col items-end gap-2">
-            <p className=" text-green-600 font-thin text-sm">
-              {getPercentageTimePassed(
-                new Date(account.createdAt),
-                new Date(account.minBetPeriod)
-              ).toFixed(2)}
-              %
-            </p>
-            <div className=" w-36 h-4 bg-[#393C53] rounded-sm border-gray-700">
+          <div className=" w-full hidden md:flex flex-col items-end gap-4">
+            <div className="flex items-center justify-between w-full">
+              <span className=" text-xs 2xl:text-base text-slate-500  font-normal text-primary-700">
+                Minimum Bet Period
+              </span>
+              <p className=" text-green-600 font-thin text-sm">
+                {getPercentageTimePassed(
+                  new Date(account.createdAt),
+                  new Date(account.minBetPeriod)
+                ).toFixed(2)}
+              </p>
+            </div>
+
+            <div className=" w-full h-2 bg-slate-200  border-gray-400">
               <div
-                className="h-full bg-[#00B544] rounded-sm shadow-inner shadow-gray-700 "
+                className="h-full bg-[#0F840C]   "
                 style={{
                   width: `${getPercentageTimePassed(
                     new Date(account.createdAt),
@@ -313,35 +308,30 @@ const Objectives = () => {
             </div>
           </div>
         </div>
-        <div className="w-full flex-col bg-[#181926] shadow-inner p-5 py-6 rounded-xl shadow-gray-700 md:flex-row  flex items-start md:items-center justify-between gap-4">
+        <div className="w-full flex-col bg-[#F4F4F4] rounded-lg p-5    flex items-starth gap-4">
           <div className="flex items-start gap-2.5">
-            <Image
-              src="/images/time.svg"
-              alt="Arrow Icon"
-              width={43}
-              height={43}
-            />
             <div className="  font-bold flex flex-col  gap-1">
-              <p className=" text-base 2xl:text-lg ">
+              <p className=" text-lg textvin 2xl:text-xl ">
                 {account.accountType !== "FUNDED" ? maxBetCountdown : `0 Days`}{" "}
-                Remaining
               </p>
-              <span className=" text-xs 2xl:text-sm text-primary-200">
-                TIME REMAINING
-              </span>
             </div>
           </div>
-          <div className=" hidden md:flex flex-col items-end gap-2">
-            <p className=" text-green-600 font-thin text-sm">
-              {getPercentageTimePassed(
-                new Date(account.createdAt),
-                new Date(account.maxBetPeriod)
-              ).toFixed(2)}
-              %
-            </p>
-            <div className=" w-36 h-4 bg-[#393C53] rounded-sm border-gray-700">
+          <div className=" w-full hidden md:flex flex-col items-end gap-4">
+            <div className="flex items-center justify-between w-full">
+              <span className=" text-xs 2xl:text-base text-slate-500  font-normal text-primary-700">
+                Time Remaining
+              </span>
+              <p className=" text-green-600 font-thin text-sm">
+                {getPercentageTimePassed(
+                  new Date(account.createdAt),
+                  new Date(account.maxBetPeriod)
+                ).toFixed(2)}
+              </p>
+            </div>
+
+            <div className=" w-full h-2 bg-slate-200  border-gray-400">
               <div
-                className="h-full bg-[#00B544] rounded-sm shadow-inner shadow-gray-700 "
+                className="h-full bg-[#0F840C]   "
                 style={{
                   width: `${getPercentageTimePassed(
                     new Date(account.createdAt),

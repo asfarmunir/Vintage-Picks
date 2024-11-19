@@ -48,7 +48,7 @@ const formatDate = (date: string) => {
 const BetHistory = () => {
   const account = accountStore((state) => state.account);
   const accountNumber = accountStore((state) => state.account.accountNumber);
-  
+
   const { data: betsData, isPending, refetch } = useGetBets(accountNumber);
   const { data, refetch: checkAndUpgradeObjectives } = useUpgradeAccount();
 
@@ -72,13 +72,10 @@ const BetHistory = () => {
 
   // Derived state: Filtered Bets based on Tab and Sort Filter
   const filteredBets = useMemo(() => {
-    if(!betsData) return;
-    
-    let filtered = betsData.filter(
-      (bet: any) =>
-        tab === "OPEN"
-          ? bet.betStatus === "OPENED"
-          : bet.betStatus === "CLOSED"
+    if (!betsData) return;
+
+    let filtered = betsData.filter((bet: any) =>
+      tab === "OPEN" ? bet.betStatus === "OPENED" : bet.betStatus === "CLOSED"
     );
 
     const currentDate = new Date();
@@ -183,34 +180,33 @@ const BetHistory = () => {
   }, [updates, accountNumber]);
 
   return (
-    <div className=" w-full border bg-primary-100 border-gray-700 rounded-xl  flex flex-col">
-      <div className="flex items-center justify-between w-full p-6 ">
-        <div className="flex items-center gap-2">
-          <button
-            className={`border  
-             px-6 text-xs 2xl:text-lg py-2 flex w-full md:w-fit justify-center  items-center flex-grow md:flex-grow-0 rounded-full ${
+    <div className=" w-full space-y-4 bg-[#F9F9F9] p-4 md:p-6 rounded-2xl ">
+      <div className="flex items-center gap-2 w-full border p-2 rounded-2xl bg-[#F4F4F4]">
+        <button
+          className={`  
+             px-6 text-xs 2xl:text-lg py-2 flex w-full  justify-center  items-center flex-grow md:flex-grow-0 rounded-xl ${
                tab === "OPEN"
-                 ? "border-[#52FC18] bg-[#1A5B0B]"
-                 : " border-gray-700 text-[#848BAC] border-2"
-             } font-semibold uppercase`}
-            onClick={() => changeTab("OPEN")}
-          >
-            Open
-          </button>
-          <button
-            className={`border  
-             px-6 text-xs 2xl:text-lg py-2 flex w-full md:w-fit justify-center  items-center flex-grow md:flex-grow-0 rounded-full ${
+                 ? "text-slate-700 bg-[#001E451A]"
+                 : "  text-[#6a6f89] "
+             } font-semibold `}
+          onClick={() => changeTab("OPEN")}
+        >
+          Open
+        </button>
+        <button
+          className={`  
+             px-6 text-xs 2xl:text-lg py-2 flex w-full  justify-center  items-center flex-grow md:flex-grow-0 rounded-xl ${
                tab === "CLOSE"
-                 ? "border-[#52FC18] bg-[#1A5B0B]"
-                 : " border-gray-700 text-[#848BAC] border-2"
-             } font-semibold uppercase`}
-            onClick={() => changeTab("CLOSE")}
-          >
-            Close
-          </button>
-        </div>
+                 ? "text-slate-700 bg-[#001E451A]"
+                 : "  text-[#6a6f89] "
+             } font-semibold `}
+          onClick={() => changeTab("CLOSE")}
+        >
+          Close
+        </button>
+      </div>
 
-        <DropdownMenu>
+      {/* <DropdownMenu>
           <DropdownMenuTrigger className=" bg-[#272837] shadow-inner shadow-gray-700   justify-center  md:w-fit  text-xs 2xl:text-base px-3.5 py-2 rounded-xl inline-flex items-center gap-2">
             <Image
               src="/icons/sort.png"
@@ -231,46 +227,45 @@ const BetHistory = () => {
               <p>LAST 30 DAYS</p>
             </DropdownMenuItem>
           </DropdownMenuContent>
-        </DropdownMenu>
-      </div>
+        </DropdownMenu> */}
       <Table>
         {/* <TableCaption>A list of your recent invoices.</TableCaption> */}
-        <TableHeader className=" bg-[#333547] text-[#848BAC] border-none">
+        <TableHeader className="  bg-white rounded-2xl border-none">
           <TableRow className=" border-none">
-            <TableHead className="uppercase  font-bold text-center text-xs 2xl:text-sm">
+            <TableHead className="  font-bold  capitalize text-center text-xs 2xl:text-sm">
               id
             </TableHead>
-            <TableHead className="uppercase font-bold text-center text-xs 2xl:text-sm">
+            <TableHead className=" font-bold  capitalize text-center text-xs 2xl:text-sm">
               sport
             </TableHead>
-            <TableHead className="uppercase font-bold text-center text-xs 2xl:text-sm">
+            <TableHead className=" font-bold  capitalize text-center text-xs 2xl:text-sm">
               event
             </TableHead>
-            <TableHead className="uppercase font-bold text-center text-xs 2xl:text-sm">
+            <TableHead className=" font-bold  capitalize text-center text-xs 2xl:text-sm">
               league
             </TableHead>
-            <TableHead className="uppercase font-bold text-center text-xs 2xl:text-sm">
+            <TableHead className=" font-bold  capitalize text-center text-xs 2xl:text-sm">
               your pick
             </TableHead>
-            <TableHead className="uppercase font-bold text-center text-xs 2xl:text-sm">
+            <TableHead className=" font-bold  capitalize text-center text-xs 2xl:text-sm">
               odds
             </TableHead>
-            <TableHead className="uppercase font-bold text-center text-xs 2xl:text-sm">
+            <TableHead className=" font-bold  capitalize text-center text-xs 2xl:text-sm">
               pick
             </TableHead>
-            <TableHead className="uppercase font-bold text-center text-xs 2xl:text-sm">
+            <TableHead className=" font-bold  capitalize text-center text-xs 2xl:text-sm">
               outcome
             </TableHead>
-            <TableHead className="uppercase font-bold text-center text-xs 2xl:text-sm">
+            <TableHead className=" font-bold  capitalize text-center text-xs 2xl:text-sm">
               payout
             </TableHead>
-            <TableHead className="uppercase font-bold text-center text-xs 2xl:text-sm">
+            <TableHead className=" font-bold  capitalize text-center text-xs 2xl:text-sm">
               date
             </TableHead>
-            <TableHead className="uppercase font-bold text-center text-xs 2xl:text-sm">
+            <TableHead className=" font-bold  capitalize text-center text-xs 2xl:text-sm">
               game date
             </TableHead>
-            <TableHead className="uppercase font-bold text-center text-xs 2xl:text-sm">
+            <TableHead className=" font-bold  capitalize text-center text-xs 2xl:text-sm">
               Action
             </TableHead>
           </TableRow>
@@ -278,17 +273,20 @@ const BetHistory = () => {
         <TableBody>
           {isPending && (
             <TableRow className=" border-none">
-              <TableCell colSpan={12} className=" font-semibold uppercase text-xs 2xl:text-sm text-center truncate">
+              <TableCell
+                colSpan={12}
+                className=" font-semibold  text-xs 2xl:text-sm text-center truncate"
+              >
                 Loading...
               </TableCell>
             </TableRow>
           )}
-          {(!isPending && currentBets.length === 0) && (
+          {!isPending && currentBets.length === 0 && (
             <TableRow className=" border-none">
               <TableCell
                 colSpan={12}
                 rowSpan={2}
-                className=" font-semibold uppercase text-xs 2xl:text-sm text-center truncate"
+                className=" font-semibold  text-xs 2xl:text-sm text-center truncate"
               >
                 No {tab} bets found
               </TableCell>
@@ -328,7 +326,9 @@ const BetHistory = () => {
                         ? "bg-green-500/20 text-green-500 border-green-500"
                         : "bg-red-500/20 text-red-500 border-red-500"
                     } ${
-                      bet.betStatus === "OPENED" ? "!bg-[#C02FF5]/20 !border !border-[#C02FF5] !text-white" : ""
+                      bet.betStatus === "OPENED"
+                        ? "!bg-[#C02FF5]/20 !border !border-[#C02FF5] !text-white"
+                        : ""
                     }
 
                     `}
@@ -348,7 +348,7 @@ const BetHistory = () => {
                 <TableCell className=" font-semibold  capitalize text-xs 2xl:text-sm text-center ">
                   <Dialog>
                     <DialogTrigger className=" w-fit text-xs 2xl:text-sm text-nowrap rounded-xl inner-shadow px-4 py-3 inline-flex items-center gap-3">
-                      <span className=" font-bold uppercase">Bet slip</span>{" "}
+                      <span className=" font-bold ">Bet slip</span>{" "}
                     </DialogTrigger>
                     <BetSlipDialogBody bet={bet} key={bet.id} />
                   </Dialog>
@@ -362,14 +362,13 @@ const BetHistory = () => {
           PAGE {currentPage} OF {Math.ceil(filteredBets?.length / betsPerPage)}
         </h4>
         <div className="flex gap-2 items-center">
-          <button className="text-[#848BAC] text-2xl"
+          <button
+            className="text-[#848BAC] text-2xl"
             onClick={goToPreviousPage}
           >
             <TiArrowLeft />
           </button>
-          <button className="text-[white] text-2xl"
-            onClick={goToNextPage}
-          >
+          <button className=" text-2xl" onClick={goToNextPage}>
             <TiArrowRight />
           </button>
         </div>
@@ -384,13 +383,12 @@ const BetSlipDialogBody = ({ bet }: { bet: any }) => (
     <div className="flex items-start justify-center gap-5 2xl:mb-6 w-full">
       <div className="flex flex-col space-y-3 items-center bg-[#272837] shadow-inner shadow-slate-700 rounded-xl px-3.5 py-5">
         <div className=" w-full flex items-center justify-between gap-6">
-          <p className=" text-lg font-bold uppercase">
+          <p className=" text-lg font-bold ">
             {bet.eventId.length > 1 ? "PARLAY " : "1 PICK "}
             {bet.betStatus === "OPENED" && "TO WIN"}
             {bet.betResult !== "LOSE" && (
               <span className="text-primary-50 ml-1.5">
-                { bet.betResult === "WIN" && "+" }
-                ${bet.winnings.toFixed(2)}
+                {bet.betResult === "WIN" && "+"}${bet.winnings.toFixed(2)}
               </span>
             )}
           </p>
