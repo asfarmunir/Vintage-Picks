@@ -1,12 +1,5 @@
 "use client";
-import MobileNav from "@/components/shared/MobileNav";
-import Sidebar from "@/components/shared/Sidebar";
-import {
-  Dialog,
-  DialogContent,
-  DialogOverlay,
-  DialogTitle,
-} from "@/components/ui/dialog";
+
 import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
@@ -80,7 +73,7 @@ const layout = ({ children }: { children: React.ReactNode }) => {
               </div>
               {/* <MobileNav /> */}
               <section className="  h-full w-full py-2.5  relative">
-                {/* {!hasAccount && <CreateAccountModal />} */}
+                {!hasAccount && <CreateAccountModal />}
                 {children}
               </section>
             </main>

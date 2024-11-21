@@ -11,7 +11,7 @@ const Verification = () => {
       </p>
       <div className=" bg-slate-50 shadow-inner shadow-gray-100 p-3 pb-8 md:p-7  rounded-2xl w-full  flex flex-col gap-3 ">
         <div className=" flex items-center gap-4 md:gap-2 p-2 md:p-0">
-          <CheckIcon className=" invert" />
+          <CheckIcon className="" />
           <p className=" uppercase text-sm text-vintage-50  2xl:text-lg  font-bold">
             YOUR ACCOUNT IS ALREADY 2-STEP VERIFIED.
           </p>

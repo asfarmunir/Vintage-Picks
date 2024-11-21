@@ -1,21 +1,12 @@
 import type { Metadata } from "next";
-import { Poppins, Roboto } from "next/font/google";
+import { Roboto } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "react-hot-toast";
 import NextTopLoader from "nextjs-toploader";
 import AuthProvider from "./api/auth/AuthProvider";
-import localFont from "next/font/local";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Providers } from "./providers";
-
-const degular = localFont({ src: "./font-regular.ttf" });
-
-const poppins = Poppins({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800"],
-  variable: "--font-poppins",
-});
 
 const roboto = Roboto({
   subsets: ["latin"],

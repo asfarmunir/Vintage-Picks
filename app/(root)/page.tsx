@@ -1,5 +1,4 @@
 "use client";
-import Navbar from "@/components/shared/Navbar";
 import {
   Dialog,
   DialogContent,
@@ -18,12 +17,7 @@ import React, { useMemo } from "react";
 import { useGetAccounts } from "../hooks/useGetAccounts";
 import { accountStore } from "../store/account";
 import { ChevronDown } from "lucide-react";
-
-const ACCOUNT_STATUS_ICON_DICT = {
-  CHALLENGE: "/icons/challenge.svg",
-  FUNDED: "/icons/fund.svg",
-  BREACHED: "/icons/breach.svg",
-};
+import AccountCheckout from "@/components/shared/AccountCheckout";
 
 type accountTypes = "CHALLENGE" | "FUNDED" | "BREACHED";
 type sortFilterType = "ALL" | "FUNDED" | "BREACHED" | "CHALLENGE";
@@ -324,6 +318,7 @@ const page = () => {
             Maximize your earnings with minimal risk. Bet confidently using our
             capital and unlock higher rewards!{" "}
           </p>
+
           <Link
             href={"/create-account"}
             className=" inline-flex items-center py-2.5 px-6 rounded-full bg-vintage-50"

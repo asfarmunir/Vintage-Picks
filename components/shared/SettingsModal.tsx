@@ -99,11 +99,11 @@ export const SettingsModal = () => {
   }, [searchParams]);
 
   // UPDATE SEARCH PARAMS ON TAB CHANGE
-  useEffect(() => {
-    if (tab) {
-      router.push(`/?tab=${tab}`);
-    }
-  }, [tab]);
+  // useEffect(() => {
+  //   if (tab) {
+  //     router.push(`/?tab=${tab}`);
+  //   }
+  // }, [tab]);
 
   // GET PREFERENCES
   const { mutate: fetchPreferences, data: preferences } = useGetPreferences({
@@ -126,7 +126,7 @@ export const SettingsModal = () => {
       <AlertDialogTrigger ref={modalRef}>
         <IoIosSettings className=" border-t border-gray-600 rounded-full bg-[#FFFFFF1A] hover:cursor-pointer  p-1.5 px-2 text-white text-4xl" />
       </AlertDialogTrigger>
-      <AlertDialogContent className="flex gap-4 bg-transparent border-none md:min-w-[1200px] 2xl:min-w-[1400px] ">
+      <AlertDialogContent className="flex flex-col md:flex-row max-h-[95svh] overflow-y-auto gap-4 bg-transparent border-none md:min-w-[1200px] 2xl:min-w-[1400px] ">
         <div className="flex flex-col  h-fit gap-2 p-6 2xl:p-8 rounded-2xl bg-[#001E45] text-white w-full md:w-[30%] ">
           {settingTabs.map((curr, index) => (
             <button
