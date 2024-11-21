@@ -50,10 +50,16 @@ const PreferenceSettings = ({
   };
 
   return (
-    <div className=" w-full flex text-white flex-col gap-4">
-      <div className=" w-full flex justify-between py-4 pb-8 border-b border-gray-700">
+    <div className=" w-full flex text-vintage-50 flex-col gap-4">
+      <h2 className="text-lg 2xl:text-xl font-semibold text-vintage-50">
+        Personal Information
+      </h2>
+      <p className="text-sm 2xl:text-base -mt-4 mb-2.5 text-gray-700">
+        Update your personal information
+      </p>
+      <div className=" w-full flex justify-between py-4  pb-8 gap-3  bg-[#EFEFF1] p-4 rounded-2xl  border ">
         <div className="flex flex-col gap-1">
-          <h3 className=" text-lg uppercase font-bold">Display Stats Live</h3>
+          <h3 className=" text-lg  font-bold">Display Stats Live</h3>
 
           <p className="text-sm text-[#848BAC] tracking-wide ">
             Display your stats online publicly.
@@ -73,9 +79,9 @@ const PreferenceSettings = ({
           }}
         />
       </div>
-      <div className=" w-full flex justify-between py-4 pb-8 border-b border-gray-700">
+      <div className=" w-full flex justify-between py-4  pb-8 gap-3  bg-[#EFEFF1] p-4 rounded-2xl  border ">
         <div className="flex flex-col gap-1">
-          <h3 className=" text-lg uppercase font-bold">Phone Notifications</h3>
+          <h3 className=" text-lg  font-bold">Phone Notifications</h3>
 
           <p className="text-sm text-[#848BAC] tracking-wide ">
             Toggle whether you want to receive phone notifications.
@@ -95,9 +101,9 @@ const PreferenceSettings = ({
           }}
         />
       </div>
-      <div className=" w-full flex justify-between py-4 pb-8">
+      <div className=" w-full flex justify-between py-4  pb-8 gap-3  bg-[#EFEFF1] p-4 rounded-2xl  border">
         <div className="flex flex-col gap-1">
-          <h3 className=" text-lg uppercase font-bold">Email Notifications</h3>
+          <h3 className=" text-lg  font-bold">Email Notifications</h3>
 
           <p className="text-sm text-[#848BAC] tracking-wide max-w-md ">
             Toggle whether you want to receive email notifications.
@@ -119,7 +125,7 @@ const PreferenceSettings = ({
       </div>
       {/* <div className=" w-full flex justify-between py-4  ">
         <div className="flex flex-col gap-1">
-          <h3 className=" text-lg uppercase font-bold">ODDS DISPLAY</h3>
+          <h3 className=" text-lg  font-bold">ODDS DISPLAY</h3>
 
           <p className="text-sm text-[#848BAC] tracking-wide max-w-md ">
             Toggle to display moneyline or odds.
@@ -137,7 +143,7 @@ const PreferenceSettings = ({
             AMERICAN
             <FaAngleDown className=" text-lg ml-0.5 mb-0.5 " />
           </DropdownMenuTrigger>
-          <DropdownMenuContent className="w-48  bg-[#181926] text-white border-none  mt-1  p-3 rounded-lg text-xs 2xl:text-base">
+          <DropdownMenuContent className="w-48  bg-[#181926] text-vintage-50 border-none  mt-1  p-3 rounded-lg text-xs 2xl:text-base">
             <DropdownMenuItem className="flex items-center justify-between ">
               <p> ITEMS</p>
             </DropdownMenuItem>

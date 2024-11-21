@@ -2,11 +2,17 @@ import { CheckIcon } from "lucide-react";
 
 const Verification = () => {
   return (
-    <div className=" w-full flex flex-col space-y-5  py-6  md:p-3 text-white rounded-2xl 2xl:p-5  mb-8 ">
-      <div className=" bg-[#272837] shadow-inner shadow-gray-700 p-3 pb-8 md:p-7  rounded-2xl w-full  flex flex-col gap-3 ">
+    <div className=" w-full flex flex-col space-y-2   rounded-2xl   mb-8 ">
+      <h2 className="text-lg 2xl:text-xl font-semibold text-vintage-50">
+        Personal Information
+      </h2>
+      <p className="text-sm 2xl:text-base  pb-4 text-gray-700">
+        Update your personal information
+      </p>
+      <div className=" bg-slate-50 shadow-inner shadow-gray-100 p-3 pb-8 md:p-7  rounded-2xl w-full  flex flex-col gap-3 ">
         <div className=" flex items-center gap-4 md:gap-2 p-2 md:p-0">
-          <CheckIcon />
-          <p className=" uppercase text-sm  2xl:text-lg  font-bold">
+          <CheckIcon className=" invert" />
+          <p className=" uppercase text-sm text-vintage-50  2xl:text-lg  font-bold">
             YOUR ACCOUNT IS ALREADY 2-STEP VERIFIED.
           </p>
         </div>

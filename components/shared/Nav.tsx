@@ -24,6 +24,7 @@ import { Notification } from "@prisma/client";
 import { useMarkNotification } from "@/app/hooks/useMarkNotification";
 import toast from "react-hot-toast";
 import UserAccount from "./UserAccount";
+import SettingsModal from "./SettingsModal";
 import { IoChevronDownCircle } from "react-icons/io5";
 import {
   Sheet,
@@ -233,7 +234,7 @@ const Sidebar = () => {
               <DropdownMenuSeparator />
             </DropdownMenuContent>
           </DropdownMenu>
-
+          <SettingsModal />
           <Link href={"/settings"}>
             <IoIosSettings className=" border-t border-gray-600 rounded-full bg-[#FFFFFF1A] hover:cursor-pointer  p-1.5 px-2 text-white text-4xl" />
           </Link>

@@ -28,7 +28,7 @@ const KYCVerification = React.lazy(() => import("./kyc-verfication"));
 const page = () => {
   // Router
   const router = useRouter();
-  
+
   const [tab, setTab] = useState<string>("general");
   const { status, data: session } = useSession();
   const changeTab = (tab: string) => {
@@ -37,19 +37,19 @@ const page = () => {
 
   // SEARCH PARAMS
   const searchParams = useSearchParams();
-  useEffect(()=>{
-    if(searchParams.get("tab")){
+  useEffect(() => {
+    if (searchParams.get("tab")) {
       setTab(searchParams.get("tab") as string);
     }
-  }, [searchParams])
+  }, [searchParams]);
 
   // UPDATE SEARCH PARAMS ON TAB CHANGE
-  useEffect(()=>{
-    if(tab){
+  useEffect(() => {
+    if (tab) {
       router.push(`/settings?tab=${tab}`);
     }
-  }, [tab])
-  
+  }, [tab]);
+
   // GET PREFERENCES
   const { mutate: fetchPreferences, data: preferences } = useGetPreferences({
     onSuccess: (data) => {
@@ -124,7 +124,7 @@ const page = () => {
           </div>
           {
             {
-              general: <GeneralSettings />,
+              // general: <GeneralSettings />,
               preferences: (
                 <PreferenceSettings
                   preferences={preferences}

@@ -71,13 +71,19 @@ const BillingSettings = () => {
   }, [billingHistory, currentPage, PER_PAGE]);
 
   return (
-    <div className=" w-full space-y-5 bg-primary-100 py-6  md:p-3  rounded-2xl 2xl:p-5 mb-8">
+    <div className=" w-full space-y-2  ">
+      <h2 className="text-lg 2xl:text-xl font-semibold text-vintage-50">
+        Personal Information
+      </h2>
+      <p className="text-sm 2xl:text-base -mt-4 mb-1.5 text-gray-700">
+        Update your personal information
+      </p>
       {/* <div className=" bg-[#272837] p-3 pb-8 md:p-7   rounded-2xl w-full  flex flex-col gap-1 ">
-        <div className="flex items-center justify-between pb-6 border-b border-gray-700 mb-3">
-          <p className=" text-white  2xl:text-lg uppercase font-bold">
+        <div className="flex items-center justify-between pb-6 border-b border-gray-300 mb-3">
+          <p className=" text-white  2xl:text-lg  capitalize font-bold">
             Payment Method
           </p>
-          <p className=" text-primary-50 flex items-center gap-1.5 2xl:text-base text-xs uppercase font-bold">
+          <p className=" text-primary-50 flex items-center gap-1.5 2xl:text-base text-xs  capitalize font-bold">
             <Image
               src="/icons/wallet.svg"
               alt="Edit Icon"
@@ -110,24 +116,27 @@ const BillingSettings = () => {
           )}
         </div>
       </div> */}
-      <div className=" w-full border border-gray-700 rounded-xl  flex flex-col">
-        <div className="flex items-center justify-between w-full p-6 ">
-          <h3 className=" font-bold"> Billing History</h3>
+      <div className=" w-full py-6   flex flex-col">
+        <div className="flex items-center justify-between w-full  ">
+          <h3 className=" font-bold text-lg text-vintage-50 mb-4">
+            {" "}
+            Billing History
+          </h3>
         </div>
         <Table>
           {/* <TableCaption>A list of your recent invoices.</TableCaption> */}
-          <TableHeader className=" bg-[#333547] text-[#848BAC] border-none">
+          <TableHeader className=" bg-[#F8F8F8] text-slate-700 border-none">
             <TableRow className=" border-none">
-              <TableHead className="uppercase  font-bold text-center">
+              <TableHead className=" capitalize  font-bold text-center">
                 Date
               </TableHead>
-              <TableHead className="uppercase font-bold text-center">
-                INVOICE NUMBER
+              <TableHead className=" capitalize font-bold text-center">
+                Invoice Number
               </TableHead>
-              <TableHead className="uppercase font-bold text-center">
+              <TableHead className=" capitalize font-bold text-center">
                 amount
               </TableHead>
-              <TableHead className="uppercase font-bold text-center">
+              <TableHead className=" capitalize font-bold text-start">
                 invoice
               </TableHead>
             </TableRow>
@@ -137,7 +146,7 @@ const BillingSettings = () => {
               <TableRow className=" border-none">
                 <TableCell
                   colSpan={4}
-                  className=" font-semibold capitalize py-6 border-b border-gray-700 text-xs 2xl:text-base text-center truncate"
+                  className=" font-semibold capitalize py-6 border-b border-gray-300 text-xs 2xl:text-base text-center truncate"
                 >
                   Loading...
                 </TableCell>
@@ -147,35 +156,29 @@ const BillingSettings = () => {
               <TableRow className=" border-none">
                 <TableCell
                   colSpan={4}
-                  className=" font-semibold capitalize py-6 border-b border-gray-700 text-xs 2xl:text-base text-center truncate"
+                  className=" font-semibold capitalize py-6 border-b border-gray-300 text-xs 2xl:text-base text-center truncate"
                 >
                   No invoices found
                 </TableCell>
               </TableRow>
             )}
+
             {!loadingInvoices &&
               paginatedHistory?.map((invoice: any) => (
                 <TableRow key={invoice.id} className=" border-none">
-                  <TableCell className=" font-semibold max-w-[100px] capitalize py-6 border-b border-gray-700 text-xs 2xl:text-base text-center truncate">
+                  <TableCell className=" font-semibold max-w-[100px] capitalize py-6 border-b border-gray-300 text-xs 2xl:text-base text-center truncate">
                     {formatDate(new Date(invoice.paymentDate))}
                   </TableCell>
-                  <TableCell className=" font-semibold max-w-[100px] capitalize py-6 border-b border-gray-700 text-xs 2xl:text-base text-center truncate">
+                  <TableCell className=" font-semibold max-w-[100px] capitalize py-6 border-b border-gray-300 text-xs 2xl:text-base text-center truncate">
                     {invoice.invoiceNumber}
                   </TableCell>
-                  <TableCell className=" font-semibold max-w-[100px] capitalize py-6 border-b border-gray-700 text-xs 2xl:text-base text-center truncate">
+                  <TableCell className=" font-semibold max-w-[100px] capitalize py-6 border-b border-gray-300 text-xs 2xl:text-base text-center truncate">
                     ${invoice.amount}
                   </TableCell>
 
-                  <TableCell className=" font-semibold max-w-[100px]  capitalize py-6 border-b border-gray-700 text-xs 2xl:text-base  justify-center ">
-                    <p className="flex items-center gap-1 text-xs  text-primary-50 font-semibold ">
-                      <Image
-                        src="/icons/download.png"
-                        alt="Coin Icon"
-                        width={14}
-                        className="mb-0.5"
-                        height={14}
-                      />
-                      <span className=" ">DOWNLOAD</span>
+                  <TableCell className=" font-semibold max-w-[100px]  capitalize py-6 border-b border-gray-300 text-xs 2xl:text-base  justify-center ">
+                    <p className="flex items-center gap-1 text-sm   text-vintage-50 font-semibold ">
+                      <span className=" ">Download</span>
                     </p>
                   </TableCell>
                 </TableRow>
@@ -183,17 +186,17 @@ const BillingSettings = () => {
           </TableBody>
         </Table>
         <div className="flex items-center justify-between p-5">
-          <h4 className="text-[#848BAC] font-thin text-xs 2xl:text-base ">
+          <h4 className="text-slate-700 font-thin text-xs 2xl:text-base ">
             PAGE {currentPage}-{TOTAL_PAGES}
           </h4>
           <div className="flex gap-2 items-center">
-            <button className="text-[#848BAC] text-2xl" onClick={goToPreviousPage}>
+            <button
+              className="text-slate-700 text-2xl"
+              onClick={goToPreviousPage}
+            >
               <TiArrowLeft />
             </button>
-            <button
-              className="text-[white] text-2xl"
-              onClick={goToNextPage}
-            >
+            <button className=" text-2xl" onClick={goToNextPage}>
               <TiArrowRight />
             </button>
           </div>

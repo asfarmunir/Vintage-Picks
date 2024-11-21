@@ -11,7 +11,7 @@ export default function Agreements() {
   const { data, refetch, isPending: loading } = useGetUser();
   const { mutate: signAgreement, isPending } = useSignAgreement({
     onSuccess: () => {
-      refetch()
+      refetch();
       toast.success("Agreement signed successfully");
     },
     onError: (error) => {
@@ -55,15 +55,15 @@ export default function Agreements() {
     setIsModalOpen(false);
   };
 
-  if(loading)   {
+  if (loading) {
     return (
-        <div className="w-full h-full flex justify-center items-center gap-2">
-            <LoaderCircle className="animate-spin" />
-            Loading...
-        </div>
-    )
+      <div className="w-full h-full flex justify-center items-center gap-2">
+        <LoaderCircle className="animate-spin" />
+        Loading...
+      </div>
+    );
   }
-  
+
   return (
     <>
       <ConfirmationModal
@@ -72,18 +72,25 @@ export default function Agreements() {
         onConfirm={handleSignAgreement}
         isPending={isPending}
       />
-      <div className=" w-full flex text-white flex-col gap-4">
+      <h2 className="text-lg 2xl:text-xl mb-2 font-semibold text-vintage-50">
+        Personal Information
+      </h2>
+      <p className="text-sm 2xl:text-base mb-5 text-gray-700">
+        Update your personal information
+      </p>
+      <div className=" w-full flex text-vintage-50 flex-col gap-4">
         <div className=" w-full flex justify-between items-start flex-wrap py-4 pb-8 gap-y-4 border-b border-gray-700">
           <div className="flex flex-col gap-1">
             <h3 className=" text-lg uppercase font-bold">Funded Agreement</h3>
 
             <p className="text-sm text-[#848BAC] tracking-wide ">
-              By signing this, you are agreeing to picks hero funded account policies.
+              By signing this, you are agreeing to picks hero funded account
+              policies.
             </p>
           </div>
           <div className="flex flex-wrap gap-2 flex-grow sm:flex-grow-0">
             <Button
-              className="bg-[#333547] inner-shadow border w-full md:w-fit border-[#28B601]  rounded-xl hover:bg-slate-600 text-white font-semibold p-6  2xl:text-lg   focus:outline-none focus:shadow-outline"
+              className="bg-slate-100 w-full md:w-fit   rounded-full hover:bg-slate-200 transition-colors text-vintage-50 font-semibold p-6  2xl:text-lg   focus:outline-none focus:shadow-outline"
               disabled={data.user?.agreement1}
               onClick={() => handleModalOpen(0)}
             >
@@ -93,7 +100,7 @@ export default function Agreements() {
             </Button>
             <a
               href="/agreements/PH Agreement Funded.pdf"
-              className="bg-[#333547] w-full md:w-fit rounded-xl hover:bg-slate-600 text-white font-semibold px-6 2xl:text-lg focus:outline-none focus:shadow-outline flex gap-2 justify-center items-center py-4"
+              className="bg-vintage-50 w-full md:w-fit rounded-full hover:bg-slate-600 text-white font-semibold px-6 2xl:text-lg focus:outline-none focus:shadow-outline flex gap-2 justify-center items-center py-4"
               download
             >
               <DownloadIcon className="w-4 h-4" />
@@ -104,15 +111,18 @@ export default function Agreements() {
 
         <div className="w-full flex justify-between items-start flex-wrap py-4 pb-8 gap-y-4 ">
           <div className="flex flex-col gap-1">
-            <h3 className=" text-lg uppercase font-bold">Non-Disclosure Agreement</h3>
+            <h3 className=" text-lg uppercase font-bold">
+              Non-Disclosure Agreement
+            </h3>
 
             <p className="text-sm text-[#848BAC] tracking-wide ">
-              By signing this, you are agreeing to picks hero non-disclosure agreement.
+              By signing this, you are agreeing to picks hero non-disclosure
+              agreement.
             </p>
           </div>
           <div className="flex flex-wrap gap-2 flex-grow sm:flex-grow-0">
             <Button
-              className="bg-[#333547] inner-shadow border w-full md:w-fit border-[#28B601]  rounded-xl hover:bg-slate-600 text-white font-semibold p-6  2xl:text-lg   focus:outline-none focus:shadow-outline"
+              className="bg-slate-100 w-full md:w-fit   rounded-full hover:bg-slate-200 transition-colors text-vintage-50 font-semibold p-6  2xl:text-lg   focus:outline-none focus:shadow-outline"
               disabled={data.user?.agreement2}
               onClick={() => handleModalOpen(1)}
             >
@@ -122,7 +132,7 @@ export default function Agreements() {
             </Button>
             <a
               href="/agreements/NDA Funded PH.pdf"
-              className="bg-[#333547] w-full md:w-fit rounded-xl hover:bg-slate-600 text-white font-semibold px-6 2xl:text-lg focus:outline-none focus:shadow-outline flex gap-2 justify-center items-center py-4"
+              className="bg-vintage-50 w-full md:w-fit rounded-full hover:bg-slate-600 text-white font-semibold px-6 2xl:text-lg focus:outline-none focus:shadow-outline flex gap-2 justify-center items-center py-4"
               download
             >
               <DownloadIcon className="w-4 h-4" />
@@ -140,7 +150,7 @@ export default function Agreements() {
           </div>
           <div className="flex flex-wrap gap-2 flex-grow sm:flex-grow-0">
             <Button
-              className="bg-[#333547] inner-shadow border w-full md:w-fit border-[#28B601]  rounded-xl hover:bg-slate-600 text-white font-semibold p-6  2xl:text-lg   focus:outline-none focus:shadow-outline"
+              className="bg-slate-100 w-full md:w-fit   rounded-full hover:bg-slate-200 transition-colors text-vintage-50 font-semibold p-6  2xl:text-lg   focus:outline-none focus:shadow-outline"
               disabled={data.user?.agreement3}
               onClick={() => handleModalOpen(2)}
             >
@@ -150,7 +160,7 @@ export default function Agreements() {
             </Button>
             <a
               href="#"
-              className="bg-[#333547] w-full md:w-fit rounded-xl hover:bg-slate-600 text-white font-semibold px-6 2xl:text-lg focus:outline-none focus:shadow-outline flex gap-2 justify-center items-center py-4"
+              className="bg-vintage-50 w-full md:w-fit rounded-full hover:bg-slate-600 text-white font-semibold px-6 2xl:text-lg focus:outline-none focus:shadow-outline flex gap-2 justify-center items-center py-4"
               download
             >
               <DownloadIcon className="w-4 h-4" />
@@ -180,8 +190,8 @@ const ConfirmationModal = ({
         isOpen ? "" : "hidden"
       }`}
     >
-      <div className="bg-primary-100 w-full max-w-lg p-8 rounded-xl mx-6">
-        <h2 className="text-xl font-bold mb-4 text-center uppercase">
+      <div className="bg-vintage-50 w-full max-w-lg p-8 rounded-xl mx-6">
+        <h2 className="text-xl text-white font-bold mb-4 text-center uppercase">
           Are you sure?
         </h2>
         <p className="text-gray-400 mb-6 text-center">
@@ -190,13 +200,13 @@ const ConfirmationModal = ({
         <div className="flex justify-center items-center gap-4">
           <Button
             onClick={onClose}
-            className="bg-[#333547] w-full md:w-fit rounded-xl hover:bg-slate-600 text-white font-semibold p-6 focus:outline-none focus:shadow-outline gap-2  text-xs uppercase"
+            className="bg-white w-full md:w-fit rounded-full hover:bg-slate-200 text-vintage-50 font-semibold p-6 focus:outline-none focus:shadow-outline gap-2  text-xs 2xl:text-sm "
           >
             Cancel
           </Button>
           <Button
             onClick={onConfirm}
-            className="bg-[#333547] inner-shadow border w-full md:w-fit border-[#28B601] rounded-xl hover:bg-slate-600 text-white font-semibold p-[22px]   focus:outline-none focus:shadow-outline text-xs uppercase"
+            className=" bg-slate-50 border w-full md:w-fit  rounded-full hover:bg-slate-200 text-vintage-50 font-semibold p-[22px]   focus:outline-none focus:shadow-outline text-xs 2xl:text-sm "
             disabled={isPending}
           >
             {isPending ? (
