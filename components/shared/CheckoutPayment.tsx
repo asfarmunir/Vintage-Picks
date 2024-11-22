@@ -80,12 +80,12 @@ const cardSchema = z.object({
   }),
 });
 
-interface AccountCheckoutProps {
+interface CheckoutPaymentProps {
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
 }
 
-const AccountCheckout: React.FC<AccountCheckoutProps> = ({
+const CheckoutPayment: React.FC<CheckoutPaymentProps> = ({
   isOpen,
   setIsOpen,
 }) => {
@@ -717,4 +717,4 @@ const AccountCheckout: React.FC<AccountCheckoutProps> = ({
   );
 };
 
-export default AccountCheckout;
+export default CheckoutPayment;

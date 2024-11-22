@@ -4,12 +4,13 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { navlinks } from "@/lib/constants";
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import { userStore } from "@/app/store/user";
 import { useGetUser } from "@/app/hooks/useGetUser";
 import { GoBellFill } from "react-icons/go";
 import { useState, useEffect } from "react";
 import { IoIosSettings } from "react-icons/io";
+import { GiCheckMark } from "react-icons/gi";
 
 import {
   DropdownMenu,
@@ -25,7 +26,7 @@ import { useMarkNotification } from "@/app/hooks/useMarkNotification";
 import toast from "react-hot-toast";
 import UserAccount from "./UserAccount";
 import SettingsModal from "./SettingsModal";
-import { IoChevronDownCircle } from "react-icons/io5";
+import { IoChevronDownCircle, IoLogOut } from "react-icons/io5";
 import {
   Sheet,
   SheetContent,
@@ -35,6 +36,7 @@ import {
 } from "@/components/ui/sheet";
 import { HiMenu } from "react-icons/hi";
 import { useRouter } from "next/navigation";
+import { FaUser } from "react-icons/fa6";
 
 const Sidebar = () => {
   const [isCollapsed, setIsCollapsed] = useState(false);
@@ -98,6 +100,16 @@ const Sidebar = () => {
     setHasUnread(false);
   };
 
+  const signOutUser = async () => {
+    await signOut({
+      redirect: false,
+      callbackUrl: "/login",
+    });
+    toast.success("Signed out successfully");
+    router.refresh();
+    router.replace("/login");
+  };
+
   return (
     <>
       <div
@@ -136,19 +148,40 @@ const Sidebar = () => {
 
         <div className="hidden md:flex items-center gap-3">
           <UserAccount />
-          <button className=" data-[state=open]:border-2 bg-[#FFFFFF1A]  data-[state=open]:shadow  data-[state=open]:border-vintage-50/50   bg-[#272837]  font-semibold   justify-center text-nowrap w-full md:w-fit  text-xs md:text-sm px-1.5 md:px-1.5 py-1.5 2xl:py-1.5  rounded-full inline-flex items-center gap-2">
-            <Image
-              src={"/vintage/images/avatar.svg"}
-              alt="User Avatar"
-              width={35}
-              height={35}
-              className="rounded-full hover:cursor-pointer"
-            />
-            <span className="  text-white capitalize flex gap-2 items-center text-xs 2xl:text-sm  px-1 py-2">
-              {`${user.firstName} ${user.lastName}`}
-              <IoChevronDownCircle className="w-5 text-white h-5" />
-            </span>
-          </button>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <button className=" data-[state=open]:border-2 bg-[#FFFFFF1A]  data-[state=open]:shadow  data-[state=open]:border-vintage-50/50   bg-[#272837]  font-semibold   justify-center text-nowrap w-full md:w-fit  text-xs md:text-sm px-1.5 md:px-1.5 py-1.5 2xl:py-1.5  rounded-full inline-flex items-center gap-2">
+                <Image
+                  src={"/vintage/images/avatar.svg"}
+                  alt="User Avatar"
+                  width={35}
+                  height={35}
+                  className="rounded-full hover:cursor-pointer"
+                />
+                <span className="  text-white capitalize flex gap-2 items-center text-xs 2xl:text-sm  px-1 py-2">
+                  {`${user.firstName} ${user.lastName}`}
+                  <IoChevronDownCircle className="w-5 text-white h-5" />
+                </span>
+              </button>
+            </DropdownMenuTrigger>
+
+            <DropdownMenuContent className=" bg-white w-48 p-2 2xl:p-3 rounded-xl flex flex-col gap-1">
+              <Link
+                href={"/user/profile"}
+                className="text-left text-sm inline-flex p-2 rounded-lg border-b border-slate-200 transition-all hover:bg-slate-100 items-center  gap-2 text-vintage-50 font-bold"
+              >
+                <FaUser className="" />
+                User Profile
+              </Link>
+              <button
+                onClick={signOutUser}
+                className="text-left text-sm inline-flex p-2 rounded-lg  border-slate-200 transition-all hover:bg-slate-100 items-center  gap-2 text-vintage-50 font-bold"
+              >
+                <IoLogOut className="text-lg" />
+                Log Out
+              </button>
+            </DropdownMenuContent>
+          </DropdownMenu>
 
           {/* <Link
             href={"/user/profile"}
@@ -172,19 +205,13 @@ const Sidebar = () => {
                 </>
               )}
             </DropdownMenuTrigger>
-            <DropdownMenuContent className=" md:w-[22rem]  2xl:w-96 max-h-[470px] 2xl:max-h-[540px] z-50 overflow-y-auto  text-white bg-[#272837] mr-8 md:mr-36 border-none py-5 mt-1   rounded-xl  shadow-inner shadow-gray-700">
+            <DropdownMenuContent className=" md:w-[22rem]  2xl:w-96 max-h-[470px] 2xl:max-h-[540px] z-50 overflow-y-auto  text-white bg-vintage-50 mr-8 md:mr-36 border-none py-5 mt-1   rounded-xl  shadow-inner shadow-gray-700">
               <div className=" w-full items-center flex justify-between border-b  border-gray-700  pb-4 mb-2">
                 <h3 className=" text-lg font-bold px-3.5">Notifications</h3>
                 <button
-                  className=" text-sm inline-flex gap-1 items-center font-bold text-primary-50 px-3.5"
+                  className=" text-sm inline-flex gap-1 items-center font-bold text-white px-3.5"
                   onClick={markNotifications}
                 >
-                  <Image
-                    src="/icons/mark-as-read.svg"
-                    alt="Mark All"
-                    width={16}
-                    height={16}
-                  />
                   Mark read
                 </button>
               </div>
@@ -214,14 +241,10 @@ const Sidebar = () => {
                 data.notifications?.map((notification: Notification) => (
                   <div
                     key={notification.id}
-                    className="flex hover:bg-[#333547]/20 items-center justify-start my-4 py-3 px-3.5"
+                    className="flex hover:bg-[#333547]/20 items-start justify-start my-4 py-3 px-3.5"
                   >
-                    <Image
-                      src="/icons/marked.png"
-                      alt="Client"
-                      width={50}
-                      height={50}
-                    />
+                    <GiCheckMark className="text-white text-xl" />
+
                     <div className="flex flex-col ml-3">
                       <p className="font-bold">{notification.content}</p>
                       <span className=" text-sm text-slate-400/60">
@@ -234,7 +257,7 @@ const Sidebar = () => {
               <DropdownMenuSeparator />
             </DropdownMenuContent>
           </DropdownMenu>
-          <SettingsModal />
+          {/* <SettingsModal /> */}
           <Link href={"/settings"}>
             <IoIosSettings className=" border-t border-gray-600 rounded-full bg-[#FFFFFF1A] hover:cursor-pointer  p-1.5 px-2 text-white text-4xl" />
           </Link>

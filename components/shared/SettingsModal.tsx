@@ -1,22 +1,14 @@
-import Navbar from "@/components/shared/Navbar";
-import Image from "next/image";
-import React, { Suspense, useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 
 import { useGetPreferences } from "@/app/hooks/useGetPreferences";
 import BillingSettings from "@/components/shared/BillingSettings";
 import GeneralSettings from "@/components/shared/GeneralSettings";
 import PreferenceSettings from "@/components/shared/PreferenceSettings";
 import Verification from "@/components/shared/Verification";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+
 import { useSession } from "next-auth/react";
 import { useState } from "react";
-import { MdOutlineArrowUpward, MdOutlineClose } from "react-icons/md";
-import { noSSR } from "next/dynamic";
+import { MdOutlineClose } from "react-icons/md";
 import Agreements from "@/app/(root)/settings/agreements";
 import { useRouter, useSearchParams } from "next/navigation";
 
@@ -81,7 +73,13 @@ const settingTabs = [
   //     tab: "verification",
   //   },
 ];
-export const SettingsModal = () => {
+
+interface SettingsProps {
+  isOpen: boolean;
+  setIsOpen: (isOpen: boolean) => void;
+}
+
+const Settings: React.FC<SettingsProps> = ({ isOpen, setIsOpen }) => {
   const router = useRouter();
   const modalRef = useRef<HTMLButtonElement>(null);
   const [tab, setTab] = useState<string>("general");
@@ -98,12 +96,11 @@ export const SettingsModal = () => {
     }
   }, [searchParams]);
 
-  // UPDATE SEARCH PARAMS ON TAB CHANGE
-  // useEffect(() => {
-  //   if (tab) {
-  //     router.push(`/?tab=${tab}`);
-  //   }
-  // }, [tab]);
+  useEffect(() => {
+    if (tab) {
+      router.push(`/settings?tab=${tab}`);
+    }
+  }, [tab]);
 
   // GET PREFERENCES
   const { mutate: fetchPreferences, data: preferences } = useGetPreferences({
@@ -122,7 +119,7 @@ export const SettingsModal = () => {
   }, [session]);
 
   return (
-    <AlertDialog>
+    <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
       <AlertDialogTrigger ref={modalRef}>
         <IoIosSettings className=" border-t border-gray-600 rounded-full bg-[#FFFFFF1A] hover:cursor-pointer  p-1.5 px-2 text-white text-4xl" />
       </AlertDialogTrigger>
@@ -179,4 +176,4 @@ export const SettingsModal = () => {
   );
 };
 
-export default SettingsModal;
+export default Settings;
