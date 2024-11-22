@@ -61,19 +61,19 @@ const layout = ({ children }: { children: React.ReactNode }) => {
         {status === "authenticated" && (
           <>
             {/* <Sidebar /> */}
-            <main className="flex relative flex-col px-3  overflow-x-hidden  items-start   w-full">
+            <main className="flex relative flex-col  overflow-x-hidden  items-start   w-full">
               <div
                 className=" block sticky 
         top-0
         z-50
         w-full
+        px-3
         "
               >
                 <Nav />
               </div>
-              {/* <MobileNav /> */}
-              <section className="  h-full w-full py-2.5  relative">
-                {!hasAccount && <CreateAccountModal />}
+              {/* {!hasAccount && <CreateAccountModal />} */}
+              <section className="  h-full w-full py-2.5 px-3 relative">
                 {children}
               </section>
             </main>

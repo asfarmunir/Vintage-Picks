@@ -1,6 +1,5 @@
 "use client";
 import { useCreateBet } from "@/app/hooks/useCreateBet";
-import { useGetAccount } from "@/app/hooks/useGetAccount";
 import { useGetSports } from "@/app/hooks/useGetSports";
 import BetModal from "@/components/shared/BetModal";
 import Navbar from "@/components/shared/Navbar";
@@ -17,7 +16,6 @@ import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { FaAngleDown } from "react-icons/fa";
 import { LuSearch } from "react-icons/lu";
-import { MdOutlineArrowUpward } from "react-icons/md";
 import { TiArrowLeft, TiArrowRight } from "react-icons/ti";
 import BetSlip from "./bet-slip";
 import GamesTable from "./games";
@@ -29,6 +27,7 @@ import {
 import { accountStore } from "@/app/store/account";
 import { ALL_STEP_CHALLENGES } from "@/lib/constants";
 import Parlay from "./parlay";
+import { ChevronDown } from "lucide-react";
 
 type oddsType = "american" | "decimal";
 
@@ -321,23 +320,7 @@ const page = () => {
 
   return (
     <>
-      <div
-        className=" hidden md:block sticky 
-        top-0
-        z-50
-        w-full
-        "
-      >
-        <div className=" w-[99%] bg-primary justify-between flex items-center absolute">
-          <div className="flex items-center gap-2">
-            <UserAccount setUserHasAccounts={setUserHasAccounts} />
-            {userHasAccounts && <BetModal />}
-          </div>
-          <Navbar />
-        </div>
-      </div>
-
-      <div className=" md:pt-16 relative px-2.5 md:px-5 2xl:px-8 2xl:mt-4 pb-24 text-white  max-h-full overflow-auto space-y-6 ">
+      <div className=" w-full p-2 md:p-3 rounded-2xl bg-vintage-50 space-y-4">
         <div className=" w-full flex md:hidden items-center justify-between">
           <UserAccount />
         </div>
@@ -346,69 +329,74 @@ const page = () => {
         {!isPending && (
           <>
             <SportsTabs sports={sports} tab={tab} changeTab={changeTab} />
-            <LeaguesTabs
+            {/* <LeaguesTabs
               leagues={leagues}
               leagueTab={leagueTab}
               changeLeagueTab={changeLeagueTab}
-            />
+            /> */}
           </>
         )}
-        <div className="w-full bg-[#181926] shadow-inner shadow-gray-700 rounded-xl p-5 py-7 flex-col md:flex-row  flex items-center justify-between gap-4">
-          <div className="flex flex-col  items-start justify-start  w-full md:w-fit  ">
-            <h3 className="text-lg 2xl:text-2xl font-bold mb-1">Featured</h3>
-            <p className="  text-xs 2xl:text-base text-[#848BAC] max-w-md">
-              Don't miss out on exclusive boosted odds and special in-play
-              betting options available only for this feature event.
-            </p>
-          </div>
-          <div className="flex w-full md:w-fit items-center gap-2 flex-col md:flex-row">
-            <button
-              className={`flex justify-center items-center gap-2 p-4 text-sm w-full md:w-fit 2xl:text-lg  bg-[#272837] shadow-inner shadow-gray-600 rounded-lg ${
-                findTeamInBets(featuredMatch?.home_team, featuredMatch?.id)
-                  ? " border border-primary-50/80 shadow shadow-green-700"
-                  : ""
-              }`}
-              onClick={() =>
-                addGameToBetSlip({ game: featuredMatch, home: true })
-              }
-            >
-              {featuredMatch?.home_team}
-            </button>
-            <p className=" p-1.5 text-sm px-2 rounded-full font-bold -mx-4 -my-4 z-30 text-primary-50 bg-green-700/30 border-green-700/40 border-2">
-              vs
-            </p>
-            <button
-              className={`flex justify-center items-center gap-2 p-4 text-sm w-full md:w-fit 2xl:text-lg  bg-[#272837] shadow-inner shadow-gray-600 rounded-lg ${
-                findTeamInBets(featuredMatch?.away_team, featuredMatch?.id)
-                  ? " border border-primary-50/80 shadow shadow-green-700"
-                  : ""
-              }`}
-              onClick={() =>
-                addGameToBetSlip({ game: featuredMatch, home: false })
-              }
-            >
-              {featuredMatch?.away_team}
-            </button>
-            <button
-              className="flex justify-center uppercase items-center gap-2 p-4 text-sm w-full md:w-fit 2xl:text-base font-bold bg-[#333547] inner-shadow rounded-lg"
-              onClick={() =>
-                addGameToBetSlip({ game: featuredMatch, home: true })
-              }
-            >
-              BET NOW
-            </button>
-          </div>
-        </div>
-        <div className=" w-full flex gap-5 flex-col-reverse md:flex-row rounded-2xl mb-8 items-start">
-          <div className=" w-full transition-all border border-gray-700 rounded-xl bg-primary-100  flex flex-col">
-            <div className="flex flex-col md:flex-row  mb-4 w-full items-center justify-between">
-              <div className="flex  items-center gap-3 w-full p-2 md:p-6 md:pr-32 ">
-                {/* <DropdownMenu>
+
+        <div className="flex gap-4 items-start">
+          <div className=" w-full flex gap-4 flex-col rounded-2xl mb-8 items-start">
+            <div className="w-full bg-white shadow-inner shadow-gray-200 rounded-xl p-5 py-7 flex-col md:flex-row  flex items-center justify-between gap-4">
+              <div className="flex flex-col  items-start justify-start  w-full md:w-fit  ">
+                <h3 className="text-lg 2xl:text-2xl font-bold mb-1">
+                  Featured
+                </h3>
+                <p className="  text-xs 2xl:text-base text-[#848BAC] max-w-md">
+                  Don't miss out on exclusive boosted odds and special in-play
+                  betting options available only for this feature event.
+                </p>
+              </div>
+              <div className="flex w-full md:w-fit items-center gap-2 flex-col md:flex-row">
+                <button
+                  className={`flex justify-center items-center p-4 text-sm w-full md:w-fit 2xl:text-base  bg-vintage-50 text-white  rounded-full ${
+                    findTeamInBets(featuredMatch?.home_team, featuredMatch?.id)
+                      ? "  shadow shadow-blue-800"
+                      : ""
+                  }`}
+                  onClick={() =>
+                    addGameToBetSlip({ game: featuredMatch, home: true })
+                  }
+                >
+                  {featuredMatch?.home_team}
+                </button>
+                <p className=" p-1.5 text-sm px-2 rounded-full font-bold -mx-3 -my-4 z-30 text-vintage-50 bg-blue-900/30 border-blue-900/40 border-2">
+                  vs
+                </p>
+                <button
+                  className={`flex justify-center items-center p-4 text-sm w-full md:w-fit 2xl:text-base  bg-vintage-50 text-white  rounded-full ${
+                    findTeamInBets(featuredMatch?.away_team, featuredMatch?.id)
+                      ? "  shadow shadow-blue-800"
+                      : ""
+                  }`}
+                  onClick={() =>
+                    addGameToBetSlip({ game: featuredMatch, home: false })
+                  }
+                >
+                  {featuredMatch?.away_team}
+                </button>
+                <button
+                  className="flex justify-center border-4 border-vintage-50
+                   items-center gap-2 p-4 px-8 text-sm w-full md:w-fit 2xl:text-base font-black bg-white  rounded-full "
+                  onClick={() =>
+                    addGameToBetSlip({ game: featuredMatch, home: true })
+                  }
+                >
+                  Bet Now
+                </button>
+              </div>
+            </div>
+            <div className=" w-full transition-all border border-gray-200 rounded-xl bg-[#F8F8F8]  flex flex-col">
+              <div className="flex flex-col md:flex-row  mb-4 w-full items-center justify-between">
+                <div className="flex  items-center gap-3 w-full p-2 md:p-6 md:pr-32 ">
+                  {/* <DropdownMenu>
                   <DropdownMenuTrigger className=" bg-[#393C53]    justify-center text-nowrap w-fit  text-xs md:text-sm px-3 md:px-4 py-3 font-bold rounded-lg inline-flex items-center gap-2">
                     TOP EARNERS
                     <FaAngleDown className=" text-lg" />
                   </DropdownMenuTrigger>
-                  <DropdownMenuContent className="w-48  bg-[#181926] text-white border-none  mt-1  p-3 rounded-lg shadow-sm">
+                  <DropdownMenuContent className="w-48  bg-white text-vintage-50 border-none  mt-1  p-3 rounded-lg shadow-sm">
                     <DropdownMenuItem className="flex items-center justify-between ">
                       <p>TOP EARNERS</p>
 
@@ -424,10 +412,17 @@ const page = () => {
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>{" "} */}
-                <div className=" bg-[#333547]/60 inline-flex  items-center py-1 px-2 rounded-lg">
-                  <LuSearch className="w-7 h-7 text-[#848BAC] " />
-                  <Input
-                    className=" 
+                  {!isPending && (
+                    <LeaguesTabs
+                      leagues={leagues}
+                      leagueTab={leagueTab}
+                      changeLeagueTab={changeLeagueTab}
+                    />
+                  )}
+                  <div className=" bg-white border border-slate-100 inline-flex  items-center py-1 px-2.5 rounded-full">
+                    <LuSearch className="w-6 h-6 text-[#848BAC] " />
+                    <Input
+                      className=" 
                 bg-transparent
                 text-[#848BAC]
 
@@ -437,96 +432,99 @@ const page = () => {
                 placeholder-slate-900 
                 uppercase
                 "
-                    placeholder={"search..."}
-                    value={search}
-                    onChange={handleSearch}
-                  />
+                      placeholder={"search..."}
+                      value={search}
+                      onChange={handleSearch}
+                    />
+                  </div>
                 </div>
-              </div>
-              <DropdownMenu>
-                <DropdownMenuTrigger className="  bg-[#393C53]  font-bold   justify-center w-[95%] text-sm 2xl:text-base md:w-fit  p-3.5 md:mr-3  rounded-xl inline-flex items-center gap-2 uppercase">
-                  <Image
-                    src="/icons/odds.png"
-                    alt="Arrow Icon"
-                    width={23}
-                    height={23}
-                  />
-                  <span className="text-[#737897] capitalize">Odds:</span>
-                  {oddsFormat}
-                  <FaAngleDown className=" text-lg ml-0.5 mb-0.5 " />
-                </DropdownMenuTrigger>
-                <DropdownMenuContent className="w-48  bg-[#181926] text-white border-none  mt-1  p-3 rounded-lg text-xs 2xl:text-base">
-                  <DropdownMenuItem
-                    className="flex items-center justify-between"
-                    onClick={() => changeOddsFormat("decimal")}
-                  >
-                    <p> Decimal</p>
-                  </DropdownMenuItem>
+                <DropdownMenu>
+                  <DropdownMenuTrigger className="  bg-white  font-bold   justify-center w-[95%] text-sm 2xl:text-base md:w-fit  p-3.5 py-3 md:mr-3  rounded-full inline-flex items-center gap-2 ">
+                    <Image
+                      src="/icons/odds.png"
+                      alt="Arrow Icon"
+                      width={23}
+                      height={23}
+                    />
+                    <span className="text-[#737897] capitalize">Odds:</span>
+                    {oddsFormat}
+                    <FaAngleDown className=" text-lg ml-0.5 mb-0.5 " />
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent className="w-48  bg-white text-vintage-50 border-none  mt-1  p-3 rounded-lg text-xs 2xl:text-base">
+                    <DropdownMenuItem
+                      className="flex items-center justify-between"
+                      onClick={() => changeOddsFormat("decimal")}
+                    >
+                      <p> Decimal</p>
+                    </DropdownMenuItem>
 
-                  <DropdownMenuItem
-                    className="flex items-center justify-between "
-                    onClick={() => changeOddsFormat("american")}
-                  >
-                    <p>American</p>
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>{" "}
-            </div>
-            {account && (
-              <GamesTable
-                tab={tab}
-                sportKey={leagueTab}
-                oddsFormat={oddsFormat}
-                addBet={addBet}
-                bets={selectedBets}
-                setBets={setSelectedBets}
-                setFeaturedMatch={setFeaturedMatch}
-                account={account}
-                search={search}
-              />
-            )}
-            <div className="flex items-center justify-between p-5">
-              <h4 className="text-[#848BAC] font-thin text-xs 2xl:text-base ">
-                PAGE 1-5
-              </h4>
-              <div className="flex gap-2 items-center">
-                <button className="text-[#848BAC] text-2xl">
-                  <TiArrowLeft />
-                </button>
-                <button className="text-[white] text-2xl">
-                  <TiArrowRight />
-                </button>
+                    <DropdownMenuItem
+                      className="flex items-center justify-between "
+                      onClick={() => changeOddsFormat("american")}
+                    >
+                      <p>American</p>
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>{" "}
+              </div>
+              {account && (
+                <GamesTable
+                  tab={tab}
+                  sportKey={leagueTab}
+                  oddsFormat={oddsFormat}
+                  addBet={addBet}
+                  bets={selectedBets}
+                  setBets={setSelectedBets}
+                  setFeaturedMatch={setFeaturedMatch}
+                  account={account}
+                  search={search}
+                />
+              )}
+              <div className="flex items-center justify-between p-5">
+                <h4 className="text-[#848BAC] font-thin text-xs 2xl:text-base ">
+                  PAGE 1-5
+                </h4>
+                <div className="flex gap-2 items-center">
+                  <button className="text-[#848BAC] text-2xl">
+                    <TiArrowLeft />
+                  </button>
+                  <button className="text-[white] text-2xl">
+                    <TiArrowRight />
+                  </button>
+                </div>
               </div>
             </div>
           </div>
           <div
-            className={` w-full md:w-[65%]  border border-gray-700 p-4 rounded-xl bg-primary-100  flex flex-col`}
+            className={` w-full md:w-[50%]  border border-gray-200 p-4 rounded-xl bg-white  flex flex-col`}
           >
             <div className="flex items-start gap-4 mb-8 md:items-center justify-between md:mb-5  flex-col md:flex-row w-full">
-              <h2 className="font-bold text-lg uppercase">betting slip</h2>
+              <h2 className="font-bold text-lg capitalize ">betting slip</h2>
               <div className="flex items-center border-gray-[#737897] rounded-lg bg-[#737897]/20">
                 <button
                   className={` ${
                     selectedBets.length === 1
-                      ? "text-white"
+                      ? "text-vintage-50"
                       : "text-primary-200"
-                  } text-xs font-bold p-2p px-3  uppercase border-r border-gray-700`}
+                  } text-xs font-bold p-2p px-3   border-r border-gray-200`}
                 >
-                  single
+                  Single
                 </button>
                 <button
-                  className={`text-xs font-bold p-2 px-3 uppercase ${
-                    selectedBets.length > 1 ? "text-white" : "text-primary-200"
+                  className={`text-xs font-bold p-2 px-3  ${
+                    selectedBets.length > 1
+                      ? "text-vintage-50"
+                      : "text-primary-200"
                   }`}
                 >
-                  parlay
+                  Parlay
                 </button>
               </div>
             </div>
 
             {selectedBets.length === 0 && (
-              <div className="flex items-center justify-center h-96 w-full">
-                <p className="text-[#848BAC] text-sm 2xl:text-lg uppercase">
+              <div className="flex items-center justify-center h-48 w-full">
+                <p className="text-[#848BAC] text-sm 2xl:text-lg capitalize ">
                   No bets selected
                 </p>
               </div>
@@ -554,28 +552,24 @@ const page = () => {
                     />
                   </>
                 )}
-            <div className=" w-full  mt-3 border-t border-gray-700 py-3 flex items-center justify-between">
-              <p className="text-sm  text-primary-200 font-thin     ">
-                OVERALL ODDS
-              </p>
+            <div className=" w-full  mt-3 border-t border-gray-200 py-3 flex items-center justify-between">
+              <p className="text-sm  text-slate-500      ">Overall Odds</p>
               <p className="font-bold">{calculateOverallOdds()}</p>
             </div>
             <div className=" w-full mb-4  flex items-center - justify-between">
-              <p className="text-sm  text-primary-200 font-thin     ">
-                TO COLLECT
-              </p>
+              <p className="text-sm  text-slate-500      ">To Collect</p>
               <p className="font-bold">{toCollect} USD</p>
             </div>
 
-            <div className=" w-full  border-t border-gray-700 py-3 flex items-center justify-between">
+            <div className=" w-full  border-t border-gray-200 py-3 flex items-center justify-between">
               <button
-                className=" p-3.5 px-4 uppercase font-bold bg-[#393C53] text-xs rounded-lg"
+                className=" p-3.5 px-8 capitalize  font-bold  text-xs 2xl:text-sm rounded-full border-2 border-vintage-50"
                 onClick={() => setSelectedBets([])}
               >
                 clear
               </button>
               <button
-                className=" p-3.5 uppercase font-bold inner-shadow text-xs rounded-lg disabled:opacity-50"
+                className=" p-3.5 px-8 bg-vintage-50 text-white capitalize border-2  border-vintage-50  font-bold  text-xs 2xl:text-sm rounded-full disabled:opacity-50"
                 disabled={placingBet}
                 onClick={placeBets}
               >
@@ -614,16 +608,14 @@ const SportsTabs = ({
   changeTab: (sport: string) => void;
 }) => {
   return (
-    <div className="flex mt-4 items-center pb-3 max-w-full overflow-auto justify-evenly md:justify-start gap-2 mb-3">
+    <div className="flex  bg-white items-center p-4 2xl:p-5 rounded-2xl max-w-full overflow-auto justify-evenly  gap-2 mb-3">
       {sports?.map((sport: any, index: number) => (
         <button
           key={index}
-          className={`border  
-              px-4 text-xs 2xl:text-lg py-2 flex w-full md:w-fit justify-center font-bold text-nowrap  items-center flex-grow md:flex-grow-0 rounded-full ${
-                tab === sport
-                  ? "border-[#52FC18] bg-[#1A5B0B]"
-                  : " border-gray-700 text-[#848BAC] border-2"
-              } uppercase`}
+          className={`  
+              px-8 text-xs w-68 2xl:text-base  py-3 flex   justify-center font-bold text-nowrap  items-center flex-grow md:flex-grow-0 rounded-full ${
+                tab === sport ? " bg-[#0100821A] border" : " "
+              } capitalize `}
           onClick={() => changeTab(sport)}
         >
           {sport}
@@ -643,23 +635,46 @@ const LeaguesTabs = ({
   changeLeagueTab: (league: string) => void;
 }) => {
   return (
-    <div className="flex mt-4 items-center pb-3 max-w-full overflow-auto justify-evenly md:justify-start gap-2 mb-3">
-      {leagues?.map((league: any, index: number) =>
-        (league.title as string).toLowerCase().includes("winner") ? null : (
-          <button
-            key={index}
-            className={`border  
+    <>
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <button className="flex items-center justify-center p-3.5 px-5 gap-4 bg-white rounded-full ">
+            <p className="text-xs 2xl:text-sm font-bold">Leagues</p>
+            <ChevronDown />
+          </button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent>
+          {leagues?.map((league: any, index: number) =>
+            (league.title as string).toLowerCase().includes("winner") ? null : (
+              <DropdownMenuItem
+                key={index}
+                onClick={() => changeLeagueTab(league.key)}
+              >
+                {league.title}
+              </DropdownMenuItem>
+            )
+          )}
+        </DropdownMenuContent>
+      </DropdownMenu>
+
+      {/* <div className="flex mt-4 items-center pb-3 max-w-full overflow-auto justify-evenly md:justify-start gap-2 mb-3">
+        {leagues?.map((league: any, index: number) =>
+          (league.title as string).toLowerCase().includes("winner") ? null : (
+            <button
+              key={index}
+              className={`border  
                 px-4 text-xs 2xl:text-lg py-2 flex w-full md:w-fit justify-center font-bold text-nowrap  items-center flex-grow md:flex-grow-0 rounded-full ${
                   leagueTab === league.key
                     ? "border-[#52FC18] bg-[#1A5B0B]"
-                    : " border-gray-700 text-[#848BAC] border-2"
+                    : " border-gray-200 text-[#848BAC] border-2"
                 } uppercase`}
-            onClick={() => changeLeagueTab(league.key)}
-          >
-            {league.title}
-          </button>
-        )
-      )}
-    </div>
+              onClick={() => changeLeagueTab(league.key)}
+            >
+              {league.title}
+            </button>
+          )
+        )}
+      </div> */}
+    </>
   );
 };

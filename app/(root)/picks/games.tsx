@@ -9,7 +9,11 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { ALL_STEP_CHALLENGES } from "@/lib/constants";
-import { americanToDecimalOdds, calculateToWin, getOriginalAccountValue } from "@/lib/utils";
+import {
+  americanToDecimalOdds,
+  calculateToWin,
+  getOriginalAccountValue,
+} from "@/lib/utils";
 import { LoaderCircle } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { toast } from "react-toastify";
@@ -41,7 +45,17 @@ interface Bet {
   league: string;
 }
 
-const GamesTable = ({ sportKey, oddsFormat, addBet, bets, setBets, setFeaturedMatch, account, tab, search }: GetGamesParams) => {
+const GamesTable = ({
+  sportKey,
+  oddsFormat,
+  addBet,
+  bets,
+  setBets,
+  setFeaturedMatch,
+  account,
+  tab,
+  search,
+}: GetGamesParams) => {
   // GAMES DATA
   const {
     data: games,
@@ -55,18 +69,23 @@ const GamesTable = ({ sportKey, oddsFormat, addBet, bets, setBets, setFeaturedMa
   useEffect(() => {
     refetch();
   }, [oddsFormat]);
-  
-  if(games) {
+
+  if (games) {
+    console.log(games[0]);
     setFeaturedMatch(games[0]);
   }
 
   // SEARCH FILTER
-  const filteredGames = useMemo(()=>{
-    if(!isLoading && search!=="") {
-      return games?.filter((game: any)=>game.home_team?.toLowerCase().includes(search.toLowerCase()) || game.away_team?.toLowerCase().includes(search.toLowerCase()))
+  const filteredGames = useMemo(() => {
+    if (!isLoading && search !== "") {
+      return games?.filter(
+        (game: any) =>
+          game.home_team?.toLowerCase().includes(search.toLowerCase()) ||
+          game.away_team?.toLowerCase().includes(search.toLowerCase())
+      );
     }
-    return games
-  }, [search, isLoading])
+    return games;
+  }, [search, isLoading]);
 
   //   BETS DATA
   const [oepnPickModal, setOpenPickModal] = useState(false);
@@ -93,7 +112,7 @@ const GamesTable = ({ sportKey, oddsFormat, addBet, bets, setBets, setFeaturedMa
     setSelectedTeam(null);
     setSelectedGame(null);
   };
-  
+
   const addGameToBetSlip = ({ game, home }: { game: any; home: boolean }) => {
     // e.preventDefault();
     let gameAlreadyInBetSlip = false;
@@ -109,16 +128,20 @@ const GamesTable = ({ sportKey, oddsFormat, addBet, bets, setBets, setFeaturedMa
     }
 
     const odds = home
-    ? game.bookmakers[0]?.markets[0]?.outcomes[0].price
-    : game.bookmakers[0]?.markets[0]?.outcomes[1].price
-    
-    const initialPick = getOriginalAccountValue(account) * ALL_STEP_CHALLENGES.minPickAmount;
+      ? game.bookmakers[0]?.markets[0]?.outcomes[0].price
+      : game.bookmakers[0]?.markets[0]?.outcomes[1].price;
+
+    const initialPick =
+      getOriginalAccountValue(account) * ALL_STEP_CHALLENGES.minPickAmount;
     const bet: Bet = {
       id: game.id,
       team: home ? game.home_team : game.away_team,
       odds: Number(odds),
       pick: initialPick,
-      toWin: oddsFormat === "decimal" ? initialPick * (Number(odds) - 1) : initialPick * (americanToDecimalOdds(Number(odds)) - 1),
+      toWin:
+        oddsFormat === "decimal"
+          ? initialPick * (Number(odds) - 1)
+          : initialPick * (americanToDecimalOdds(Number(odds)) - 1),
       oddsFormat: oddsFormat,
       home_team: game.home_team,
       away_team: game.away_team,
@@ -128,7 +151,6 @@ const GamesTable = ({ sportKey, oddsFormat, addBet, bets, setBets, setFeaturedMa
       event: `${game.home_team} vs ${game.away_team}`,
     };
 
-    
     // if bet id is already there, skip
     if (bets.find((b) => b.id === bet.id)) {
       return;
@@ -170,24 +192,24 @@ const GamesTable = ({ sportKey, oddsFormat, addBet, bets, setBets, setFeaturedMa
     <>
       <Table>
         {/* <TableCaption>A list of your recent invoices.</TableCaption> */}
-        <TableHeader className=" bg-[#333547] text-[#848BAC] border-none">
+        <TableHeader className=" bg-white text-[#848BAC] border-none">
           <TableRow className=" border-none">
-            <TableHead className="uppercase  font-bold text-start">
-              TIME
+            <TableHead className=" capitalize  font-bold text-center">
+              Time
             </TableHead>
-            <TableHead className="uppercase font-bold text-start">
-              TEAM & ODDS
+            <TableHead className=" capitalize font-bold text-center">
+              Team & Odds
             </TableHead>
           </TableRow>
         </TableHeader>
         <TableBody className=" ">
           {filteredGames.map((game: any) => (
             <TableRow key={game.id}>
-              <TableCell className=" font-semibold w-[160px] capitalize text-xs py-5 border-b border-gray-700 2xl:text-base text-start truncate">
+              <TableCell className=" font-semibold w-[160px] capitalize text-xs py-5 border-b border-gray-300 2xl:text-base text-start truncate">
                 {new Date(game.commence_time).toUTCString()}{" "}
               </TableCell>
 
-              <TableCell className=" w-full py-5 border-b border-gray-700 ">
+              <TableCell className=" w-full py-5 border-b border-gray-300 ">
                 <div
                   className={`flex w-full cursor-pointer items-center gap-2`}
                 >
@@ -195,11 +217,11 @@ const GamesTable = ({ sportKey, oddsFormat, addBet, bets, setBets, setFeaturedMa
                     onClick={() => addGameToBetSlip({ game, home: true })}
                     className={`  ${
                       findTeamInBets(game.home_team, game.id)
-                        ? " border border-primary-50/80 shadow shadow-green-700"
-                        : ""
+                        ? "  bg-vintage-50 text-white "
+                        : "bg-white"
                     }  flex w-full text-start justify-between
-                    items-center gap-5 p-3 text-sm  2xl:text-base  bg-[#272837]
-                    shadow-inner shadow-gray-600 rounded-lg`}
+                    items-center gap-5 px-4 p-3 text-sm  2xl:text-base
+                     rounded-full`}
                   >
                     <p className="flex items-center text-nowrap gap-1">
                       {game.home_team}
@@ -209,8 +231,8 @@ const GamesTable = ({ sportKey, oddsFormat, addBet, bets, setBets, setFeaturedMa
                     </span>
                   </div>
                   <p
-                    className={`flex justify-center font-bold text-nowrap items-center gap-2 p-3 text-sm   2xl:text-base 
-                    bg-[#272837] shadow-inner shadow-gray-600 rounded-lg`}
+                    className={`flex justify-center font-bold text-nowrap items-center gap-2 p-3 text-base font-serif   2xl:text-xl 
+                      text-vintage-50  `}
                   >
                     vs
                   </p>
@@ -218,11 +240,11 @@ const GamesTable = ({ sportKey, oddsFormat, addBet, bets, setBets, setFeaturedMa
                     onClick={() => addGameToBetSlip({ game, home: false })}
                     className={`${
                       findTeamInBets(game.away_team, game.id)
-                        ? " border border-primary-50/80 shadow shadow-green-700"
-                        : ""
+                        ? "  bg-vintage-50 text-white "
+                        : "bg-white"
                     }  flex w-full text-start justify-between
-                    items-center gap-5 p-3 text-sm  2xl:text-base  bg-[#272837]
-                    shadow-inner shadow-gray-600 rounded-lg`}
+                    items-center gap-5 px-4 p-3 text-sm  2xl:text-base
+                     rounded-full`}
                   >
                     <p className="flex items-center text-nowrap gap-1">
                       {game.away_team}
@@ -256,7 +278,7 @@ const GamesTable = ({ sportKey, oddsFormat, addBet, bets, setBets, setFeaturedMa
             </div>
             <button
               type="submit"
-              className=" p-3.5 uppercase font-bold inner-shadow text-xs rounded-lg"
+              className=" p-3.5  capitalize font-bold inner-shadow text-xs rounded-lg"
             >
               PLACE bet
             </button>
