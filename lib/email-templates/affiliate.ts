@@ -1,6 +1,7 @@
 export const getAffiliateSaleEmailTemplate = (name: string, amount: string) => {
-  const AFFILIATE_SALE_TITLE = "Welcome to the PicksHero!";
-  const AFFILIATE_SALE_TEMPLATE = (`
+  const AFFILIATE_SALE_TITLE = "Sale Headup!";
+   const AFFILIATE_SALE_TEMPLATE = (`
+
     <!doctype html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
   <head>
@@ -47,13 +48,11 @@ export const getAffiliateSaleEmailTemplate = (name: string, amount: string) => {
     <style type="text/css">
       @media only screen and (min-width:480px) {
         .mj-column-per-100 { width:100% !important; max-width: 100%; }
-.mj-column-per-50 { width:50% !important; max-width: 50%; }
 .mj-column-per-20 { width:20% !important; max-width: 20%; }
       }
     </style>
     <style media="screen and (min-width:480px)">
       .moz-text-html .mj-column-per-100 { width:100% !important; max-width: 100%; }
-.moz-text-html .mj-column-per-50 { width:50% !important; max-width: 50%; }
 .moz-text-html .mj-column-per-20 { width:20% !important; max-width: 20%; }
     </style>
     
@@ -69,220 +68,177 @@ export const getAffiliateSaleEmailTemplate = (name: string, amount: string) => {
   
     </style>
     <style type="text/css">
-    .background-text-header div {
-      	background: rgba(255, 255, 255, 0.2) !important;
-      	 border: 2px solid #050614;
-  	     border-radius: 5px!important;
-     		padding:10px !important;
-      }
-      .rounded-border{
-      		background: rgba(0, 255, 0, 0.08) !important;
-      	 border: 2px solid #53FC18;
-  	     border-radius: 5px;
-      
-      }
- 
-      
-      .heder-media-q{
-				background-size="contain" !important;
-     }
-      
-      .sub-title-box{
-      
-      background: rgba(25, 25, 255, 0.2) !important;
-      
-      }
-      .sub-title{
-      
-      font-size:12px !important;
-      
-      width:230px;
-  	  border-radius: 5px !important;
+    *{
+      padding:0px;
+      margin:0px auto;
+      font-family: 'Poppins';
       }
       
-      div.footer-icon{
-      align:center;
-      padding=0px 100px !important;
-       width:300px;!important;
-      }
+      body(
+      background-color: #FFFFFF;
+      )
       
-   
-      
-      .gaped-boder-box {
-  	
-      border: 2px solid #53FC18;
-  	  border-radius: 5px !important;
-      width:200px !important;
-      height:200px !important;
-      padding:10px !important;
-      }
       .green-border{
-      /*border: 3px solid #050614;
-  	  border-radius: 30px !important;
-      height:200px !important;*/
-      
-      background-image:    url("https://res.cloudinary.com/unionwealthmanagement/image/upload/v1729372393/email%20images/background_with_boarder_cchv4y.png");
+     
+    
  			background-color: #050614;
       background-position: center;
       background-repeat: no-repeat;
       padding:5px;
       background-size: contain;
       
+      }
+      
+      .borded-collomn{
+      margin:3px;
+      }
+      
+      .footer-icons{
+      
+      width:250px;
       }
       
       .footer-background{
-      url("https://res.cloudinary.com/unionwealthmanagement/image/upload/v1729518924/email%20images/y4dxmcfl3y84tkelv49t.png");
- 			background-color: #050614;
-      background-position: center;
-      background-repeat: no-repeat;
-      padding:5px;
-      background-size: cover;
-      
+   
+      padding:0px 10px;
       }
       
-      
-      .img-container{
-      height:250px !important;
- 			background-color: #050614;
-      background-repeat: no-repeat;
-      padding= 10px;
-      background-size: contain;
-      }
-      .toptitlewithbg{
-      background-color: rgba(255, 255, 255, 0.2);
-      }
-      
-      .phase1img{
-      background-image:    url("https://res.cloudinary.com/unionwealthmanagement/image/upload/v1729413297/email%20images/Passed%20phase%201/esnkkyheuztg1mm7q6m6.png");
-      }
-      .phase2img{
-      background-image:    url("https://res.cloudinary.com/unionwealthmanagement/image/upload/v1729422926/email%20images/phase%202/wususiu91gwfdfhn3kro.png");
-      }
+      .footer-boarder{
     
+      border:1px solid #2160EB;
+      border-radius: 15px;
+      padding-bottom:10px;
       
-@media (min-width:440px)  { 
+      background-image: url('https://res.cloudinary.com/unionwealthmanagement/image/upload/v1731607723/Vantage/Html%20Email%20Images/footer_bg_2_gtk0ic.png');
+      background-size: contain;
+      background-repeat: no-repeat;
+    
+      background-position: right top;
+      }
+      @media (min-width:440px)  { 
       // phone display
+       
       
-         .congrat-title{
-      	font-size:8px !important;
       }
-      
-        .img-container{
-          padding-top:50px !important;
-        }
-        .sub-title{
-      
-         font-size:12px !important;
-         background: rgba(255, 255, 255, 0.2) !important;
-         width:250px !important;
-  	     border-radius: 5px !important;
-        }
-      
-      	.congrat-title span{
-      	  font-size:18px !important;
-          padding:10px;
-          border-radius: 5px;
-      		
-        }
-        .credit-text{
-      	  padding-top:50px;
-        }
-      .title-text-size{
-          font-size:18px !important;
-        }
-      
-    	 .wecome-live-img2{
-      		display:none;
-        }
-      .wecome-live-img1{
-      		display:inline;
-        }
-      .image-fullwidth{
-      	padding:5px 0px;
-      }
-      .login-btn-resize{
-       width: 150px;
-      }
-      
-      
-    }
       
 	
       
       
-@media (max-width:441px)  { 
+      @media (max-width:441px)  { 
       //desktop size
-      .congrat-title{
-      	font-size:18px !important;
-      }
-         
-       .congrat-title span{
-      	  font-size:12px !important;
-      		padding:10px;
-          border-radius: 5px;
-        }
-      
-       .img-container{
-          //padding-top:50px !important;
-      		font-size:12px !important;
-        }
-      
-        .wecome-live-img1{
-      		display:none;
-        }
-      	.wecome-live-img2{
-      		display:inline;
-        }
-      
-       .image-fullwidth{
-      	padding:20px 0px;
-      	}
-      
+   
       
       }
     </style>
     
   </head>
-  <body style="word-spacing:normal;background-color:#050614;">
+  <body style="word-spacing:normal;background-color:#ffffff;">
     
     
       <div
-         style="background-color:#050614;"
+         style="background-color:#ffffff;"
       >
         
       
-      <!--[if mso | IE]><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" bgcolor="#050614" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
-    
-      
-      <div  style="background:#050614;background-color:#050614;margin:0px auto;max-width:600px;">
-        
+      <!--[if mso | IE]><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><v:rect style="width:600px;" xmlns:v="urn:schemas-microsoft-com:vml" fill="true" stroke="false"><v:fill origin="0, -0.5" position="0, -0.5" src="https://res.cloudinary.com/unionwealthmanagement/image/upload/v1731614711/Vantage/Html%20Email%20Images/hero%20image/Affiliate_Sale_mhgrr4.png" type="frame" size="1,1" aspect="atmost" /><v:textbox style="mso-fit-shape-to-text:true" inset="0,0,0,0"><![endif]-->
+          
+      <div  style="background:url('https://res.cloudinary.com/unionwealthmanagement/image/upload/v1731614711/Vantage/Html%20Email%20Images/hero%20image/Affiliate_Sale_mhgrr4.png') center top / contain no-repeat;background-position:center top;background-repeat:no-repeat;background-size:contain;margin:0px auto;max-width:600px;">
+        <div  style="line-height:0;font-size:0;">
         <table
-           align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="background:#050614;background-color:#050614;width:100%;"
+           align="center" background="https://res.cloudinary.com/unionwealthmanagement/image/upload/v1731614711/Vantage/Html%20Email%20Images/hero%20image/Affiliate_Sale_mhgrr4.png" border="0" cellpadding="0" cellspacing="0" role="presentation" style="background:url('https://res.cloudinary.com/unionwealthmanagement/image/upload/v1731614711/Vantage/Html%20Email%20Images/hero%20image/Affiliate_Sale_mhgrr4.png') center top / contain no-repeat;background-position:center top;background-repeat:no-repeat;background-size:contain;width:100%;"
         >
           <tbody>
             <tr>
               <td
-                 style="direction:ltr;font-size:0px;padding:20px 0;padding-bottom:0px;text-align:center;"
+                 style="direction:ltr;font-size:0px;padding:20px 0;padding-top:50%;text-align:center;"
               >
-                <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="width:600px;" ><![endif]-->
+                <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:top;width:600px;" ><![endif]-->
             
       <div
-         class="mj-column-per-100 mj-outlook-group-fix" style="font-size:0;line-height:0;text-align:left;display:inline-block;width:100%;direction:ltr;"
-      >
-        <!--[if mso | IE]><table border="0" cellpadding="0" cellspacing="0" role="presentation" ><tr><td style="vertical-align:middle;width:300px;" ><![endif]-->
-                
-      <div
-         class="mj-column-per-50 mj-outlook-group-fix" style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:middle;width:50%;"
+         class="mj-column-per-100 mj-outlook-group-fix" style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;"
       >
         
       <table
-         border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:middle;" width="100%"
+         border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:top;" width="100%"
       >
         <tbody>
           
               <tr>
                 <td
-                   align="center" style="font-size:0px;padding:10px 25px;word-break:break-word;"
+                   align="left" style="font-size:0px;padding:15% 15% 15% 15%;word-break:break-word;"
+                >
+                  
+      <div
+         style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:16px;font-style:Poppins;font-weight:300;line-height:1.4;text-align:left;color:#001E45;"
+      >Hey ${name}
+          </br></br>
+Your affiliate link has been made by a user, and has successfully ordered from our platform. Please view your dashboard to see the earnings you made from the sale!</br></br>
+<span style="color:#2160EB"> Keep up the great work!</span></div>
+    
+                </td>
+              </tr>
+            
+        </tbody>
+      </table>
+    
+      </div>
+    
+          <!--[if mso | IE]></td></tr></table><![endif]-->
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        </div>
+      </div>
+    
+        <!--[if mso | IE]></v:textbox></v:rect></td></tr></table><table align="center" border="0" cellpadding="0" cellspacing="0" class="footer-background-outlook" role="presentation" style="width:600px;" width="600" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
+    
+      
+      <div  class="footer-background" style="margin:0px auto;max-width:600px;">
+        
+        <table
+           align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="width:100%;"
+        >
+          <tbody>
+            <tr>
+              <td
+                 style="direction:ltr;font-size:0px;padding:20px 0;text-align:center;"
+              >
+                <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><![endif]-->
+                  
+      <div class="footer-boarder">
+          <!--[if mso | IE]><tr><td class="footer-icons-outlook" width="600px" ><table align="center" border="0" cellpadding="0" cellspacing="0" class="footer-icons-outlook" role="presentation" style="width:600px;" width="600" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
+    
+      
+      <div  class="footer-icons" style="margin:0px auto;max-width:600px;">
+        
+        <table
+           align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="width:100%;"
+        >
+          <tbody>
+            <tr>
+              <td
+                 style="direction:ltr;font-size:0px;padding:40px 10px 10px 10px;text-align:center;"
+              >
+                <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="width:580px;" ><![endif]-->
+            
+      <div
+         class="mj-column-per-100 mj-outlook-group-fix" style="font-size:0;line-height:0;text-align:left;display:inline-block;width:100%;direction:ltr;"
+      >
+        <!--[if mso | IE]><table border="0" cellpadding="0" cellspacing="0" role="presentation" ><tr><td style="vertical-align:top;width:116px;" ><![endif]-->
+                
+      <div
+         class="mj-column-per-20 mj-outlook-group-fix" style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:20%;"
+      >
+        
+      <table
+         border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:top;" width="100%"
+      >
+        <tbody>
+          
+              <tr>
+                <td
+                   align="center" style="font-size:0px;padding:0px;word-break:break-word;"
                 >
                   
       <table
@@ -290,10 +246,10 @@ export const getAffiliateSaleEmailTemplate = (name: string, amount: string) => {
       >
         <tbody>
           <tr>
-            <td  style="width:198px;">
+            <td  style="width:38px;">
               
       <img
-         height="auto" src="https://res.cloudinary.com/unionwealthmanagement/image/upload/v1729212110/Logo_ej82qr.png" style="border:0;display:block;outline:none;text-decoration:none;height:auto;width:100%;font-size:13px;" width="198"
+         height="auto" src="https://res.cloudinary.com/unionwealthmanagement/image/upload/v1731608062/Vantage/Html%20Email%20Images/discord_idon_gs2jdu.png" style="border:0;display:block;outline:none;text-decoration:none;height:auto;width:100%;font-size:13px;" width="38"
       />
     
             </td>
@@ -309,20 +265,20 @@ export const getAffiliateSaleEmailTemplate = (name: string, amount: string) => {
     
       </div>
     
-              <!--[if mso | IE]></td><td style="vertical-align:middle;width:300px;" ><![endif]-->
+              <!--[if mso | IE]></td><td style="vertical-align:top;width:116px;" ><![endif]-->
                 
       <div
-         class="mj-column-per-50 mj-outlook-group-fix" style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:middle;width:50%;"
+         class="mj-column-per-20 mj-outlook-group-fix" style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:20%;"
       >
         
       <table
-         border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:middle;" width="100%"
+         border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:top;" width="100%"
       >
         <tbody>
           
               <tr>
                 <td
-                   align="center" style="font-size:0px;padding:10px 25px;word-break:break-word;"
+                   align="center" style="font-size:0px;padding:0px;word-break:break-word;"
                 >
                   
       <table
@@ -330,18 +286,132 @@ export const getAffiliateSaleEmailTemplate = (name: string, amount: string) => {
       >
         <tbody>
           <tr>
-            <td  style="width:120px;">
+            <td  style="width:38px;">
               
-        <a
-           href="#" target="_blank"
-        >
-          
       <img
-         height="auto" src="https://res.cloudinary.com/unionwealthmanagement/image/upload/v1729212151/Login_btn_1_gtyoob.png" style="border:0;display:block;outline:none;text-decoration:none;height:auto;width:100%;font-size:13px;" width="120"
+         height="auto" src="https://res.cloudinary.com/unionwealthmanagement/image/upload/v1731608060/Vantage/Html%20Email%20Images/insta_icon_vshcy4.png" style="border:0;display:block;outline:none;text-decoration:none;height:auto;width:100%;font-size:13px;" width="38"
       />
     
-        </a>
-      
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    
+                </td>
+              </tr>
+            
+        </tbody>
+      </table>
+    
+      </div>
+    
+              <!--[if mso | IE]></td><td style="vertical-align:top;width:116px;" ><![endif]-->
+                
+      <div
+         class="mj-column-per-20 mj-outlook-group-fix" style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:20%;"
+      >
+        
+      <table
+         border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:top;" width="100%"
+      >
+        <tbody>
+          
+              <tr>
+                <td
+                   align="center" style="font-size:0px;padding:0px;word-break:break-word;"
+                >
+                  
+      <table
+         border="0" cellpadding="0" cellspacing="0" role="presentation" style="border-collapse:collapse;border-spacing:0px;"
+      >
+        <tbody>
+          <tr>
+            <td  style="width:38px;">
+              
+      <img
+         height="auto" src="https://res.cloudinary.com/unionwealthmanagement/image/upload/v1731608059/Vantage/Html%20Email%20Images/youtube_icon_klssnv.png" style="border:0;display:block;outline:none;text-decoration:none;height:auto;width:100%;font-size:13px;" width="38"
+      />
+    
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    
+                </td>
+              </tr>
+            
+        </tbody>
+      </table>
+    
+      </div>
+    
+              <!--[if mso | IE]></td><td style="vertical-align:top;width:116px;" ><![endif]-->
+                
+      <div
+         class="mj-column-per-20 mj-outlook-group-fix" style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:20%;"
+      >
+        
+      <table
+         border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:top;" width="100%"
+      >
+        <tbody>
+          
+              <tr>
+                <td
+                   align="center" style="font-size:0px;padding:0px;word-break:break-word;"
+                >
+                  
+      <table
+         border="0" cellpadding="0" cellspacing="0" role="presentation" style="border-collapse:collapse;border-spacing:0px;"
+      >
+        <tbody>
+          <tr>
+            <td  style="width:38px;">
+              
+      <img
+         height="auto" src="https://res.cloudinary.com/unionwealthmanagement/image/upload/v1731608058/Vantage/Html%20Email%20Images/twwter_x_icon_hkyu0w.png" style="border:0;display:block;outline:none;text-decoration:none;height:auto;width:100%;font-size:13px;" width="38"
+      />
+    
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    
+                </td>
+              </tr>
+            
+        </tbody>
+      </table>
+    
+      </div>
+    
+              <!--[if mso | IE]></td><td style="vertical-align:top;width:116px;" ><![endif]-->
+                
+      <div
+         class="mj-column-per-20 mj-outlook-group-fix" style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:20%;"
+      >
+        
+      <table
+         border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:top;" width="100%"
+      >
+        <tbody>
+          
+              <tr>
+                <td
+                   align="center" style="font-size:0px;padding:0px;word-break:break-word;"
+                >
+                  
+      <table
+         border="0" cellpadding="0" cellspacing="0" role="presentation" style="border-collapse:collapse;border-spacing:0px;"
+      >
+        <tbody>
+          <tr>
+            <td  style="width:38px;">
+              
+      <img
+         height="auto" src="https://res.cloudinary.com/unionwealthmanagement/image/upload/v1731608057/Vantage/Html%20Email%20Images/telegram_icon_cobzqx.png" style="border:0;display:block;outline:none;text-decoration:none;height:auto;width:100%;font-size:13px;" width="38"
+      />
+    
             </td>
           </tr>
         </tbody>
@@ -367,328 +437,13 @@ export const getAffiliateSaleEmailTemplate = (name: string, amount: string) => {
       </div>
     
       
-      <!--[if mso | IE]></td></tr></table><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
+      <!--[if mso | IE]></td></tr></table></td></tr><tr><td class="" width="600px" ><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
     
       
       <div  style="margin:0px auto;max-width:600px;">
         
         <table
            align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="width:100%;"
-        >
-          <tbody>
-            <tr>
-              <td
-                 style="direction:ltr;font-size:0px;padding:20px 0;padding-bottom:0px;text-align:center;"
-              >
-                <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:top;width:600px;" ><![endif]-->
-            
-      <div
-         class="mj-column-per-100 mj-outlook-group-fix" style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;"
-      >
-        
-      <table
-         border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:top;" width="100%"
-      >
-        <tbody>
-          
-              <tr>
-                <td
-                   align="center" style="font-size:0px;padding:0px;word-break:break-word;"
-                >
-                  
-      <table
-         border="0" cellpadding="0" cellspacing="0" role="presentation" style="border-collapse:collapse;border-spacing:0px;" class="mj-full-width-mobile"
-      >
-        <tbody>
-          <tr>
-            <td  style="width:600px;" class="mj-full-width-mobile">
-              
-      <img
-         height="auto" src="https://res.cloudinary.com/unionwealthmanagement/image/upload/v1729453205/email%20images/phase%202/knclujtfbtkxhpavybf8.png" style="border:0;display:block;outline:none;text-decoration:none;height:auto;width:100%;font-size:13px;" width="600"
-      />
-    
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    
-                </td>
-              </tr>
-            
-        </tbody>
-      </table>
-    
-      </div>
-    
-          <!--[if mso | IE]></td></tr></table><![endif]-->
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        
-      </div>
-    
-      
-      <!--[if mso | IE]></td></tr></table><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
-    
-      
-      <div  style="margin:0px auto;max-width:600px;">
-        
-        <table
-           align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="width:100%;"
-        >
-          <tbody>
-            <tr>
-              <td
-                 style="direction:ltr;font-size:0px;padding:20px 0;padding-top:0px;text-align:center;"
-              >
-                <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:top;width:600px;" ><![endif]-->
-            
-      <div
-         class="mj-column-per-100 mj-outlook-group-fix" style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;"
-      >
-        
-      <table
-         border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:top;" width="100%"
-      >
-        <tbody>
-          
-              <tr>
-                <td
-                   align="center" class="congrat-title" style="font-size:0px;padding:10px 25px;padding-bottom:5px;word-break:break-word;"
-                >
-                  
-      <div
-         style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;font-style:Poppins;font-weight:800;line-height:1;text-align:center;text-transform:uppercase;color:#ffffff;"
-      ><span style="background: rgba(255, 255, 255, 0.2);padding:10px; border-radius:5px;"> WOOHOO CONGRATS</span></div>
-    
-                </td>
-              </tr>
-            
-        </tbody>
-      </table>
-    
-      </div>
-    
-          <!--[if mso | IE]></td></tr></table><![endif]-->
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        
-      </div>
-    
-      
-      <!--[if mso | IE]></td></tr></table><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
-    
-      
-      <div  style="margin:0px auto;max-width:600px;">
-        
-        <table
-           align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="width:100%;"
-        >
-          <tbody>
-            <tr>
-              <td
-                 style="direction:ltr;font-size:0px;padding:20px 0;text-align:center;"
-              >
-                <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:top;width:600px;" ><![endif]-->
-            
-      <div
-         class="mj-column-per-100 mj-outlook-group-fix" style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;"
-      >
-        
-      <table
-         border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:top;" width="100%"
-      >
-        <tbody>
-          
-              <tr>
-                <td
-                   align="center" style="font-size:0px;padding:0px 10px;word-break:break-word;"
-                >
-                  
-      <div
-         style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;font-style:Poppins;font-weight:100;line-height:1.6;text-align:center;color:#ffffff;"
-      >Hey ${name},</br></div>
-    
-                </td>
-              </tr>
-            
-              <tr>
-                <td
-                   align="center" style="font-size:0px;padding:0px 20px;word-break:break-word;"
-                >
-                  
-      <div
-         style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;font-style:Poppins;font-weight:100;line-height:1.6;text-align:center;color:#ffffff;"
-      >Your affiliate link has been made by a user, and has successfully ordered from our platform. Please view your dashboard to see the earnings you made from the sale!</div>
-    
-                </td>
-              </tr>
-            
-              <tr>
-                <td
-                   align="center" style="font-size:0px;padding:0px 10px;word-break:break-word;"
-                >
-                  
-      <div
-         style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;font-style:Poppins;font-weight:100;line-height:1.6;text-align:center;color:#ffffff;"
-      ></br>
-          <span style="color:#53FC18;">Keep up the great work!</span></div>
-    
-                </td>
-              </tr>
-            
-        </tbody>
-      </table>
-    
-      </div>
-    
-          <!--[if mso | IE]></td></tr></table><![endif]-->
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        
-      </div>
-    
-      
-      <!--[if mso | IE]></td></tr></table><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
-    
-      
-      <div  style="margin:0px auto;max-width:600px;">
-        
-        <table
-           align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="width:100%;"
-        >
-          <tbody>
-            <tr>
-              <td
-                 style="direction:ltr;font-size:0px;padding:0px;text-align:center;"
-              >
-                <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:top;width:600px;" ><![endif]-->
-            
-      <div
-         class="mj-column-per-100 mj-outlook-group-fix" style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;"
-      >
-        
-      <table
-         border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:top;" width="100%"
-      >
-        <tbody>
-          
-              <tr>
-                <td
-                   align="center" style="font-size:0px;padding:10px 25px;word-break:break-word;"
-                >
-                  
-      <table
-         border="0" cellpadding="0" cellspacing="0" role="presentation" style="border-collapse:collapse;border-spacing:0px;"
-      >
-        <tbody>
-          <tr>
-            <td  style="width:220px;">
-              
-      <img
-         height="auto" src="https://res.cloudinary.com/unionwealthmanagement/image/upload/v1729455167/email%20images/Affiliate%20sale/itiz3z1dra0odf3ug2pe.png" style="border:0;display:block;outline:none;text-decoration:none;height:auto;width:100%;font-size:13px;" width="220"
-      />
-    
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    
-                </td>
-              </tr>
-            
-        </tbody>
-      </table>
-    
-      </div>
-    
-          <!--[if mso | IE]></td></tr></table><![endif]-->
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        
-      </div>
-    
-      
-      <!--[if mso | IE]></td></tr></table><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
-    
-      
-      <div  style="margin:0px auto;max-width:600px;">
-        
-        <table
-           align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="width:100%;"
-        >
-          <tbody>
-            <tr>
-              <td
-                 style="direction:ltr;font-size:0px;padding:0px;text-align:center;"
-              >
-                <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:top;width:600px;" ><![endif]-->
-            
-      <div
-         class="mj-column-per-100 mj-outlook-group-fix" style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;"
-      >
-        
-      <table
-         border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:top;" width="100%"
-      >
-        <tbody>
-          
-              <tr>
-                <td
-                   align="center" style="font-size:0px;padding:0px;word-break:break-word;"
-                >
-                  
-      <table
-         border="0" cellpadding="0" cellspacing="0" role="presentation" style="border-collapse:collapse;border-spacing:0px;"
-      >
-        <tbody>
-          <tr>
-            <td  style="width:270px;">
-              
-      <img
-         height="auto" src="https://res.cloudinary.com/unionwealthmanagement/image/upload/v1729455167/email%20images/Affiliate%20sale/zgom4jhjfwkuhlx7ayza.png" style="border:0;display:block;outline:none;text-decoration:none;height:auto;width:100%;font-size:13px;" width="270"
-      />
-    
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    
-                </td>
-              </tr>
-            
-        </tbody>
-      </table>
-    
-      </div>
-    
-          <!--[if mso | IE]></td></tr></table><![endif]-->
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        
-      </div>
-    
-      
-      <!--[if mso | IE]></td></tr></table><![endif]-->
-    
-    <div class="footer-background">
-      
-      <!--[if mso | IE]><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" bgcolor="#050614" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
-    
-      
-      <div  style="background:#050614;background-color:#050614;margin:0px auto;max-width:600px;">
-        
-        <table
-           align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="background:#050614;background-color:#050614;width:100%;"
         >
           <tbody>
             <tr>
@@ -712,7 +467,7 @@ export const getAffiliateSaleEmailTemplate = (name: string, amount: string) => {
                 >
                   
       <div
-         style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:12px;font-style:Poppins;font-weight:600;line-height:1;text-align:center;color:#ffffff;"
+         style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:12px;font-style:Poppins;font-weight:600;line-height:1;text-align:center;color:#000000;"
       >Contact</div>
     
                 </td>
@@ -732,13 +487,13 @@ export const getAffiliateSaleEmailTemplate = (name: string, amount: string) => {
       </div>
     
       
-      <!--[if mso | IE]></td></tr></table><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" bgcolor="#050614" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
+      <!--[if mso | IE]></td></tr></table></td></tr><tr><td class="" width="600px" ><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
     
       
-      <div  style="background:#050614;background-color:#050614;margin:0px auto;max-width:600px;">
+      <div  style="margin:0px auto;max-width:600px;">
         
         <table
-           align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="background:#050614;background-color:#050614;width:100%;"
+           align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="width:100%;"
         >
           <tbody>
             <tr>
@@ -780,7 +535,7 @@ export const getAffiliateSaleEmailTemplate = (name: string, amount: string) => {
                 <td  style="font-size:0;height:20px;vertical-align:middle;width:20px;">
                   
                     <img
-                       height="20" src="https://res.cloudinary.com/unionwealthmanagement/image/upload/v1729213072/Message_fill_smaza3.png" style="border-radius:3px;display:block;" width="20"
+                       height="20" src="https://res.cloudinary.com/unionwealthmanagement/image/upload/v1731604551/Vantage/Html%20Email%20Images/email_icon_zjloh5.png" style="border-radius:3px;display:block;" width="20"
                     />
                   
                 </td>
@@ -791,7 +546,7 @@ export const getAffiliateSaleEmailTemplate = (name: string, amount: string) => {
         
           <td  style="vertical-align:middle;">
             <span
-                     style="color:#ffffff;font-size:13px;font-family:Ubuntu, Helvetica, Arial, sans-serif;line-height:22px;text-decoration:none;">
+                     style="color:#000000;font-size:13px;font-family:Ubuntu, Helvetica, Arial, sans-serif;line-height:22px;text-decoration:none;">
               support@pickshero.io
             </span>
           </td>
@@ -820,317 +575,34 @@ export const getAffiliateSaleEmailTemplate = (name: string, amount: string) => {
       </div>
     
       
-      <!--[if mso | IE]></td></tr></table><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" bgcolor="#050614" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><v:rect style="width:600px;" xmlns:v="urn:schemas-microsoft-com:vml" fill="true" stroke="false"><v:fill origin="-0.5, 0" position="-0.5, 0" src="https://res.cloudinary.com/unionwealthmanagement/image/upload/v1729520077/email%20images/ap6zvxwkb9p9pem6mjoc.png" color="#050614" type="frame" size="52px" aspect="atmost" /><v:textbox style="mso-fit-shape-to-text:true" inset="0,0,0,0"><![endif]-->
-          
-      <div  style="background:#050614 url('https://res.cloudinary.com/unionwealthmanagement/image/upload/v1729520077/email%20images/ap6zvxwkb9p9pem6mjoc.png') left center / 52px no-repeat;background-position:left center;background-repeat:no-repeat;background-size:52px;margin:0px auto;max-width:600px;">
-        <div  style="line-height:0;font-size:0;">
-        <table
-           align="center" background="https://res.cloudinary.com/unionwealthmanagement/image/upload/v1729520077/email%20images/ap6zvxwkb9p9pem6mjoc.png" border="0" cellpadding="0" cellspacing="0" role="presentation" style="background:#050614 url('https://res.cloudinary.com/unionwealthmanagement/image/upload/v1729520077/email%20images/ap6zvxwkb9p9pem6mjoc.png') left center / 52px no-repeat;background-position:left center;background-repeat:no-repeat;background-size:52px;width:100%;"
-        >
-          <tbody>
-            <tr>
-              <td
-                 style="direction:ltr;font-size:0px;padding:20px 60px;text-align:center;"
-              >
-                <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="footer-icon-outlook" style="width:480px;" ><![endif]-->
-            
-      <div
-         class="mj-column-per-100 mj-outlook-group-fix footer-icon" style="font-size:0;line-height:0;text-align:left;display:inline-block;width:100%;direction:ltr;"
-      >
-        <!--[if mso | IE]><table border="0" cellpadding="0" cellspacing="0" role="presentation" ><tr><td style="vertical-align:top;width:96px;" ><![endif]-->
-                
-      <div
-         class="mj-column-per-20 mj-outlook-group-fix" style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:20%;"
-      >
-        
-      <table
-         border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:top;" width="100%"
-      >
-        <tbody>
-          
-              <tr>
-                <td
-                   align="center" style="font-size:0px;padding:0px;word-break:break-word;"
-                >
-                  
-      <table
-         border="0" cellpadding="0" cellspacing="0" role="presentation" style="border-collapse:collapse;border-spacing:0px;"
-      >
-        <tbody>
-          <tr>
-            <td  style="width:38px;">
-              
-      <img
-         height="auto" src="https://res.cloudinary.com/unionwealthmanagement/image/upload/v1729213128/Social_Icon_disscord_pun9p5.png" style="border:0;display:block;outline:none;text-decoration:none;height:auto;width:100%;font-size:13px;" width="38"
-      />
-    
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    
-                </td>
-              </tr>
-            
-        </tbody>
-      </table>
-    
-      </div>
-    
-              <!--[if mso | IE]></td><td style="vertical-align:top;width:96px;" ><![endif]-->
-                
-      <div
-         class="mj-column-per-20 mj-outlook-group-fix" style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:20%;"
-      >
-        
-      <table
-         border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:top;" width="100%"
-      >
-        <tbody>
-          
-              <tr>
-                <td
-                   align="center" style="font-size:0px;padding:0;word-break:break-word;"
-                >
-                  
-      <table
-         border="0" cellpadding="0" cellspacing="0" role="presentation" style="border-collapse:collapse;border-spacing:0px;"
-      >
-        <tbody>
-          <tr>
-            <td  style="width:38px;">
-              
-      <img
-         height="auto" src="https://res.cloudinary.com/unionwealthmanagement/image/upload/v1729213127/Social_Icon_insta_kcgtat.png" style="border:0;display:block;outline:none;text-decoration:none;height:auto;width:100%;font-size:13px;" width="38"
-      />
-    
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    
-                </td>
-              </tr>
-            
-        </tbody>
-      </table>
-    
-      </div>
-    
-              <!--[if mso | IE]></td><td style="vertical-align:top;width:96px;" ><![endif]-->
-                
-      <div
-         class="mj-column-per-20 mj-outlook-group-fix" style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:20%;"
-      >
-        
-      <table
-         border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:top;" width="100%"
-      >
-        <tbody>
-          
-              <tr>
-                <td
-                   align="center" style="font-size:0px;padding:0;word-break:break-word;"
-                >
-                  
-      <table
-         border="0" cellpadding="0" cellspacing="0" role="presentation" style="border-collapse:collapse;border-spacing:0px;"
-      >
-        <tbody>
-          <tr>
-            <td  style="width:38px;">
-              
-      <img
-         height="auto" src="https://res.cloudinary.com/unionwealthmanagement/image/upload/v1729213130/Social_Icon_Youtube_ko4xg5.png" style="border:0;display:block;outline:none;text-decoration:none;height:auto;width:100%;font-size:13px;" width="38"
-      />
-    
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    
-                </td>
-              </tr>
-            
-        </tbody>
-      </table>
-    
-      </div>
-    
-              <!--[if mso | IE]></td><td style="vertical-align:top;width:96px;" ><![endif]-->
-                
-      <div
-         class="mj-column-per-20 mj-outlook-group-fix" style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:20%;"
-      >
-        
-      <table
-         border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:top;" width="100%"
-      >
-        <tbody>
-          
-              <tr>
-                <td
-                   align="center" style="font-size:0px;padding:0;word-break:break-word;"
-                >
-                  
-      <table
-         border="0" cellpadding="0" cellspacing="0" role="presentation" style="border-collapse:collapse;border-spacing:0px;"
-      >
-        <tbody>
-          <tr>
-            <td  style="width:38px;">
-              
-      <img
-         height="auto" src="https://res.cloudinary.com/unionwealthmanagement/image/upload/v1729213129/Social_Icon_x_xxtorz.png" style="border:0;display:block;outline:none;text-decoration:none;height:auto;width:100%;font-size:13px;" width="38"
-      />
-    
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    
-                </td>
-              </tr>
-            
-        </tbody>
-      </table>
-    
-      </div>
-    
-              <!--[if mso | IE]></td><td style="vertical-align:top;width:96px;" ><![endif]-->
-                
-      <div
-         class="mj-column-per-20 mj-outlook-group-fix" style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:20%;"
-      >
-        
-      <table
-         border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:top;" width="100%"
-      >
-        <tbody>
-          
-              <tr>
-                <td
-                   align="center" style="font-size:0px;padding:0;word-break:break-word;"
-                >
-                  
-      <table
-         border="0" cellpadding="0" cellspacing="0" role="presentation" style="border-collapse:collapse;border-spacing:0px;"
-      >
-        <tbody>
-          <tr>
-            <td  style="width:38px;">
-              
-      <img
-         height="auto" src="https://res.cloudinary.com/unionwealthmanagement/image/upload/v1729213131/Social_Icon_telegram_plb0cw.png" style="border:0;display:block;outline:none;text-decoration:none;height:auto;width:100%;font-size:13px;" width="38"
-      />
-    
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    
-                </td>
-              </tr>
-            
-        </tbody>
-      </table>
-    
-      </div>
-    
-              <!--[if mso | IE]></td></tr></table><![endif]-->
-      </div>
-    
-          <!--[if mso | IE]></td></tr></table><![endif]-->
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        </div>
-      </div>
-    
-        <!--[if mso | IE]></v:textbox></v:rect></td></tr></table><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" bgcolor="#050614" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
+      <!--[if mso | IE]></td></tr></table></td></tr><tr><td class="" width="600px" ><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
     
       
-      <div  style="background:#050614;background-color:#050614;margin:0px auto;max-width:600px;">
+      <div  style="margin:0px auto;max-width:600px;">
         
         <table
-           align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="background:#050614;background-color:#050614;width:100%;"
+           align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="width:100%;"
         >
           <tbody>
             <tr>
               <td
-                 style="direction:ltr;font-size:0px;padding:0px;text-align:center;"
+                 style="direction:ltr;font-size:0px;padding:10px 40px;text-align:center;"
               >
-                <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:top;width:600px;" ><![endif]-->
+                <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:top;width:520px;" ><![endif]-->
             
       <div
          class="mj-column-per-100 mj-outlook-group-fix" style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;"
       >
         
       <table
-         border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:top;" width="100%"
-      >
-        <tbody>
-          
-              <tr>
-                <td
-                   align="center" style="font-size:0px;padding:10px 25px;word-break:break-word;"
-                >
-                  
-      <table
-         border="0" cellpadding="0" cellspacing="0" role="presentation" style="border-collapse:collapse;border-spacing:0px;"
+         border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%"
       >
         <tbody>
           <tr>
-            <td  style="width:550px;">
+            <td  style="background-color:#02316E;border-radius:10px;vertical-align:top;padding:0px;">
               
-      <img
-         height="auto" src="https://res.cloudinary.com/unionwealthmanagement/image/upload/v1729213286/pickshero_aubaeh.png" style="border:0;display:block;outline:none;text-decoration:none;height:auto;width:100%;font-size:13px;" width="550"
-      />
-    
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    
-                </td>
-              </tr>
-            
-        </tbody>
-      </table>
-    
-      </div>
-    
-          <!--[if mso | IE]></td></tr></table><![endif]-->
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        
-      </div>
-    
-      
-      <!--[if mso | IE]></td></tr></table><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" bgcolor="#050614" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
-    
-      
-      <div  style="background:#050614;background-color:#050614;margin:0px auto;max-width:600px;">
-        
-        <table
-           align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="background:#050614;background-color:#050614;width:100%;"
-        >
-          <tbody>
-            <tr>
-              <td
-                 style="direction:ltr;font-size:0px;padding:0px;text-align:center;"
-              >
-                <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="background-text-header-outlook" style="vertical-align:top;width:600px;" ><![endif]-->
-            
-      <div
-         class="mj-column-per-100 mj-outlook-group-fix background-text-header" style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;"
-      >
-        
       <table
-         border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:top;" width="100%"
+         border="0" cellpadding="0" cellspacing="0" role="presentation" style="" width="100%"
       >
         <tbody>
           
@@ -1149,6 +621,11 @@ export const getAffiliateSaleEmailTemplate = (name: string, amount: string) => {
         </tbody>
       </table>
     
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    
       </div>
     
           <!--[if mso | IE]></td></tr></table><![endif]-->
@@ -1160,14 +637,78 @@ export const getAffiliateSaleEmailTemplate = (name: string, amount: string) => {
       </div>
     
       
+      <!--[if mso | IE]></td></tr></table></td></tr><tr><td class="" width="600px" ><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
+    
+      
+      <div  style="margin:0px auto;max-width:600px;">
+        
+        <table
+           align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="width:100%;"
+        >
+          <tbody>
+            <tr>
+              <td
+                 style="direction:ltr;font-size:0px;padding:15px 15px 20px 15px;text-align:center;"
+              >
+                <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:top;width:570px;" ><![endif]-->
+            
+      <div
+         class="mj-column-per-100 mj-outlook-group-fix" style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;"
+      >
+        
+      <table
+         border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:top;" width="100%"
+      >
+        <tbody>
+          
+              <tr>
+                <td
+                   align="center" style="font-size:0px;padding:0px 4px;word-break:break-word;"
+                >
+                  
+      <div
+         style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:10px;font-style:Poppins;font-weight:400;line-height:1;text-align:center;color:#000000;"
+      >© 2024 VantagePicks all rights reserved.</div>
+    
+                </td>
+              </tr>
+            
+        </tbody>
+      </table>
+    
+      </div>
+    
+          <!--[if mso | IE]></td></tr></table><![endif]-->
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        
+      </div>
+    
+      
+      <!--[if mso | IE]></td></tr></table></td></tr><![endif]-->
+        </div>
+    
+                <!--[if mso | IE]></table><![endif]-->
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        
+      </div>
+    
+      
       <!--[if mso | IE]></td></tr></table><![endif]-->
     
-    </div>
+    
       </div>
     
   </body>
 </html>
-  `);
+  
+    `)
+
   return {
     title: AFFILIATE_SALE_TITLE,
     template: AFFILIATE_SALE_TEMPLATE,

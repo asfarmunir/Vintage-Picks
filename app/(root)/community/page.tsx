@@ -140,7 +140,7 @@ const page = () => {
               <div className=" bg-[#333547]/60 inline-flex md:flex-grow items-center py-1 px-2 rounded-lg">
                 <LuSearch className="w-7 h-7 text-[#848BAC] " />
                 <Input
-                  className=" bg-transparent text-white focus:outline-0 focus:ring-0 focus:border-none placeholder-slate-900 uppercase"
+                  className=" bg-transparent text-white focus:outline-0 focus:ring-0 focus:border-none placeholder-slate-900  capitalize"
                   placeholder={"search..."}
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
@@ -152,19 +152,19 @@ const page = () => {
               {/* <TableCaption>A list of your recent invoices.</TableCaption> */}
               <TableHeader className=" bg-[#F8F8F8]  border-none">
                 <TableRow className=" border-none">
-                  <TableHead className="uppercase  font-bold text-start">
+                  <TableHead className=" capitalize  font-bold text-start">
                     position
                   </TableHead>
-                  <TableHead className="uppercase font-bold text-start">
+                  <TableHead className=" capitalize font-bold text-start">
                     name
                   </TableHead>
-                  <TableHead className="uppercase font-bold text-start">
+                  <TableHead className=" capitalize font-bold text-center">
                     level
                   </TableHead>
-                  <TableHead className="uppercase font-bold text-start">
+                  <TableHead className=" capitalize font-bold text-center">
                     country
                   </TableHead>
-                  <TableHead className="uppercase font-bold text-start">
+                  <TableHead className=" capitalize font-bold text-center">
                     earnings
                   </TableHead>
                 </TableRow>
@@ -182,27 +182,35 @@ const page = () => {
 
                 {!loading &&
                   filteredData?.map((account: any, index: number) => (
-                    <TableRow className="" key={account.userId}>
+                    <TableRow className="text-black" key={account.userId}>
                       {/* <TableRow className=""> */}
-                      <TableCell className="  max-w-[100px] py-5 border-b border-gray-700 ">
-                        <div className="font-semibold text-xs   2xl:text-base flex mt-0.5 items-center justify-center ">
-                          <Image
-                            src="/icons/polygon.png"
-                            alt="profile"
-                            width={30}
-                            className="relative"
-                            height={30}
-                          />
-                          <p className=" absolute text-primary-50 font-bold">
-                            {account.rank}
-                          </p>
-                        </div>
+                      <TableCell className="   py-5 border-b border-gray-700 ">
+                        <p
+                          className={`
+                        w-8 ml-4 h-8 rounded-full 
+                        font-bold text-xs 2xl:text-base text-center flex items-center justify-center
+
+                        ${
+                          account.rank === 1
+                            ? " bg-yellow-400 text-black shadow-inner shadow-slate-400"
+                            : account.rank === 2
+                            ? " bg-gray-400 text-black shadow-inner shadow-slate-400"
+                            : account.rank === 3
+                            ? " bg-[#cd7f32] text-white shadow-inner shadow-slate-400"
+                            : " "
+                        }
+                          
+                          
+                          `}
+                        >
+                          {account.rank}
+                        </p>
                       </TableCell>
 
-                      <TableCell className="  max-w-[140px] w-full font-bold uppercase text-xs py-5 border-b border-gray-700 2xl:text-base   ">
+                      <TableCell className="   font-bold  capitalize text-xs py-5 border-b border-gray-700 2xl:text-base   ">
                         <div className="flex items-center  gap-2">
                           <Image
-                            src="/icons/avatar.png"
+                            src="/vintage/images/avatar.svg"
                             alt="profile"
                             width={25}
                             height={25}
@@ -211,7 +219,7 @@ const page = () => {
                           {/* Asfar Munir */}
                         </div>
                       </TableCell>
-                      <TableCell className="  max-w-[100px]  py-5 border-b border-gray-700 ">
+                      <TableCell className="    py-5 border-b border-gray-700 ">
                         <div className=" 2xl:text-base mx-auto flex justify-center mt-0.5 ">
                           <Image
                             src={
@@ -225,7 +233,7 @@ const page = () => {
                           />
                         </div>
                       </TableCell>
-                      <TableCell className="  max-w-[100px] font-bold capitalize text-xs py-5 border-b border-gray-700 2xl:text-base  ">
+                      <TableCell className="   font-bold capitalize text-xs py-5 border-b border-gray-700 2xl:text-base  ">
                         <div className="flex justify-center">
                           <ReactCountryFlag
                             countryCode={
@@ -244,7 +252,7 @@ const page = () => {
                         </div>
                       </TableCell>
 
-                      <TableCell className=" font-bold max-w-[120px] capitalize text-black text-xs py-5 border-b border-gray-700 2xl:text-base text-start truncate">
+                      <TableCell className=" font-bold  capitalize text-black text-xs py-5 border-b border-gray-700 2xl:text-base text-center truncate">
                         ${account.totalFundedAmount}
                         {/* $1000 */}
                       </TableCell>

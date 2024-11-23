@@ -1,7 +1,4 @@
-export const getSignupEmailTemplate = (name: string) => {
-  const SIGNUP_TITLE = "Welcome to the PicksHero!";
-  const SIGNUP_TEMPLATE = (`
-    <!doctype html>
+<!doctype html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
   <head>
     <title>
@@ -704,10 +701,4 @@ We thank you once again for being apart of the VantagePicks family!</div>
     
   </body>
 </html>
-  `);
-
-  return {
-    title: SIGNUP_TITLE,
-    template: SIGNUP_TEMPLATE,
-  };
-};
+  

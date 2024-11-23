@@ -1,14 +1,11 @@
 "use client";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
-// import { MdOutlineArrowUpward } from "react-icons/md";
 import { useGetAccountStats } from "@/app/hooks/useGetAccountStats";
 import { accountStore } from "@/app/store/account";
 import AccountGraph from "@/components/shared/AccountGraph";
 import BetHistory from "@/components/shared/BetHistory";
-import Navbar from "@/components/shared/Navbar";
 import Objectives from "@/components/shared/Objectives";
-import UserAccount from "@/components/shared/UserAccount";
 import { dashboardTabs } from "@/lib/constants";
 import { getOriginalAccountValue } from "@/lib/utils";
 import { LoaderCircle } from "lucide-react";
@@ -85,30 +82,30 @@ const page = () => {
                 <p className=" font-bold 2xl:text-lg  text-vintage-50">
                   Account overview
                 </p>
-                <p className="  text-xs max-w-[18rem]  text-primary-600 ">
+                <p className="  text-xs max-w-[18rem] hidden 2xl:block  text-primary-600 ">
                   provides a summarized view of an account's key details and
                   activities.
                 </p>
               </div>{" "}
-              <div className="flex items-start gap-3 md:gap-5">
+              <div className="flex items-start gap-3 ">
                 <div className="flex items-center gap-2.5 ">
                   <p className="   text-xs 2xl:text-sm text-primary-700">
                     Profit
                   </p>
-                  <h2 className="  2xl:text-lg font-semibold ">
+                  <h2 className=" text-sm 2xl:text-lg font-semibold ">
                     $
                     {account.balance - getOriginalAccountValue(account) < 0
                       ? "0"
                       : (
                           account.balance - getOriginalAccountValue(account)
-                        ).toFixed(2)}
+                        ).toFixed(1)}
                   </h2>
                 </div>{" "}
                 <div className="flex gap-2.5 items-center ">
                   <p className="   text-xs 2xl:text-sm text-primary-700">
-                    Returns
+                    Returns:
                   </p>
-                  <h2 className="  bg-[#1CC0531A] p-1  px-4 rounded-full text-sm text-green-600 font-semibold  gap-2 inline-flex items-center ">
+                  <h2 className="  bg-[#1CC0531A] p-1  px-2.5 rounded-full text-sm text-green-600 font-semibold  gap-2 inline-flex items-center ">
                     {account.balance - getOriginalAccountValue(account) < 0
                       ? 0
                       : (
@@ -117,7 +114,7 @@ const page = () => {
                           ) /
                             getOriginalAccountValue(account)) *
                           100
-                        ).toFixed(2)}
+                        ).toFixed(1)}
                     %
                     <Image
                       src="/icons/retrun.svg"
@@ -167,13 +164,13 @@ const page = () => {
                 </span>
               </div>
             </div>
-            <div className="p-1 bg-primary">
+            <div className="p-1 ">
               <AccountGraph filter={filter} />
             </div>
           </div>
         </div>
         <div className="flex items-center justify-between p-4 md:p-6 rounded-2xl bg-white">
-          <div className="flex items-center justify-evenly md:justify-start flex-wrap gap-2 mb-3">
+          <div className="flex items-center justify-evenly md:justify-start flex-wrap gap-2 ">
             {dashboardTabs.map((curr, index) => (
               <button
                 key={index}

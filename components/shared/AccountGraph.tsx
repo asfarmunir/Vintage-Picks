@@ -8,7 +8,6 @@ import {
   Area,
   XAxis,
   YAxis,
-  CartesianGrid,
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
@@ -22,7 +21,7 @@ const Example = ({ filter }: { filter: "1M" | "3M" | "24H" | "7D" }) => {
   const account = accountStore((state) => state.account);
   const { data, isPending } = useGetGraphData(account.id);
 
-  const filteredData: GraphDataType[] = useMemo(()=>{
+  const filteredData: GraphDataType[] = useMemo(() => {
     if (!data) return [];
     switch (filter) {
       case "1M":
@@ -35,12 +34,12 @@ const Example = ({ filter }: { filter: "1M" | "3M" | "24H" | "7D" }) => {
         return data.slice(-24);
       default:
         return data;
-    }    
-  }, [data, filter])
-  
+    }
+  }, [data, filter]);
+
   if (isPending) {
     return (
-      <div className="bg-primary-100 flex justify-center items-center h-[310px] gap-2">
+      <div className=" flex justify-center items-center h-[310px] gap-2">
         <LoaderCircle className="animate-spin" />
         Loading Graph...
       </div>
@@ -58,39 +57,37 @@ const Example = ({ filter }: { filter: "1M" | "3M" | "24H" | "7D" }) => {
           bottom: 10,
         }}
       >
-        {/* <CartesianGrid strokeDasharray="3 3" stroke="#444" /> */}
         <XAxis
           dataKey="date"
           tick={{
-            fill: "#737897",
-            fontSize: 8, // Adjust the font size
+            fill: "#001E45", // Primary color
+            fontSize: 12, // Adjust font size for better visibility
             dy: 10, // Adjust vertical position
-            dx: 15, // Adjust horizontal position
+            dx: 0, // Horizontal position
           }}
-          tickLine={{ stroke: "#737897" }}
+          tickLine={{ stroke: "#001E45" }} // Primary color
           allowDuplicatedCategory
         />
         <YAxis
-          // ticks={[0, 1000, 2000, 3000, 4000, 5000]}
           tick={{
-            fill: "#737897",
-            fontSize: 12, // Adjust the font size
-            dy: 0, // Adjust vertical position
-            dx: -10, // Adjust horizontal position
+            fill: "#001E45", // Primary color
+            fontSize: 12, // Adjust font size
+            dy: 0, // Vertical position
+            dx: -10, // Horizontal position
           }}
-          tickLine={{ stroke: "#737897" }}
+          tickLine={{ stroke: "#001E45" }} // Primary color
         />
         <Tooltip
-          cursor={{ fill: "#282227" }}
+          cursor={{ fill: "rgba(0, 30, 69, 0.1)" }} // Slight tint of the primary color
           contentStyle={{
-            backgroundColor: "#333547",
-            border: "1px solid #282227",
+            backgroundColor: "white", // Match the background
+            border: `1px solid #001E45`, // Primary color
             borderRadius: "10px",
             padding: "20px 45px",
           }}
-          labelStyle={{ color: "#737897", fontSize: 16 }}
+          labelStyle={{ color: "#001E45", fontSize: 14 }}
           itemStyle={{
-            color: "#fff",
+            color: "#001E45",
             fontSize: 14,
             fontWeight: 600,
           }}
@@ -98,8 +95,8 @@ const Example = ({ filter }: { filter: "1M" | "3M" | "24H" | "7D" }) => {
         <Area
           type="linear"
           dataKey="balance"
-          stroke="#3fd80c"
-          fill="rgba(63, 216, 12, 0.1)"
+          stroke="#001E45" // Primary color
+          fill="rgba(0, 30, 69, 0.1)" // Transparent tint of primary color
         />
       </AreaChart>
     </ResponsiveContainer>

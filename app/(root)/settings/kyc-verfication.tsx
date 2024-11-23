@@ -34,7 +34,7 @@ const KYCVerification = () => {
 
   const startVerification = async () => {
     const veriff = Veriff({
-      apiKey: "d6c9eaf5-e31b-4a4c-8a94-73029ccc5ed6",
+      apiKey: "f2a23a4b-3f75-4d65-a45f-759ec27a18a5",
       parentId: "veriff-root",
       onSession: function (err: any, response: any) {
         // received the response, verification can be started / triggered now

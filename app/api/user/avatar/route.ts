@@ -54,7 +54,7 @@ export async function POST(req: NextRequest) {
     })
 
     const result = await cloudinary.uploader.upload(dataURI, {
-      folder: 'heropicks/avatars',
+      folder: 'vintage-picks/avatars',
       public_id: user.id,
       overwrite: true,
     }, () => {

@@ -319,9 +319,9 @@ const BetHistory = () => {
                 <TableCell className=" font-semibold max-w-[100px] capitalize text-xs 2xl:text-sm text-center truncate">
                   ${bet.pick}
                 </TableCell>
-                <TableCell className=" font-semibold max-w-[100px] capitalize text-xs 2xl:text-sm flex items-center justify-center truncate">
+                <TableCell className=" font-semibold max-w-[100px] capitalize text-xs h-full 2xl:text-sm text-center truncate">
                   <p
-                    className={`px-2 py-1 border mt-2 rounded-full ${
+                    className={`px-2 py-1 border  rounded-full ${
                       bet.betStatus === "CLOSED" && bet.betResult === "WIN"
                         ? "bg-green-500/20 text-green-500 border-green-500"
                         : "bg-red-500/20 text-red-500 border-red-500"

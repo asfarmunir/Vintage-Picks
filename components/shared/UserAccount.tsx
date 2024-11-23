@@ -76,7 +76,7 @@ const UserAccount = ({
           ) : (
             <>
               <span className=" text-vintage-50 bg-[#EBCD3F] text-xs 2xl:text-base rounded-full border-r border-gray-600 px-4 py-2.5 md:pr-4">
-                ${activeAccount.balance}
+                ${activeAccount.balance.toFixed(2)}
               </span>
               <p className=" text-[#FFFFFF99]  text-xs bg-[#F4F4F41A] inline-flex items-center rounded-full 2xl:text-base py-2.5 px-4">
                 Account
@@ -104,22 +104,16 @@ const UserAccount = ({
                 onClick={() => changeUserAccount(account)}
               >
                 <p className="  inline-flex items-center font-bold">
-                  ${account.balance}{" "}
+                  ${account.balance.toFixed(2)}{" "}
                   <span className="text-3xl flex  mb-4 mx-1.5">.</span>
                   {account.accountNumber}
                 </p>
                 <span
-                  className={` border font-semibold inline-flex items-center gap-x-1.5 text-xs 2xl:text-base  p-1 px-2  rounded-sm ${
+                  className={`  font-semibold inline-flex items-center gap-x-1.5 text-xs 2xl:text-base  p-1 px-5  rounded-full ${
                     challengeColorClasses[account.status]
                   }`}
                 >
-                  <Image
-                    src={`/icons/account-${account.status.toLowerCase()}.svg`}
-                    alt="Arrow Icon"
-                    width={13}
-                    height={13}
-                  />
-                  {account.status.toUpperCase()}
+                  {account.status}
                 </span>
               </DropdownMenuItem>
             ))}

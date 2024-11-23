@@ -192,7 +192,7 @@ const page = () => {
         <div className="w-full  rounded-xl p-4 md:p-6  flex flex-col space-y-5 bg-white ">
           <div className="flex flex-col md:flex-row items-start gap-2 md:items-center justify-between w-full ">
             <h3 className="text-lg font-bold">REFERAL HISTORY</h3>
-            <div className="border border-[#52FC18]/40 bg-[#52FC18]/15 p-3 md rounded-2xl w-full md:w-fit flex gap-6 items-center justify-between">
+            <div className="border border-blue-700 bg-blue-700/15 p-3 md rounded-2xl w-full md:w-fit flex gap-6 items-center justify-between">
               <h2 className="font-bold text-sm text-vintage-50]">
                 Code:
                 <span className="text-vintage-50 ml-1">
