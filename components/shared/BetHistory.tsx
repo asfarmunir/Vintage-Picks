@@ -347,7 +347,7 @@ const BetHistory = () => {
                 </TableCell>
                 <TableCell className=" font-semibold  capitalize text-xs 2xl:text-sm text-center ">
                   <Dialog>
-                    <DialogTrigger className=" w-fit text-xs 2xl:text-sm text-nowrap rounded-xl inner-shadow px-4 py-3 inline-flex items-center gap-3">
+                    <DialogTrigger className=" w-fit text-xs 2xl:text-sm text-nowrap bg-vintage-50 text-white rounded-full  px-7 py-3 inline-flex items-center gap-3">
                       <span className=" font-bold ">Bet slip</span>{" "}
                     </DialogTrigger>
                     <BetSlipDialogBody bet={bet} key={bet.id} />
@@ -378,32 +378,32 @@ const BetHistory = () => {
 };
 
 const BetSlipDialogBody = ({ bet }: { bet: any }) => (
-  <DialogContent className=" bg-primary-100 gap-1 p-5 text-white border-none  md:max-w-[1200px] 2xl:min-w-[1300px] flex flex-col ">
+  <DialogContent className=" bg-white gap-1 p-5 text-vintage-50 border-none  md:max-w-[1200px] 2xl:min-w-[1300px] flex flex-col ">
     <h2 className=" text-3xl font-bold mb-5">BET SLIP</h2>
     <div className="flex items-start justify-center gap-5 2xl:mb-6 w-full">
-      <div className="flex flex-col space-y-3 items-center bg-[#272837] shadow-inner shadow-slate-700 rounded-xl px-3.5 py-5">
+      <div className="flex flex-col space-y-3 items-center bg-slate-100 shadow-inner shadow-slate-200 rounded-xl px-3.5 py-5">
         <div className=" w-full flex items-center justify-between gap-6">
           <p className=" text-lg font-bold ">
             {bet.eventId.length > 1 ? "PARLAY " : "1 PICK "}
             {bet.betStatus === "OPENED" && "TO WIN"}
             {bet.betResult !== "LOSE" && (
-              <span className="text-primary-50 ml-1.5">
+              <span className="text-black ml-1.5">
                 {bet.betResult === "WIN" && "+"}${bet.winnings.toFixed(2)}
               </span>
             )}
           </p>
           {bet.betStatus === "OPENED" && (
-            <p className="text-white font-bold px-2 py-1.5 rounded-lg bg-[#C02FF5]/20 border border-[#C02FF5] text-xs 2xl:text-sm">
+            <p className="text-purple-700 font-bold px-6 py-1.5 rounded-lg bg-[#C02FF5]/20 border border-[#C02FF5] text-xs 2xl:text-sm">
               IN PROGRESS
             </p>
           )}
           {bet.betResult === "LOSE" && (
-            <p className="text-white font-bold px-2 py-1.5 rounded-lg bg-[#F74418]/20 border border-[#F74418] text-xs 2xl:text-sm">
+            <p className="text-red-700 font-bold px-6 py-1.5 rounded-lg bg-[#F74418]/20 border border-[#F74418] text-xs 2xl:text-sm">
               LOSS{" "}
             </p>
           )}
           {bet.betResult === "WIN" && (
-            <p className="text-white font-bold px-2 py-1.5 rounded-lg bg-[#52FC18]/20 border border-[#52FC18] text-xs 2xl:text-sm">
+            <p className="text-green-700 font-bold px-6 py-1.5 rounded-lg bg-[#52FC18]/20 border border-[#52FC18] text-xs 2xl:text-sm">
               WIN
             </p>
           )}
@@ -411,7 +411,7 @@ const BetSlipDialogBody = ({ bet }: { bet: any }) => (
         <div className="flex flex-col max-h-44 2xl:max-h-56 mt-1 overflow-auto px-1 w-full gap-3 ">
           {bet.event.length > 1 &&
             bet.event.map((event: string, index: number) => (
-              <div className="bg-[#333547]  shadow-inner w-full shadow-gray-700 p-3 rounded-lg ">
+              <div className="bg-vintage-50 text-white shadow-inner w-full shadow-gray-800 p-3 rounded-lg ">
                 <p className=" text-sm mb-2">{event}</p>
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-1.5">
@@ -422,7 +422,7 @@ const BetSlipDialogBody = ({ bet }: { bet: any }) => (
               </div>
             ))}
           {bet.event.length === 1 && (
-            <div className="bg-[#333547]  shadow-inner w-full shadow-gray-700 p-3 rounded-lg ">
+            <div className="bg-vintage-50 text-white shadow-inner w-full shadow-gray-800 p-3 rounded-lg ">
               <p className=" text-sm mb-2">{bet.event[0]}</p>
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-1.5">
@@ -445,16 +445,10 @@ const BetSlipDialogBody = ({ bet }: { bet: any }) => (
           <p className="  font-bold text-primary-200">WINNING</p>
           <p className="  font-bold ">${bet.winnings.toFixed(2)}</p>
         </div>
-        <div className="flex w-full px-4 py-2 items-center justify-between">
-          <p className="text-white font-bold px-2 py-1.5 rounded-lg bg-[#737897]/20 border border-[#737897] text-xs 2xl:text-sm">
+        <div className="flex w-full px-4 py-2 items-center justify-center">
+          <p className="text-vintage-50 font-bold px-2 py-1.5 rounded-lg bg-[#737897]/20 border border-[#737897] text-xs 2xl:text-sm">
             {formatDate(bet.betDate)}
           </p>
-          <Image
-            src="/images/logo.svg"
-            width={150}
-            alt="QR Code"
-            height={150}
-          />
         </div>
       </div>
     </div>

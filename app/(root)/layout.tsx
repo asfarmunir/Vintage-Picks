@@ -72,7 +72,7 @@ const layout = ({ children }: { children: React.ReactNode }) => {
               >
                 <Nav />
               </div>
-              {/* {!hasAccount && <CreateAccountModal />} */}
+              {!hasAccount && <CreateAccountModal />}
               <section className="  h-full w-full py-2.5 px-3 relative">
                 {children}
               </section>

@@ -1,4 +1,4 @@
-import { sendAccountBreachedEmail, sendAccountUnlockedEmail, sendContractAwaitsEmail, sendFundedAccountEmail, sendPhaseUpdateEmail, sendPickResultEmail } from "@/helper/sendgridapi";
+import { sendAccountBreachedEmail, sendAccountUnlockedEmail, sendContractAwaitsEmail, sendFundedAccountEmail, sendPhaseUpdateEmail, sendPickResultEmail } from "@/helper/mailgun";
 import { connectToDatabase } from "@/lib/database";
 import prisma from "@/prisma/client";
 import { NextRequest, NextResponse } from "next/server";

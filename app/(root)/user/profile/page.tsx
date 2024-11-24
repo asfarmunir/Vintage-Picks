@@ -591,10 +591,10 @@ const AccountsSection = ({ accounts }: { accounts: Account[] }) => {
                 ${account.accountSize.replace("K", "000")}
               </p>
               <p
-                className={` px-8 py-2.5 2xl:py-3 text-xs 2xl:text-sm rounded-full 
+                className={` px-8 py-2.5 2xl:py-3 text-xs 2xl:text-sm font-bold rounded-full 
                   ${
                     account.status === "FUNDED"
-                      ? "  bg-[#0F840C1F] text-[#0F840C3D] border border-[#0F840C3D] "
+                      ? "  bg-[#0F840C1F] text-green-700 border border-[#0F840C3D] "
                       : account.status === "BREACHED"
                       ? " bg-[#FF00001F] text-[#ff00009e] border border-[#FF00003D] "
                       : " bg-[#FFA5001F] text-[#ffa600fa] border border-[#FFA5003D] "

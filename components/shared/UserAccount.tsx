@@ -26,8 +26,8 @@ const UserAccount = ({
 
   const challengeColorClasses = {
     CHALLENGE: "text-white  bg-[#1973D3]",
-    FUNDED: "text-white  bg-[#1973D3]",
-    BREACHED: "text-[#F74418]/70 border-[#F74418]/80 bg-[#F74418]/10",
+    FUNDED: "text-white  bg-green-700",
+    BREACHED: "text-[#F74418]/70 border-[#F74418]/80 bg-[#F74418]/20",
   };
 
   // Active Account

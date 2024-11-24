@@ -104,8 +104,8 @@ const page = () => {
 
   return (
     <div className=" w-full flex items-start justify-center bg-vintage-50 h-screen overflow-hidden ">
-      <div className=" w-full bg-[#F8F8F8]  h-svh  flex flex-col items-center justify-center rounded-xl p-8 py-8  2xl:p-10 ">
-        <div className=" w-fit bg-white p-12 rounded-3xl shadow-sm max-h-[90svh] overflow-y-auto [scrollbar-width:none] scroll-smooth  ">
+      <div className=" w-full bg-[#F8F8F8]  h-svh  flex flex-col items-center justify-center rounded-xl p-2 md:p-8 md:py-8  2xl:p-10 ">
+        <div className=" w-fit bg-white px-6 py-12 md:p-12 rounded-3xl shadow-sm max-h-[90svh] overflow-y-auto [scrollbar-width:none] scroll-smooth  ">
           <h2 className=" text-2xl md:text-3xl font-bold text-vintage-50 mb-2">
             Sign In
           </h2>

@@ -11,8 +11,8 @@ import {
   REFER_COMMISSIONS,
 } from "@/lib/constants";
 import { dateToFullCronString } from "@/lib/utils";
-import { sendAffiliateSaleEmail } from "@/helper/sendgridapi";
 import { sendNotification } from "@/helper/notifications";
+import { sendAffiliateSaleEmail } from "@/helper/mailgun";
 
 function generateInvoice(account: any, newAccount: any, userId: any) {
   // Strip $ from accountPrice

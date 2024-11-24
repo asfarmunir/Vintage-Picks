@@ -95,7 +95,7 @@ const page = ({ searchParams: { referrerCode } }: props) => {
       }
 
       router.push("/api/auth/signin");
-      toast.success("Account created successfully. Login to continue.");
+      toast.success("Account created successfully.");
     } catch (error: any) {
       if (error?.response?.data?.message) {
         toast.error(error.response.data.message);
@@ -109,8 +109,8 @@ const page = ({ searchParams: { referrerCode } }: props) => {
 
   return (
     <div className=" w-full flex items-start justify-center bg-vintage-50 h-screen overflow-hidden ">
-      <div className=" w-full bg-[#F8F8F8]  h-svh  flex flex-col items-center justify-center rounded-xl p-8 py-8  2xl:p-10 ">
-        <div className=" w-fit bg-white p-12 rounded-3xl shadow-sm max-h-[90svh] overflow-y-auto [scrollbar-width:none] scroll-smooth  ">
+      <div className=" w-full bg-[#F8F8F8]  h-svh  flex flex-col items-center justify-center rounded-xl p-4 md:p-8 md:py-8  2xl:p-10 ">
+        <div className=" w-fit bg-white px-6 py-12 md:p-12 rounded-3xl shadow-sm max-h-[90svh] overflow-y-auto [scrollbar-width:none] scroll-smooth  ">
           <h2 className=" text-2xl md:text-3xl font-bold text-vintage-50 mb-2">
             Create your account
           </h2>
@@ -270,7 +270,7 @@ const page = ({ searchParams: { referrerCode } }: props) => {
                       setIsChecked(checked === true)
                     }
                   >
-                    <Checkbox.Indicator className="flex items-center justify-center">
+                    <Checkbox.Indicator className="flex w-5 h-5 items-center justify-center">
                       <CheckIcon className="w-4 h-4 text-vintage-50" />
                     </Checkbox.Indicator>
                   </Checkbox.Root>
@@ -289,7 +289,7 @@ const page = ({ searchParams: { referrerCode } }: props) => {
                 <div className="flex flex-col w-full mt-2 items-center justify-center">
                   <Button
                     type="submit"
-                    className="bg-vintage-50 mb-4  border  w-full rounded-full  text-white font-semibold py-8 px-10 2xl:text-lg   focus:outline-none focus:shadow-outline"
+                    className="bg-vintage-50 mb-4  border  w-full rounded-full  text-white font-semibold py-6 md:py-8 px-10 2xl:text-lg   focus:outline-none focus:shadow-outline"
                     disabled={!isChecked}
                   >
                     {isLoading ? (
