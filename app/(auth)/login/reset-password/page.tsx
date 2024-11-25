@@ -39,7 +39,7 @@ const Page = () => {
     setLoading(true);
     try {
       const response = await axios.post(
-        "https://app.pickshero.io/api/auth/reset-password",
+        "https://app.vantagepicks.com/api/auth/reset-password",
         {
           email: values.email,
         }

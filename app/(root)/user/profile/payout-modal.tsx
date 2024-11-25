@@ -29,7 +29,9 @@ const payoutSchema = z.object({
   currency: z.enum([Currency.USDT, Currency.ETH], {
     required_error: "Please select a currency",
   }),
-  networkAddress: z.string().regex(ethAddressRegex, "Invalid Ethereum address format"),
+  networkAddress: z
+    .string()
+    .regex(ethAddressRegex, "Invalid Ethereum address format"),
 });
 
 type PayoutFormInputs = z.infer<typeof payoutSchema>;
@@ -72,7 +74,10 @@ export default function PayoutModal({
     if (errors.currency || errors.networkAddress) return;
 
     const payoutReqData = {
-      currency: data.currency === Currency.USDT ? "USDT_ERC20" : "ETH_ERC20" as "USDT_ERC20" | "ETH_ERC20",
+      currency:
+        data.currency === Currency.USDT
+          ? "USDT_ERC20"
+          : ("ETH_ERC20" as "USDT_ERC20" | "ETH_ERC20"),
       networkAddress: data.networkAddress,
       accountId: account.id,
     };
@@ -82,14 +87,14 @@ export default function PayoutModal({
 
   return (
     <Dialog open={open} onOpenChange={onClose}>
-      <DialogContent className="bg-primary-100 gap-1 p-5 text-white border-none">
-        <DialogTitle className="bg-primary-100 text-white border-none mb-8">
+      <DialogContent className="bg-vintage-50 gap-1 p-5 text-white border-none">
+        <DialogTitle className="bg-vintage-50 text-white border-none mb-8">
           Request Payout
         </DialogTitle>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           {/* Crypto Currency Selection */}
           <div>
-            <label htmlFor="currency" className="text-sm">
+            <label htmlFor="currency" className="text-sm mb-1">
               Crypto Currency
             </label>
             <DropdownMenu>
@@ -103,7 +108,7 @@ export default function PayoutModal({
               <DropdownMenuContent
                 align="start"
                 id="currency"
-                className="bg-primary-100 text-white border-white/20"
+                className="bg-vintage-50 text-white border-white/20"
               >
                 <DropdownMenuItem
                   onSelect={() => {
@@ -132,7 +137,7 @@ export default function PayoutModal({
 
           {/* Network Address Input */}
           <div>
-            <label htmlFor="network-address" className="text-sm">
+            <label htmlFor="network-address" className="text-sm mb-1">
               Network Address
             </label>
             <Input
@@ -154,14 +159,14 @@ export default function PayoutModal({
           <div className="flex justify-end items-end gap-4">
             <button
               type="button"
-              className="text-white font-semibold hover:outline hover:outline-1 hover:outline-primary-200 uppercase text-xs bg-[#333547] p-3.5 rounded-lg shadow-inner shadow-gray-500 inline-flex items-center gap-3"
+              className="text-vintage-50 font-semibold hover:outline-none  text-xs bg-white p-3.5 px-8 rounded-full inline-flex items-center gap-3"
               onClick={onClose}
             >
               Close
             </button>
             <button
               type="submit"
-              className="p-3.5 uppercase font-bold inner-shadow text-xs text-white rounded-lg hover:outline hover:outline-1 hover:outline-coral-500 bg-[#52FC18]/20 disabled:opacity-20"
+              className="p-3.5 font-semibold  text-xs text-white rounded-full  bg-vintage-50 px-8 disabled:opacity-20"
               disabled={isPending}
             >
               {isPending ? "Submitting..." : "Request Payout"}

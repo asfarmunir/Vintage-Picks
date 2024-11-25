@@ -1,4 +1,4 @@
-const BASE_URL = process.env.NODE_ENV === "production" ? "https://app.heropicks.io/" : "http://localhost:3000";
+const BASE_URL = process.env.NODE_ENV === "production" ? "https://app.vantagepicks.com" : "http://localhost:3000";
 
 const ALL_STEP_CHALLENGES = {
   minPicks: 25,

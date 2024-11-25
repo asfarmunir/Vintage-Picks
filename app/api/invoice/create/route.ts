@@ -52,7 +52,7 @@ export async function POST(req: NextRequest) {
                 description: "Settlement to BTC",
                 currencyTo: "BTC",
             },
-            notifyUrl: `https://app.pickshero.io/api/invoice/confirm`,
+            notifyUrl: `https://app.vantagepicks.com/api/invoice/confirm`,
         }),
     })
 

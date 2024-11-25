@@ -752,14 +752,8 @@ const CertificaeSection = () => {
           </p>
           <Dialog>
             {!fetchingAccounts && filteredAccounts.length > 0 ? (
-              <DialogTrigger className=" flex items-center px-4 py-1.5  shadow-inner shadow-gray-600 rounded-xl gap-1 text-white font-bold 2xl:text-lg ">
-                <Image
-                  src="/icons/certificate.svg"
-                  alt="Arrow Icon"
-                  width={20}
-                  height={20}
-                />
-                VIEW {filteredAccounts.length} CERTIFICATES
+              <DialogTrigger className=" flex items-center px-4 py-1.5  shadow-inner rounded-full bg-vintage-50 gap-1 text-white font-bold 2xl:text-sm text-xs ">
+                View {filteredAccounts.length} Certificates
               </DialogTrigger>
             ) : !fetchingAccounts && filteredAccounts.length === 0 ? (
               <div className="flex items-center px-4 py-1.5   rounded-full gap-1 text-white bg-vintage-50 font-bold text-xs 2xl:text-sm">
@@ -771,16 +765,16 @@ const CertificaeSection = () => {
                 Loading...
               </div>
             )}
-            <DialogContent className=" bg-primary-100 text-white p-8 border-none">
+            <DialogContent className=" bg-white text-vintage-500 p-8 border-none">
               <DialogHeader>
                 <DialogTitle className=" text-xl font-bold mb-4">
                   FUNDED CERTIFICATES
                 </DialogTitle>
                 <div className="flex flex-col gap-2 w-full">
                   {filteredAccounts.length === 0 && (
-                    <div className=" p-4 bg-[#272837] rounded-xl py-8 shadow-inner shadow-gray-700 flex items-center justify-between">
+                    <div className=" p-4 bg-vintage-50 text-white rounded-xl py-8  flex items-center justify-between">
                       <div className="flex items-center ">
-                        <div className="w-12 h-12 rounded-xl mr-2.5 bg-gray-700"></div>
+                        <div className="w-12 h-12 rounded-xl mr-2.5 bg-blue-950"></div>
                         <div className=" flex flex-col  gap-1">
                           <h2 className=" text-sm md:text-base font-bold">
                             No funded accounts
@@ -791,7 +785,7 @@ const CertificaeSection = () => {
                   )}
                   {!fetchingAccounts &&
                     filteredAccounts.map((account: Account) => (
-                      <div className=" p-4 bg-[#272837] rounded-xl py-8 shadow-inner shadow-gray-700 flex items-center justify-between">
+                      <div className=" p-4 bg-vintage-50 text-white rounded-xl py-8  flex items-center justify-between">
                         <div className="flex items-center ">
                           <div className=" flex flex-col  gap-1">
                             <h2 className=" text-sm md:text-base font-bold">
@@ -811,9 +805,7 @@ const CertificaeSection = () => {
                             width={15}
                             height={15}
                           />
-                          <p className="text-xs text-[#52FC18] font-bold">
-                            DOWNLOAD
-                          </p>
+                          <p className="text-xs  font-bold">DOWNLOAD</p>
                         </button>
                       </div>
                     ))}

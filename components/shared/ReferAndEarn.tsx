@@ -39,7 +39,7 @@ const page = () => {
 
   let link = `${
     process.env.NODE_ENV === "production"
-      ? "https://app.pickshero.io"
+      ? "https://app.vantagepicks.com"
       : "http://localhost:3000"
   }/signup?referrerCode=${currentUser.referralCode}`;
 

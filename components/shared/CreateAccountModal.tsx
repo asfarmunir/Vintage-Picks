@@ -10,7 +10,7 @@ export default function CreateAccountModal() {
     (pathname === "/dashboard" || pathname === "/picks") && (
       <div className="absolute w-full inset-0 flex justify-center  items-start pt-16 2xl:pt-12 backdrop-blur-sm bg-black/50 z-50">
         <div
-          className="text-white flex flex-col justify-end items-center relative border-none p-8 pb-48 md:pb-12 overflow-hidden min-h-[75svh] 2xl:min-h-[80svh] rounded-2xl w-[95%] md:w-[30%] max-w-screen-xl bg-primary-100  gap-3 [&_button:has(svg)]:hidden"
+          className="text-white flex flex-col justify-end items-center relative border-none p-8 md:pb-10 overflow-hidden min-h-[75svh] 2xl:min-h-[80svh] rounded-2xl w-[95%] md:w-[30%] max-w-screen-xl bg-primary-100  gap-3 [&_button:has(svg)]:hidden"
           style={{
             backgroundImage: "url('/vintage/images/2.webp')",
             backgroundSize: "cover",
@@ -22,7 +22,7 @@ export default function CreateAccountModal() {
             BET SPORTS WITH OUR
           </h1>
 
-          <p className=" text-slate-700 mb-3 mt-4 md:mt-0 2xl:text-base text-sm">
+          <p className=" text-slate-700 mb-3 mt-4 md:mt-0 2xl:text-base text-center text-sm">
             Maximize your earnings with minimal risk. Bet confidently using our
             capital and unlock higher rewards!{" "}
           </p>
