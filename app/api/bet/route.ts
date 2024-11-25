@@ -227,7 +227,8 @@ export async function POST(req: NextRequest) {
         }
       );
       if (!response.ok) {
-        throw new Error(await response.text());
+        // throw new Error(await response.text());
+          console.error(await response.text());
       }
     }
 

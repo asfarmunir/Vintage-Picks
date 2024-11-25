@@ -183,6 +183,9 @@ const getEmailTitleAndTemplate = async (
       template = getLifetimePayoutCertificate(user.firstName, account).template;
       title = getLifetimePayoutCertificate(user.firstName, account).title;
       break;
+     case "PROFILE_LEVEL":
+      // template = getProfile();
+      break
     default:
       throw Error("Invalid certificate type");
   }

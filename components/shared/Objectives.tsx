@@ -97,12 +97,15 @@ const Objectives = () => {
               height={20}
             />
             <span className="text-primary-700 ">Start Date:</span>
-            {/* {new Date(account.createdAt).toLocaleDateString()} */}
-            01/01/2021
+            {new Date(account.createdAt).toLocaleDateString()}
           </button>
           <button className="flex justify-center text-vintage-50  items-center gap-2 px-4 py-2 text-xs w-full md:w-fit 2xl:text-base font-semibold  bg-[#001E451A] rounded-lg">
-            {/* PHASE {account.phase} / {account.accountType === "TWO_STEP" ? 2 : 3} */}
-            PHASE 1 / 2
+            {(() => {
+              const totalPhases = account.accountType === "TWO_STEP" ? 2 : 3;
+              if (account.phase < totalPhases)
+                return `PHASE ${account.phase} / ${totalPhases}`;
+              return "FUNDED";
+            })()}
           </button>
         </div>
       </div>
@@ -164,8 +167,10 @@ const Objectives = () => {
             <div className="  font-bold flex flex-col  gap-1">
               <p className=" text-lg textvin 2xl:text-xl ">
                 -${account.dailyLoss || 0} / -$
-                {getOriginalAccountValue(account) *
-                  ALL_STEP_CHALLENGES.maxDailyLoss}
+                {(
+                  getOriginalAccountValue(account) *
+                  ALL_STEP_CHALLENGES.maxDailyLoss
+                ).toFixed(2)}
               </p>
             </div>
           </div>
@@ -204,7 +209,9 @@ const Objectives = () => {
             <div className="  font-bold flex flex-col  gap-1">
               <p className=" text-lg textvin 2xl:text-xl ">
                 -${account.totalLoss} / -$
-                {getOriginalAccountValue(account) * ALL_STEP_CHALLENGES.maxLoss}
+                {(
+                  getOriginalAccountValue(account) * ALL_STEP_CHALLENGES.maxLoss
+                ).toFixed(2)}{" "}
               </p>
             </div>
           </div>
@@ -217,8 +224,10 @@ const Objectives = () => {
                 {(account.totalLoss / getOriginalAccountValue(account)) * 100 >
                 100
                   ? 100
-                  : (account.totalLoss / getOriginalAccountValue(account)) *
-                    100}
+                  : (
+                      (account.totalLoss / getOriginalAccountValue(account)) *
+                      100
+                    ).toFixed(2)}
                 %
               </p>
             </div>
@@ -256,7 +265,11 @@ const Objectives = () => {
               <p className=" text-green-600 font-thin text-sm">
                 {(account.picks / ALL_STEP_CHALLENGES.minPicks) * 100 > 100
                   ? 100
-                  : (account.picks / ALL_STEP_CHALLENGES.minPicks) * 100}
+                  : (
+                      (account.picks / ALL_STEP_CHALLENGES.minPicks) *
+                      100
+                    ).toFixed(2)}
+                %
               </p>
             </div>
 

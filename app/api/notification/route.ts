@@ -31,8 +31,8 @@ export async function POST(req: NextRequest) {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                userId: userId,
-                message: message,
+                 userId: user ? user.id : userId,
+                 message: message,
             }),
         });
         if (!response.ok) {

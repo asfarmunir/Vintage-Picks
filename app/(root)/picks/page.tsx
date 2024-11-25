@@ -157,6 +157,8 @@ const page = () => {
 
   // TABS MECHANISM
   const changeTab = (tab: string) => {
+    setSearch("");
+    setSelectedBets([]);
     const leaguesArray = data.filter((sport: any) => sport.group === tab);
     setLeagues(leaguesArray);
     setTab(tab);
@@ -164,6 +166,8 @@ const page = () => {
   };
 
   const changeLeagueTab = (league: string) => {
+    setSearch("");
+    setSelectedBets([]);
     setLeagueTab(league);
   };
 

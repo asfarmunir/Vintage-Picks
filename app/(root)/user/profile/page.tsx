@@ -820,9 +820,16 @@ const CertificaeSection = () => {
       </button>
       <button
         className=" bg-[#F4F4F4] p-3 md:p-6 text-center overflow-hidden relative min-h-32 2xl:min-h-44 items-start rounded-2xl w-full  flex flex-col gap-3 disabled:opacity-20 disabled:cursor-not-allowed"
-        disabled={!(account.status === "FUNDED" && payoutHistory.length > 0)}
+        disabled={
+          !(
+            account.status === "FUNDED" &&
+            !fetchingPayoutHistory &&
+            payoutHistory.length > 0
+          )
+        }
         onClick={() =>
           account.status === "FUNDED" &&
+          !fetchingPayoutHistory &&
           payoutHistory.length > 0 &&
           handleSendCertificate("PAYOUT")
         }
@@ -846,9 +853,16 @@ const CertificaeSection = () => {
 
       <button
         className=" bg-[#F4F4F4] p-3 md:p-6 text-center overflow-hidden relative min-h-32 2xl:min-h-44 items-start rounded-2xl w-full  flex flex-col gap-3 disabled:opacity-20 disabled:cursor-not-allowed"
-        disabled={!(account.status === "FUNDED" && payoutHistory.length > 0)}
+        disabled={
+          !(
+            account.status === "FUNDED" &&
+            !fetchingPayoutHistory &&
+            payoutHistory.length > 0
+          )
+        }
         onClick={() =>
           account.status === "FUNDED" &&
+          !fetchingPayoutHistory &&
           payoutHistory.length > 0 &&
           handleSendCertificate("LIFETIME_PAYOUT")
         }

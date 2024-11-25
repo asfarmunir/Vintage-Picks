@@ -382,13 +382,15 @@ const CheckoutPayment: React.FC<CheckoutPaymentProps> = ({
                                     <SelectValue placeholder=" select your country " />
                                   </SelectTrigger>
                                   <SelectContent>
-                                    {Object.entries(countries).map(
-                                      ([code, { name }]) => (
+                                    {Object.entries(countries)
+                                      .sort((a, b) =>
+                                        a[1].name.localeCompare(b[1].name)
+                                      )
+                                      .map(([code, { name }]) => (
                                         <SelectItem key={code} value={name}>
                                           {name}
                                         </SelectItem>
-                                      )
-                                    )}
+                                      ))}
                                   </SelectContent>
                                 </Select>
                               </FormControl>

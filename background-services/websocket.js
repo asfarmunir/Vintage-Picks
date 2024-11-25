@@ -237,6 +237,13 @@ async function checkForUpdates(wss) {
                     data: {
                       status: "FUNDED",
                       phaseNumber: newPhase,
+                       balance: getOriginalBalance(account),
+                      dailyLoss: 0,
+                      totalLoss: 0,
+                      totalFundedPayout: 0,
+                      totalFundedAmount: getOriginalBalance(account),
+                      picks: 0,
+                      fundedPayoutTimer: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000), // 14 days
                     },
                   });
                   await sendFundedAccountEmail(account.id);
@@ -252,6 +259,13 @@ async function checkForUpdates(wss) {
                     },
                     data: {
                       phase: newPhase,
+                       balance: getOriginalBalance(account),
+                      dailyLoss: 0,
+                      totalLoss: 0,
+                      totalFundedPayout: 0,
+                      totalFundedAmount: getOriginalBalance(account),
+                      picks: 0,
+
                     },
                   });
                   await sendPhaseUpdateEmail(account.id, newPhase);

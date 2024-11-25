@@ -21,7 +21,7 @@ app.use(cors());
 app.use(bodyParser.json());
 
 // Middleware or API routes (optional)
-app.get("/", (req, res) => {
+app.get("/backend/", (req, res) => {
   res.send("Background Service Running!");
 });
 
@@ -32,8 +32,8 @@ app.get("/", (req, res) => {
 // 4. inactivity (only for funded accounts)
 
 // Route to add a new cron job
-app.post("/add-cron-job", async (req, res) => {
-  const { jobName, time, type, accountId } = req.body;
+app.post("/backend/add-cron-job", async (req, res) => {
+    const { jobName, time, type, accountId } = req.body;
 
   if (!jobName || !time || !type || !accountId) {
     return res.status(400).json({ error: "Missing required fields" });
@@ -57,7 +57,7 @@ app.post("/add-cron-job", async (req, res) => {
 });
 
 // Route to edit an existing cron job
-app.put("/edit-cron-job", async (req, res) => {
+app.put("/backend/edit-cron-job", async (req, res) => {
   const { jobName, newTime } = req.body;
 
   try {
@@ -69,7 +69,7 @@ app.put("/edit-cron-job", async (req, res) => {
 });
 
 // Route to delete a cron job
-app.delete("/delete-cron-job", async (req, res) => {
+app.delete("/backend/delete-cron-job", async (req, res) => {
   const { jobName } = req.body;
 
   try {
@@ -81,8 +81,8 @@ app.delete("/delete-cron-job", async (req, res) => {
 });
 
 
-app.post("/generate-notification", async (req, res) => {
-  const { userId, message } = req.body;
+app.post("/backend/generate-notification", async (req, res) => {
+    const { userId, message } = req.body;
 
   if (!userId || !message) {
     return res.status(400).json({ error: "Missing required fields" });

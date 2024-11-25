@@ -103,6 +103,15 @@ const checkAllObjectives = async (accountId) => {
       where: { id: accountId },
     });
 
+     // check if the account is funded
+    if (account.accountType !== "FUNDED") {
+      return;
+    }
+    // check if phase > 1
+    if (account.phase > 1) {
+      return;
+    }
+
     // get tailored objectives
     const tailoredObjectives = getTailoredObjectives(account);
 
