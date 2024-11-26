@@ -266,27 +266,20 @@ const Sidebar = () => {
           <SheetTrigger className=" block  lg:hidden">
             <HiMenu className=" text-white text-3xl" />
           </SheetTrigger>
-          <SheetContent className=" bg-primary text-white py-7 px-4 border-none">
+          <SheetContent className=" bg-vintage-50/90 text-white py-7 px-4 border-none">
             <SheetClose ref={closeRef} />
             <SheetHeader>
               <div className=" relative h-full min-h-screen flex flex-col items-start gap-7">
-                <Image
-                  src="/vintage/images/logo.svg"
-                  alt="logo"
-                  width={200}
-                  height={200}
-                  className=" w-[60px] 2xl:w-[70px] "
-                />
-                <div className="flex  w-full gap-3">
+                <div className="flex  w-full gap-3 mt-4">
                   <Image
-                    src="/images/hello.png"
-                    alt="Client"
-                    width={46}
-                    height={46}
-                    className="2xl:w-14 2xl:h-14"
+                    src="/vintage/images/logo.svg"
+                    alt="logo"
+                    width={200}
+                    height={200}
+                    className=" w-[60px] 2xl:w-[70px] "
                   />
                   <div className="flex items-start flex-col w-full">
-                    <button className=" data-[state=open]:border-2  bg-[#FFFFFF1A]  data-[state=open]:shadow  data-[state=open]:border-vintage-50/50   bg-[#272837]  font-semibold   justify-center text-nowrap w-full md:w-fit  text-xs md:text-sm px-1.5 md:px-1.5 py-1.5 2xl:py-1.5  rounded-full inline-flex items-center gap-2">
+                    <button className=" data-[state=open]:border-2    data-[state=open]:shadow  data-[state=open]:border-vintage-50/50     font-semibold   justify-start text-nowrap w-full md:w-fit  text-xs md:text-sm px-1.5 md:px-1.5 py-1.5 2xl:py-1.5  rounded-full inline-flex items-center gap-2">
                       <Image
                         src={"/vintage/images/avatar.svg"}
                         alt="User Avatar"
@@ -322,15 +315,15 @@ const Sidebar = () => {
                     </button>
                   ))}
                 </div>
-                <div className="absolute bottom-14  w-full  gap-7 flex-col flex">
+                <div className="absolute bottom-24 gap-4  w-full   flex-col flex">
                   <Link
                     href={"/settings"}
                     className={`inline-flex  font-bold uppercase text-sm  2xl:text-lg 
-                ${
-                  pathname === "/settings"
-                    ? "text-white inner-left-shadow p-3 2xl:p-4 bg-[#181926] rounded-2xl"
-                    : "text-[#848BAC] p-3 2xl:p-4  rounded-lg hover:bg-[#27283197]"
-                }
+                 ${
+                   pathname === "/settings"
+                     ? "text-white  bg-[#FFFFFF33] font-semibold px-5 py-2 2xl:px-6  2xl:py-2  rounded-md md:rounded-3xl"
+                     : "text-[#FFFFFFCC] font-normal hover:bg-white/10 px-3 py-1 2xl:px-4  2xl:py-2  rounded-md md:rounded-3xl"
+                 }
                 items-center gap-2 `}
                   >
                     <Image
@@ -350,11 +343,11 @@ const Sidebar = () => {
                   <Link
                     href={"/user/profile"}
                     className={`inline-flex  font-bold uppercase text-sm  2xl:text-lg 
-                ${
-                  pathname === "/user/profile"
-                    ? "text-white inner-left-shadow p-3 2xl:p-4 bg-[#181926] rounded-2xl"
-                    : "text-[#848BAC] p-3 2xl:p-4  rounded-lg hover:bg-[#27283197]"
-                }
+                  ${
+                    pathname === "/user/profile"
+                      ? "text-white  bg-[#FFFFFF33] font-semibold px-5 py-2 2xl:px-6  2xl:py-2  rounded-md md:rounded-3xl"
+                      : "text-[#FFFFFFCC] font-normal hover:bg-white/10 px-3 py-1 2xl:px-4  2xl:py-2  rounded-md md:rounded-3xl"
+                  }
                 items-center gap-2 `}
                   >
                     <Image
@@ -371,7 +364,7 @@ const Sidebar = () => {
                     />
                     <p>PROFILE</p>
                   </Link>
-                  <Link
+                  {/* <Link
                     href={"/help"}
                     className={`inline-flex  font-bold uppercase text-sm  2xl:text-lg 
                 ${
@@ -394,7 +387,7 @@ const Sidebar = () => {
                       priority
                     />
                     <p>HELP</p>
-                  </Link>
+                  </Link> */}
                 </div>
               </div>
             </SheetHeader>

@@ -1,6 +1,13 @@
 "use client";
 import Image from "next/image";
 import { useState } from "react";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -330,14 +337,51 @@ const page = ({ searchParams: { referrerCode } }: props) => {
           </Form>
         </div>
       </div>
-      <div className="hidden md:flex h-svh  flex-col items-center justify-center object-cover object-center   w-full  ">
+      <div className="hidden md:flex h-svh relative  flex-col items-center justify-center object-cover object-center   w-full  ">
         <Image
-          src="/vintage/images/loginHero.svg"
+          src="/vintage/images/authBg.webp"
           alt="signup"
           className=" w-full h-full object-cover object-bottom"
           width={400}
           height={400}
         />
+        <div className=" absolute bottom-20">
+          <Carousel orientation="horizontal">
+            <CarouselContent className=" w-[300px] 2xl:w-[400px]  ">
+              <CarouselItem>
+                <Image
+                  src="/vintage/images/feature1.svg"
+                  alt="feature"
+                  width={100}
+                  className=" w-full"
+                  height={100}
+                />
+              </CarouselItem>
+              <CarouselItem>
+                {" "}
+                <Image
+                  src="/vintage/images/feature2.svg"
+                  alt="feature"
+                  width={100}
+                  className=" w-full"
+                  height={100}
+                />
+              </CarouselItem>
+              <CarouselItem>
+                {" "}
+                <Image
+                  src="/vintage/images/feature3.svg"
+                  alt="feature"
+                  width={100}
+                  className=" w-full"
+                  height={100}
+                />
+              </CarouselItem>
+            </CarouselContent>
+            <CarouselPrevious className=" " />
+            <CarouselNext />
+          </Carousel>
+        </div>
       </div>
     </div>
   );

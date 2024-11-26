@@ -6,6 +6,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { FcCancel } from "react-icons/fc";
 
 import { MAX_PROFIT_THRESHOLD, profileLevels, tabs } from "@/lib/constants";
 import Image from "next/image";
@@ -328,65 +329,170 @@ const ProfileMilestone = () => {
       title: "Affiliate",
       milestone: "Win 150 Picks Across all of your accounts",
       rewards: [
-        "Exclusive discord role",
-        "Special giveaway entries",
-        "Secret discounts",
-        "First access to features",
-        "Premium bonuses",
-        "Event invitations",
-        "Priority support",
+        {
+          title: "Exclusive discord role",
+          included: false,
+        },
+        {
+          title: "Special giveaway entries",
+          included: false,
+        },
+        {
+          title: "Secret discounts",
+          included: true,
+        },
+        {
+          title: "First access to features",
+          included: true,
+        },
+        {
+          title: "Premium bonuses",
+          included: false,
+        },
+        {
+          title: "Event invitations",
+          included: false,
+        },
+        {
+          title: "Priority support",
+          included: true,
+        },
       ],
     },
     {
       title: "Superviser ",
       milestone: "Win 150 Picks Across all of your accounts",
       rewards: [
-        "Exclusive discord role",
-        "Special giveaway entries",
-        "Secret discounts",
-        "First access to features",
-        "Premium bonuses",
-        "Event invitations",
-        "Priority support",
+        {
+          title: "Exclusive discord role",
+          included: false,
+        },
+        {
+          title: "Special giveaway entries",
+          included: true,
+        },
+        {
+          title: "Secret discounts",
+          included: true,
+        },
+        {
+          title: "First access to features",
+          included: true,
+        },
+        {
+          title: "Premium bonuses",
+          included: false,
+        },
+        {
+          title: "Event invitations",
+          included: false,
+        },
+        {
+          title: "Priority support",
+          included: true,
+        },
       ],
     },
     {
       title: "Affiliate Manager",
       milestone: "Win 150 Picks Across all of your accounts",
       rewards: [
-        "Exclusive discord role",
-        "Special giveaway entries",
-        "Secret discounts",
-        "First access to features",
-        "Premium bonuses",
-        "Event invitations",
-        "Priority support",
+        {
+          title: "Exclusive discord role",
+          included: true,
+        },
+        {
+          title: "Special giveaway entries",
+          included: true,
+        },
+        {
+          title: "Secret discounts",
+          included: true,
+        },
+        {
+          title: "First access to features",
+          included: true,
+        },
+        {
+          title: "Premium bonuses",
+          included: true,
+        },
+        {
+          title: "Event invitations",
+          included: false,
+        },
+        {
+          title: "Priority support",
+          included: true,
+        },
       ],
     },
     {
       title: "Top Tier",
       milestone: "Win 150 Picks Across all of your accounts",
       rewards: [
-        "Exclusive discord role",
-        "Special giveaway entries",
-        "Secret discounts",
-        "First access to features",
-        "Premium bonuses",
-        "Event invitations",
-        "Priority support",
+        {
+          title: "Exclusive discord role",
+          included: true,
+        },
+        {
+          title: "Special giveaway entries",
+          included: true,
+        },
+        {
+          title: "Secret discounts",
+          included: true,
+        },
+        {
+          title: "First access to features",
+          included: true,
+        },
+        {
+          title: "Premium bonuses",
+          included: true,
+        },
+        {
+          title: "Event invitations",
+          included: true,
+        },
+        {
+          title: "Priority support",
+          included: true,
+        },
       ],
     },
     {
       title: "Regional Affiliate",
       milestone: "Win 150 Picks Across all of your accounts",
       rewards: [
-        "Exclusive discord role",
-        "Special giveaway entries",
-        "Secret discounts",
-        "First access to features",
-        "Premium bonuses",
-        "Event invitations",
-        "Priority support",
+        {
+          title: "Exclusive discord role",
+          included: true,
+        },
+        {
+          title: "Special giveaway entries",
+          included: true,
+        },
+        {
+          title: "Secret discounts",
+          included: true,
+        },
+        {
+          title: "First access to features",
+          included: true,
+        },
+        {
+          title: "Premium bonuses",
+          included: true,
+        },
+        {
+          title: "Event invitations",
+          included: true,
+        },
+        {
+          title: "Priority support",
+          included: true,
+        },
       ],
     },
   ];
@@ -415,9 +521,13 @@ const ProfileMilestone = () => {
           <div className=" mt-4 bg-white p-4 flex flex-col pb-6  space-y-1.5">
             {milestone.rewards.map((milestone, index) => (
               <p className=" inline-flex items-center gap-2" key={index}>
-                <FaCircleCheck className="text-vintage-50 2xl:text-lg" />
+                {milestone.included ? (
+                  <FaCircleCheck className="text-vintage-50 2xl:text-lg" />
+                ) : (
+                  <FcCancel className="text-vintage-50 2xl:text-lg" />
+                )}
                 <span className="text-sm 2xl:text-base capitalize text-gray-700">
-                  {milestone}
+                  {milestone.title}
                 </span>
               </p>
             ))}

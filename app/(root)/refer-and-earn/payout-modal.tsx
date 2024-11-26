@@ -76,9 +76,9 @@ export default function PayoutModal({
 
   return (
     <Dialog open={open} onOpenChange={onClose}>
-      <DialogContent className="bg-primary-100 gap-1 p-5 text-white border-none">
-        <DialogTitle className="bg-primary-100 text-white border-none mb-8">
-          Request Payout
+      <DialogContent className=" bg-white gap-1 p-6 text-vintage-50 md:rounded-3xl overflow-hidden border-none">
+        <DialogTitle className=" bg-white text-vintage-50 2xl:text-lg border-none mb-8">
+          Request Affiliate Payout
         </DialogTitle>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           {/* Crypto Currency Selection */}
@@ -88,8 +88,8 @@ export default function PayoutModal({
             </label>
             <DropdownMenu>
               <DropdownMenuTrigger
-                className={`bg-transparent border border-white border-opacity-10 w-full text-left p-2 rounded-md text-sm ${
-                  selectedCurrency ? "text-white" : "text-white/40"
+                className={`bg-[#F8F8F8] py-3 border border-[#001E451A] border-opacity-10 w-full text-left p-2 rounded-xl text-sm ${
+                  selectedCurrency ? "text-vintage-50" : "text-vintage-50/40"
                 } ${errors.currency ? "border-red-500" : ""}`}
               >
                 {selectedCurrency ? selectedCurrency : "Select Currency"}
@@ -97,7 +97,7 @@ export default function PayoutModal({
               <DropdownMenuContent
                 align="start"
                 id="currency"
-                className="bg-primary-100 text-white border-white/20"
+                className=" bg-white text-vintage-50 border-[#001E451A]/20"
               >
                 <DropdownMenuItem
                   onSelect={() => {
@@ -132,7 +132,7 @@ export default function PayoutModal({
             <Input
               id="network-address"
               placeholder="Enter Network Address"
-              className={`bg-transparent text-white border border-white border-opacity-10 ${
+              className={`bg-[#F8F8F8] py-6 rounded-xl text-vintage-50 border border-[#001E451A] border-opacity-10 ${
                 errors.networkAddress ? "border-red-500" : ""
               }`}
               {...register("networkAddress")}
@@ -145,17 +145,17 @@ export default function PayoutModal({
           </div>
 
           {/* Action Buttons */}
-          <div className="flex justify-end items-end gap-4">
+          <div className="flex justify-end items-end gap-4 pt-4">
             <button
               type="button"
-              className="text-white font-semibold hover:outline hover:outline-1 hover:outline-primary-200 uppercase text-xs bg-[#333547] p-3.5 rounded-lg shadow-inner shadow-gray-500 inline-flex items-center gap-3"
+              className="bg-[#001E451A] font-semibold  2xl:text-sm  text-xs  p-3 rounded-full px-8 border border-[#001E451A]"
               onClick={onClose}
             >
               Close
             </button>
             <button
               type="submit"
-              className="p-3.5 uppercase font-bold inner-shadow text-xs text-white rounded-lg hover:outline hover:outline-1 hover:outline-coral-500 bg-[#52FC18]/20 disabled:opacity-20"
+              className="p-3 px-8 2xl:text-sm font-semibold text-xs text-white rounded-full bg-vintage-50 disabled:opacity-20"
               disabled={isPending}
             >
               {isPending ? "Submitting..." : "Request Payout"}

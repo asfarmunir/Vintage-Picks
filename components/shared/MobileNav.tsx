@@ -4,7 +4,7 @@ import {
   Sheet,
   SheetContent,
   SheetHeader,
-  SheetTrigger
+  SheetTrigger,
 } from "@/components/ui/sheet";
 import { navlinks } from "@/lib/constants";
 import Image from "next/image";
@@ -15,13 +15,13 @@ const MobileNav = () => {
   const pathname = usePathname();
   const user = userStore((state) => state.user);
   return (
-    <div className=" w-full bg-primary  flex md:hidden items-center justify-between px-3.5 py-4">
+    <div className=" w-full  bg-vintage-50  flex md:hidden items-center justify-between px-3.5 py-4">
       <Image src="/images/logo.svg" alt="Logo" width={160} height={160} />
       <Sheet>
         <SheetTrigger className=" block  lg:hidden">
           <HiMenu className=" text-white text-3xl" />
         </SheetTrigger>
-        <SheetContent className=" bg-primary text-white py-7 px-4 border-none">
+        <SheetContent className="  bg-vintage-50 text-white py-7 px-4 border-none">
           <SheetHeader>
             <div className=" relative h-full min-h-screen flex flex-col items-start gap-7">
               <Image
