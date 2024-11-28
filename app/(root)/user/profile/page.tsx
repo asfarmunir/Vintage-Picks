@@ -327,7 +327,7 @@ const ProfileMilestone = () => {
   const milestones = [
     {
       title: "Affiliate",
-      milestone: "Win 150 Picks Across all of your accounts",
+      milestone: "Win 10 Picks Across all of your accounts",
       rewards: [
         {
           title: "Exclusive discord role",
@@ -361,7 +361,7 @@ const ProfileMilestone = () => {
     },
     {
       title: "Superviser ",
-      milestone: "Win 150 Picks Across all of your accounts",
+      milestone: "Win 25 Picks Across all of your accounts",
       rewards: [
         {
           title: "Exclusive discord role",
@@ -395,7 +395,7 @@ const ProfileMilestone = () => {
     },
     {
       title: "Affiliate Manager",
-      milestone: "Win 150 Picks Across all of your accounts",
+      milestone: "Win 50 Picks Across all of your accounts",
       rewards: [
         {
           title: "Exclusive discord role",
@@ -429,7 +429,7 @@ const ProfileMilestone = () => {
     },
     {
       title: "Top Tier",
-      milestone: "Win 150 Picks Across all of your accounts",
+      milestone: "Win 100 Picks Across all of your accounts",
       rewards: [
         {
           title: "Exclusive discord role",
@@ -463,7 +463,7 @@ const ProfileMilestone = () => {
     },
     {
       title: "Regional Affiliate",
-      milestone: "Win 150 Picks Across all of your accounts",
+      milestone: "Win 200 Picks Across all of your accounts",
       rewards: [
         {
           title: "Exclusive discord role",

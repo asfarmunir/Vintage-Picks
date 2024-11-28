@@ -95,12 +95,12 @@ const UserAccount = ({
             </>
           )}
         </DropdownMenuTrigger>
-        <DropdownMenuContent className="   border-none shadow-gray-600   bg-[#181926] text-white   mt-1  p-1 rounded-lg shadow-base">
+        <DropdownMenuContent className="   border-none shadow-gray-600   bg-vintage-50 text-white   mt-1  p-2 rounded-xl shadow-base">
           {!isPending &&
             userAccounts.map((account: Account, index: number) => (
               <DropdownMenuItem
                 key={index}
-                className="flex py-0 items-center gap-14 md:gap-28 justify-between"
+                className="flex py-1 items-center gap-14 border-b border-slate-700 md:gap-28 justify-between"
                 onClick={() => changeUserAccount(account)}
               >
                 <p className="  inline-flex items-center font-bold">
