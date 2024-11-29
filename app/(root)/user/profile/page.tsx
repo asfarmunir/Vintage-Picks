@@ -99,7 +99,7 @@ const page = () => {
             </p>
             <p>
               Upgrade your profile level and get exclusive access to discrod
-              roles.
+              roles
             </p>
             <ProfileLevel />
           </div>
