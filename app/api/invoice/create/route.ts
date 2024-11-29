@@ -5,7 +5,7 @@ import prisma from "@/prisma/client";
 import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
 const coinbase = require("coinbase-commerce-node");
-const { Client, resources, Webhook } = coinbase;
+const { Client, resources } = coinbase;
 const { Charge } = resources;
 
 
