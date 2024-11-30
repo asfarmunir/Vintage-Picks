@@ -115,7 +115,7 @@ const page = ({ searchParams: { referrerCode } }: props) => {
   }
 
   return (
-    <div className=" w-full flex items-start justify-center bg-vintage-50 h-screen overflow-hidden ">
+    <div className=" w-full flex items-start justify-center bg-vintage-50 gap-2 h-screen overflow-hidden ">
       <div className=" w-full bg-[#F8F8F8]  h-svh  flex flex-col items-center justify-center rounded-xl p-4 md:p-8 md:py-8  2xl:p-10 ">
         <div className=" w-fit bg-white px-6 py-12 md:p-12 rounded-3xl shadow-sm max-h-[90svh] overflow-y-auto [scrollbar-width:none] scroll-smooth  ">
           <h2 className=" text-2xl md:text-3xl font-bold text-vintage-50 mb-2">
@@ -337,7 +337,7 @@ const page = ({ searchParams: { referrerCode } }: props) => {
           </Form>
         </div>
       </div>
-      <div className="hidden md:flex h-svh relative  flex-col items-center justify-center object-cover object-center   w-full  ">
+      <div className="hidden md:flex h-svh relative rounded-xl overflow-hidden  flex-col items-center justify-center object-cover object-center   w-full  ">
         <Image
           src="/vintage/images/authBg.webp"
           alt="signup"

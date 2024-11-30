@@ -71,32 +71,10 @@ const page = () => {
   return (
     <>
       <div className=" w-full p-2 md:p-3 rounded-2xl bg-vintage-50 space-y-2">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-          <div className=" p-3 md:p-6 bg-white  overflow-hidden relative min-h-44 2xl:min-h-44 rounded-2xl w-full  flex flex-col gap-1 ">
-            <div className=" w-full flex items-center justify-between">
-              <p className=" text-gray-700 mb-3  2xl:text-base text-sm ">
-                Total Funded Amount
-              </p>
-              <Link href={"/user/profile?tab=accounts&status=funded"}>
-                <Image
-                  src="/vintage/images/arrow.svg"
-                  alt="Arrow Icon"
-                  width={50}
-                  className=" absolute bottom-3 right-3"
-                  height={50}
-                />
-              </Link>
-            </div>
-            <p className="     text-4xl 2xl:text-5xl font-bold">
-              $
-              {(account.status === "FUNDED"
-                ? account.totalFundedAmount
-                : 0
-              )?.toFixed(2)}
-            </p>
-          </div>
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-3">
+          {/* mobile hero  */}
           <div
-            className="p-3 md:p-6 bg-white justify-center  row-span-2  overflow-hidden relative min-h-48 2xl:min-h-44 rounded-2xl w-full  flex flex-col gap-2 "
+            className="p-3 md:p-6 md:hidden bg-white justify-center  row-span-2 md:col-span-2  overflow-hidden relative min-h-48 2xl:min-h-44 rounded-2xl w-full  flex flex-col gap-2 "
             style={{
               backgroundImage: "url('/vintage/images/heroBg.svg')",
               backgroundSize: "cover",
@@ -130,7 +108,65 @@ const page = () => {
               </DialogContent>
             </Dialog>
           </div>
-          <div className=" p-3 md:p-6 bg-white  overflow-hidden relative min-h-44 2xl:min-h-44 rounded-2xl w-full  flex flex-col gap-1 ">
+          <div className=" p-3 md:p-6 bg-white  overflow-hidden col-span-1 md:col-span-2 relative min-h-44 2xl:min-h-44 rounded-2xl w-full  flex flex-col gap-1 ">
+            <div className=" w-full flex items-center justify-between">
+              <p className=" text-gray-700 mb-3  2xl:text-base text-sm ">
+                Total Funded Amount
+              </p>
+              <Link href={"/user/profile?tab=accounts&status=funded"}>
+                <Image
+                  src="/vintage/images/arrow.svg"
+                  alt="Arrow Icon"
+                  width={50}
+                  className=" absolute bottom-3 right-3"
+                  height={50}
+                />
+              </Link>
+            </div>
+            <p className="     text-4xl 2xl:text-5xl font-bold">
+              $
+              {(account.status === "FUNDED"
+                ? account.totalFundedAmount
+                : 0
+              )?.toFixed(2)}
+            </p>
+          </div>
+          <div
+            className="p-3 md:p-6 hidden bg-white justify-center  row-span-2 md:col-span-3  overflow-hidden relative min-h-48 2xl:min-h-44 rounded-2xl w-full  md:flex flex-col gap-2 "
+            style={{
+              backgroundImage: "url('/vintage/images/heroBg.svg')",
+              backgroundSize: "cover",
+              backgroundPosition: "right",
+              backgroundRepeat: "no-repeat",
+            }}
+          >
+            <h1 className="text-xl capitalize 2xl:text-2xl text-vintage-50 font-bold">
+              Bet sports with our money
+            </h1>
+
+            <p className=" text-gray-700  bg-white/50 rounded-full p-2 mb-2   2xl:text-base max-w-sm 2xl:max-w-md text-sm  font-semibold">
+              Maximize your earnings with minimal risk. Bet confidently using
+              our capital and unlock higher rewards!{" "}
+            </p>
+            <Dialog>
+              <DialogTrigger className=" w-fit text-sm 2xl:text-base  rounded-full bg-vintage-50 px-5 py-3 inline-flex items-center gap-3">
+                <Image
+                  src="/icons/video.svg"
+                  alt="Arrow Icon"
+                  width={13}
+                  height={13}
+                />
+                <span className=" font-semibold text-white">How it works</span>{" "}
+              </DialogTrigger>
+              <DialogContent className=" bg-white gap-1 py-12  border-none md:min-w-[700px] 2xl:min-w-[900px] flex flex-col items-center">
+                <h2 className=" text-3xl font-bold">How It Works</h2>
+                <DialogDescription>
+                  You can find more information on our help tab
+                </DialogDescription>
+              </DialogContent>
+            </Dialog>
+          </div>
+          <div className=" p-3 md:p-6 bg-white col-span-1 md:col-span-2  overflow-hidden relative min-h-44 2xl:min-h-44 rounded-2xl w-full  flex flex-col gap-1 ">
             <div className=" w-full flex items-center justify-between">
               <p className=" text-gray-700  mb-3  2xl:text-base text-sm ">
                 Total Payout Amount
@@ -161,7 +197,7 @@ const page = () => {
                 {tab !== "show" ? (
                   <button
                     onClick={() => setTab("show")}
-                    className="  text-vintage-50  w-full md:w-fit text-sm font-semibold px-3.5 py-2 rounded-xl inline-flex items-center justify-center gap-2"
+                    className="  text-vintage-50 bg-white   w-full md:w-fit text-sm font-semibold px-3.5 py-2.5 rounded-full inline-flex items-center justify-center gap-2"
                   >
                     <Image
                       src="/icons/check.png"
@@ -175,7 +211,7 @@ const page = () => {
                 ) : (
                   <button
                     onClick={() => setTab("hide")}
-                    className=" text-vintage-50 w-full md:w-fit text-sm font-semibold px-3.5 py-2 rounded-xl inline-flex items-center justify-center gap-2"
+                    className=" text-vintage-50 w-full bg-white md:w-fit text-sm font-semibold px-3.5 py-2.5 rounded-full inline-flex items-center justify-center gap-2"
                   >
                     <Image
                       src="/icons/hide.png"
@@ -188,7 +224,7 @@ const page = () => {
                   </button>
                 )}
                 <DropdownMenu>
-                  <DropdownMenuTrigger className=" text-slate-700     justify-center w-full md:w-fit  text-xs 2xl:text-base px-3.5 py-2 rounded-xl inline-flex items-center gap-2">
+                  <DropdownMenuTrigger className=" text-vintage-50  bg-white font-semibold     justify-center w-full md:w-fit  text-xs 2xl:text-base px-3.5 py-2.5 rounded-full inline-flex items-center gap-2">
                     Sort : {sortFilter} <ChevronDown className="pb-0.5" />
                   </DropdownMenuTrigger>
                   <DropdownMenuContent className="w-48  bg-vintage-50 text-white border-none  mt-1  p-3 rounded-lg text-xs 2xl:text-base">
@@ -257,7 +293,7 @@ const page = () => {
                 filteredData?.map((account: any, index: number) => (
                   <Link
                     key={index}
-                    className="   overflow-hidden relative  bg-white p-6 rounded-xl shadow-sm  w-full  flex flex-col gap-1 "
+                    className="   overflow-hidden relative  bg-white p-2 md:p-6 rounded-xl shadow-sm  w-full  flex flex-col gap-1 "
                     href={`/dashboard?account=${account.id}`}
                   >
                     <div className=" w-full flex items-center mb-3 justify-between">
@@ -271,7 +307,7 @@ const page = () => {
                       ? "  bg-[#0F840C1F] text-green-700 border border-[#0F840C3D] "
                       : account.status === "BREACHED"
                       ? " bg-[#FF00001F] text-[#ff0000cf] border border-[#FF00003D] "
-                      : " bg-[#FFA5001F] text-[#ffa600fa] border border-[#FFA5003D] "
+                      : " bg-[#C02FF51F] text-[#c02ff5ad] border border-[#C02FF53D]  "
                   }
              
               `}
@@ -279,20 +315,20 @@ const page = () => {
                         {account.status}
                       </p>
                     </div>
-                    <div className=" w-full flex items-center gap-4">
+                    <div className=" w-full flex justify-between items-center gap-2 md:gap-4">
                       <div className=" w-full p-7 rounded-lg  bg-[#F8F8F8] flex flex-col-reverse items-center justify-between">
-                        <p className=" text-xs md:text-sm text-[#848697]   md:mt-1 2xl:text-lg ">
+                        <p className=" text-xs md:text-sm text-center text-[#848697]   md:mt-1 2xl:text-lg ">
                           Account Balance
                         </p>
-                        <p className=" text-vintage-50 mb-1 mt-4   md:mt-0 2xl:text-2xl text-xl font-semibold">
+                        <p className=" text-vintage-50 mb-1 mt-4   md:mt-0 2xl:text-2xl text-xs md:text-xl font-semibold">
                           ${account.balance}
                         </p>
                       </div>
                       <div className=" w-full p-7 rounded-lg  bg-[#F8F8F8] flex flex-col-reverse items-center justify-between">
-                        <p className=" text-xs md:text-sm text-[#848697]   md:mt-1 2xl:text-lg ">
+                        <p className=" text-xs md:text-sm text-center text-[#848697]   md:mt-1 2xl:text-lg ">
                           Account Number
                         </p>
-                        <p className=" text-vintage-50 mb-1 mt-4   md:mt-0 2xl:text-2xl text-xl font-semibold">
+                        <p className=" text-vintage-50 mb-1 truncate mt-4 text-xs  md:mt-0 2xl:text-2xl md:text-xl font-semibold">
                           #{account.accountNumber}
                         </p>
                       </div>{" "}

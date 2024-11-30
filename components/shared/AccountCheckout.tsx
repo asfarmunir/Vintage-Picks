@@ -246,7 +246,7 @@ const AccountCheckout: React.FC<AccountCheckoutProps> = ({
                   {" "}
                   Account Size
                 </h2>
-                <div className="flex items-center  flex-wrap  mt-10  gap-5 md:mt-4">
+                <div className="flex items-center  flex-wrap  mt-10 w-full  gap-3 md:mt-4">
                   {accountSizes.map((item, index) => (
                     <div
                       key={index}
@@ -303,7 +303,7 @@ const AccountCheckout: React.FC<AccountCheckoutProps> = ({
                       height={25}
                       className=""
                     />
-                    100% Refundable
+                    100% Refundable fee with payout
                   </h2>
                 </div>
                 <div className=" flex flex-col gap-3  py-6  ">
@@ -321,8 +321,10 @@ const AccountCheckout: React.FC<AccountCheckoutProps> = ({
                     </p>
                   </div>
                   <div className="flex items-center justify-between">
-                    <h2 className="text-lg font-semibold">Discounted Price</h2>
-                    <p className="text-lg font-semibold">
+                    <h2 className="text-lg font-semibold text-[#3E4347]">
+                      Discounted Price
+                    </h2>
+                    <p className="text-lg font-semibold text-[#3E4347]">
                       {activeAccountSize.price}.00
                     </p>
                   </div>

@@ -137,15 +137,30 @@ async function checkForUpdates(wss) {
                 }
               }
 
+              
               // Check if the home and away scores were correctly assigned
               if (homeScore !== null && awayScore !== null) {
-                let isHomeTeam = bet.team[i] === game.home_team;
+                let betTeam = normalizeName(bet.team[i]);
+                let homeTeamNormalized = normalizeName(game.home_team);
+                let awayTeamNormalized = normalizeName(game.away_team);
+
+                  let isHomeTeam = betTeam === homeTeamNormalized;
+                let isAwayTeam = betTeam === awayTeamNormalized;
+                // Log team information
+                console.log(`Bet Team: ${bet.team[i]}`);
+                console.log(
+                  `Is Home Team: ${isHomeTeam}, Is Away Team: ${isAwayTeam}`
+                );
 
                 // Determine if the selected team won based on their home/away status
                 let matchWon =
                   (isHomeTeam && homeScore > awayScore) ||
-                  (!isHomeTeam && homeScore < awayScore);
+                  (isAwayTeam && awayScore > homeScore);
 
+
+
+                  
+                  // If the match is not won, set allMatchesWon to false and exit loop
                 if (!matchWon) {
                   allMatchesWon = false; // If any match is lost, mark the entire bet as lost
                   break;
@@ -243,7 +258,9 @@ async function checkForUpdates(wss) {
                       totalFundedPayout: 0,
                       totalFundedAmount: getOriginalBalance(account),
                       picks: 0,
-                      fundedPayoutTimer: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000), // 14 days
+                       fundedPayoutTimer: new Date(
+                        Date.now() + 14 * 24 * 60 * 60 * 1000
+                      ), // 14 days
                     },
                   });
                   await sendFundedAccountEmail(account.id);

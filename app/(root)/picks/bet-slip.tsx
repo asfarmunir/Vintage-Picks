@@ -73,15 +73,15 @@ const BetSlip = ({
           />
         </button>
       </div>
-      <div className=" w-full mb-4  rounded-xl text-white bg-vintage-50 p-3 flex items-center justify-between">
-        <p className="text-sm font-thin capitalize">money line</p>
+      <div className=" w-full mb-4  rounded-xl text-vintage-50 bg-[#0100821A] p-3 flex items-center justify-between">
+        <p className="text-sm  capitalize font-semibold">money line</p>
         <p className="font-bold">
           {calculateMoneyLine(bet.odds, bet.oddsFormat, bet.pick)}
         </p>
       </div>
       <div className="w-full flex items-center gap-3">
-        <div className="bg-vintage-50 rounded-xl p-3.5 text-white flex flex-col gap-2.5 flex-grow">
-          <p className=" text-xs font-thin text-slate-100">Pick</p>
+        <div className="bg-[#F9F9F9] rounded-xl p-3.5 text-vintage-50 flex flex-col gap-2.5 flex-grow">
+          <p className=" text-xs font-thin ">Pick</p>
           <div className="flex gap-2">
             <input
               className=" font-bold bg-white focus:outline-none border border-transparent text-vintage-50 w-36 rounded-sm px-2"
@@ -93,8 +93,8 @@ const BetSlip = ({
             <p className="font-bold">$</p>
           </div>
         </div>
-        <div className="bg-vintage-50 rounded-xl p-3.5 text-white flex flex-col gap-2.5 flex-grow">
-          <p className=" text-xs font-thin text-slate-100">To Win</p>
+        <div className="bg-[#F9F9F9] rounded-xl p-3.5 text-vintage-50 flex flex-col gap-2.5 flex-grow">
+          <p className=" text-xs font-thin ">To Win</p>
           <h2 className=" font-bold">{bet.toWin.toFixed(2)}$</h2>
         </div>
       </div>

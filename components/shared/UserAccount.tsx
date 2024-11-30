@@ -86,7 +86,7 @@ const UserAccount = ({
                 <IoChevronDownCircle className=" text-2xl text-white pb-1" />
               </p>
               <span
-                className={` inline-flex items-center gap-x-1 md:gap-x-1.5 text-xs 2xl:text-base capitalize   px-4 py-2.5 rounded-full
+                className={` hidden sm:inline-flex items-center gap-x-1 md:gap-x-1.5 text-xs 2xl:text-base capitalize   px-4 py-2.5 rounded-full
             ${challengeColorClasses[activeAccount.status]}
             `}
               >
@@ -100,7 +100,7 @@ const UserAccount = ({
             userAccounts.map((account: Account, index: number) => (
               <DropdownMenuItem
                 key={index}
-                className="flex py-1 items-center gap-14 border-b border-slate-700 md:gap-28 justify-between"
+                className="flex py-1 items-center gap-6 border-b border-slate-700 md:gap-28 justify-between"
                 onClick={() => changeUserAccount(account)}
               >
                 <p className="  inline-flex items-center font-bold">

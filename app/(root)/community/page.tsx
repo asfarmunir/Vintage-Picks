@@ -287,11 +287,11 @@ const page = () => {
             backgroundPosition: "center",
           }}
         >
-          <div className=" flex flex-col gap-2">
+          <div className=" flex flex-col items-center md:items-start gap-2">
             <h2 className="font-bold text-xl 2xl:text-2xl">
               Stay in the Game with Us
             </h2>
-            <p className=" text-sm 2xl:text-base text-white mb-4">
+            <p className=" text-sm 2xl:text-base text-center text-white mb-4">
               Follow our social channels for exclusive tips, news, and offers.
             </p>
             <Link
@@ -303,23 +303,26 @@ const page = () => {
               JOIN DISCORD
             </Link>
           </div>
-          <div className=" flex items-center flex-wrap gap-3">
+          <div className=" flex items-center  gap-3">
             <Image
               src="/vintage/images/discord.svg"
               alt="Logo"
               width={140}
+              className=" w-[80px] md:w-[145px] "
               height={140}
             />
             <Image
               src="/vintage/images/youtube.svg"
               alt="Logo"
               width={140}
+              className=" w-[80px] md:w-[145px] "
               height={140}
             />
             <Image
               src="/vintage/images/instagram.svg"
               alt="Logo"
               width={150}
+              className=" w-[80px] md:w-[145px] "
               height={150}
             />
           </div>

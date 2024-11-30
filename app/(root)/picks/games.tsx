@@ -17,6 +17,7 @@ import {
 import { LoaderCircle } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { toast } from "react-toastify";
+import { TiArrowLeft, TiArrowRight } from "react-icons/ti";
 
 interface GetGamesParams {
   sportKey: string;
@@ -85,7 +86,29 @@ const GamesTable = ({
       );
     }
     return games;
-  }, [search, isLoading]);
+  }, [search, isLoading, games]);
+  // PAGINATION
+  const [page, setPage] = useState(1);
+  const pageSize = 5;
+  const startIndex = (page - 1) * pageSize;
+  const endIndex = startIndex + pageSize;
+  useEffect(() => {
+    setPage(1);
+  }, [filteredGames]);
+
+  const goNext = () => {
+    if (endIndex < filteredGames.length) {
+      setPage(page + 1);
+    }
+  };
+  const goPrev = () => {
+    if (startIndex > 0) {
+      setPage(page - 1);
+    }
+  };
+  const paginatedGames = useMemo(() => {
+    return filteredGames?.slice(startIndex, endIndex);
+  }, [filteredGames, startIndex, endIndex]);
 
   //   BETS DATA
   const [oepnPickModal, setOpenPickModal] = useState(false);
@@ -128,11 +151,11 @@ const GamesTable = ({
     }
 
     const odds = home
-      ? game.bookmakers[0]?.markets[0]?.outcomes[0].price
-      : game.bookmakers[0]?.markets[0]?.outcomes[1].price;
-
+      ? getTeamOdds(game.bookmakers[0]?.markets[0]?.outcomes, game.home_team)
+      : getTeamOdds(game.bookmakers[0]?.markets[0]?.outcomes, game.away_team);
     const initialPick =
       getOriginalAccountValue(account) * ALL_STEP_CHALLENGES.minPickAmount;
+
     const bet: Bet = {
       id: game.id,
       team: home ? game.home_team : game.away_team,
@@ -162,6 +185,10 @@ const GamesTable = ({
 
   const findTeamInBets = (team: string, id: number) => {
     return bets.find((bet) => bet.team === team && bet.id === id);
+  };
+
+  const getTeamOdds = (outcomes: any, team: string) => {
+    return outcomes?.find((outcome: any) => outcome.name === team)?.price;
   };
 
   if (isLoading) {
@@ -203,7 +230,7 @@ const GamesTable = ({
           </TableRow>
         </TableHeader>
         <TableBody className=" ">
-          {filteredGames.map((game: any) => (
+          {paginatedGames.map((game: any) => (
             <TableRow key={game.id}>
               <TableCell className=" font-semibold w-[160px] capitalize text-xs py-5 border-b border-gray-300 2xl:text-base text-start truncate">
                 {new Date(game.commence_time).toUTCString()}{" "}
@@ -217,7 +244,7 @@ const GamesTable = ({
                     onClick={() => addGameToBetSlip({ game, home: true })}
                     className={`  ${
                       findTeamInBets(game.home_team, game.id)
-                        ? "  bg-vintage-50 text-white "
+                        ? "  bg-[#0100821A] text-vintage-50 font-semibold "
                         : "bg-white"
                     }  flex w-full text-start justify-between
                     items-center gap-5 px-4 p-3 text-sm  2xl:text-base
@@ -227,7 +254,10 @@ const GamesTable = ({
                       {game.home_team}
                     </p>
                     <span className=" ">
-                      {game.bookmakers[0]?.markets[0]?.outcomes[0].price}
+                      {getTeamOdds(
+                        game.bookmakers[0]?.markets[0]?.outcomes,
+                        game.home_team
+                      )}{" "}
                     </span>
                   </div>
                   <p
@@ -240,7 +270,7 @@ const GamesTable = ({
                     onClick={() => addGameToBetSlip({ game, home: false })}
                     className={`${
                       findTeamInBets(game.away_team, game.id)
-                        ? "  bg-vintage-50 text-white "
+                        ? "  bg-[#0100821A] text-vintage-50 font-semibold "
                         : "bg-white"
                     }  flex w-full text-start justify-between
                     items-center gap-5 px-4 p-3 text-sm  2xl:text-base
@@ -251,7 +281,10 @@ const GamesTable = ({
                     </p>
 
                     <span className=" ">
-                      {game.bookmakers[0]?.markets[0]?.outcomes[1].price}
+                      {getTeamOdds(
+                        game.bookmakers[0]?.markets[0]?.outcomes,
+                        game.away_team
+                      )}{" "}
                     </span>
                   </div>
                 </div>
@@ -260,6 +293,35 @@ const GamesTable = ({
           ))}
         </TableBody>
       </Table>
+
+      <div className="flex items-center justify-between p-5">
+        <h4 className="text-[#848BAC] font-thin text-xs 2xl:text-base ">
+          PAGE {page} OF {Math.ceil(filteredGames.length / pageSize)}
+        </h4>
+        <div className="flex gap-2 items-center">
+          <button
+            className={`text-2xl
+            ${startIndex === 0 ? "text-[#848BAC]" : "text-vintage-50"}
+            `}
+            onClick={goPrev}
+          >
+            <TiArrowLeft />
+          </button>
+          <button
+            className={`text-2xl
+            ${
+              page >= Math.ceil(filteredGames.length / pageSize)
+                ? "text-[#848BAC]"
+                : "text-vintage-50"
+            }
+            `}
+            onClick={goNext}
+          >
+            <TiArrowRight />
+          </button>
+        </div>
+      </div>
+
       {/* <Dialog open={oepnPickModal} onOpenChange={onClose}>
         <DialogContent className=" bg-primary-100 gap-1 p-5 text-white border-none">
           <form className="space-y-4" >

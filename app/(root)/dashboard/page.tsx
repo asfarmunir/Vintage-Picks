@@ -61,9 +61,9 @@ const page = () => {
             </Link>
           </div>
         </div>
-        <div className=" w-full grid grid-cols-1 md:grid-cols-2 gap-2">
+        <div className=" w-full grid grid-cols-1 md:grid-cols-5 gap-2">
           <div
-            className=" min-h-96 flex items-center bg-vintage-50 flex-col justify-center gap-4 rounded-2xl"
+            className=" min-h-96 flex items-center bg-vintage-50  md:col-span-2 flex-col justify-center gap-4 rounded-2xl"
             style={{
               backgroundImage: "url('/vintage/images/dashboardBg.svg')",
               backgroundSize: "cover",
@@ -76,8 +76,8 @@ const page = () => {
               ${account.balance.toLocaleString()}
             </h2>
           </div>
-          <div className=" bg-white rounded-2xl p-4 md:p-6 ">
-            <div className=" w-full flex items-start justify-between  ">
+          <div className=" bg-white rounded-2xl md:col-span-3 p-4 md:p-6 ">
+            <div className=" w-full flex flex-col md:flex-row gap-3 items-start justify-between pb-2 ">
               <div className="flex flex-col gap-1">
                 <p className=" font-bold 2xl:text-lg  text-vintage-50">
                   Account overview
@@ -87,7 +87,7 @@ const page = () => {
                   activities.
                 </p>
               </div>{" "}
-              <div className="flex items-start gap-3 ">
+              <div className="flex items-center 2xl:items-start gap-3 ">
                 <div className="flex items-center gap-2.5 ">
                   <p className="   text-xs 2xl:text-sm text-primary-700">
                     Profit
@@ -169,13 +169,13 @@ const page = () => {
             </div>
           </div>
         </div>
-        <div className="flex items-center justify-between p-4 md:p-6 rounded-2xl bg-white">
+        <div className="flex flex-col md:flex-row items-center justify-between p-4 md:p-6 rounded-2xl bg-white">
           <div className="flex items-center justify-evenly md:justify-start flex-wrap gap-2 ">
             {dashboardTabs.map((curr, index) => (
               <button
                 key={index}
                 className={`  
-             text-xs 2xl:text-base py-2.5  w-full md:w-fit  flex-grow md:flex-grow-0 rounded-full ${
+             text-xs 2xl:text-base py-2.5  w-full md:w-fit text-center  flex-grow md:flex-grow-0 rounded-full ${
                tab === curr.tab
                  ? "border-[#0a0a202c] border  px-6 bg-[#0A0A201A]"
                  : " bg-transparent  px-3 capitalize"
@@ -188,7 +188,7 @@ const page = () => {
           </div>
           <Link
             href={"/picks"}
-            className=" px-7 py-2.5 font-semibold text-white text-sm w-full md:w-fit 2xl:text-base  rounded-full bg-vintage-50 "
+            className=" px-7 py-2.5 font-semibold text-white text-center text-sm w-full md:w-fit 2xl:text-base  rounded-full bg-vintage-50 "
           >
             Place Pick
           </Link>

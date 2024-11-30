@@ -6,7 +6,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { FcCancel } from "react-icons/fc";
+import { RxCross2 } from "react-icons/rx";
 
 import { MAX_PROFIT_THRESHOLD, profileLevels, tabs } from "@/lib/constants";
 import Image from "next/image";
@@ -326,7 +326,7 @@ const ProfileLevel = () => {
 const ProfileMilestone = () => {
   const milestones = [
     {
-      title: "Affiliate",
+      title: "Beginner",
       milestone: "Win 10 Picks Across all of your accounts",
       rewards: [
         {
@@ -394,7 +394,7 @@ const ProfileMilestone = () => {
       ],
     },
     {
-      title: "Affiliate Manager",
+      title: "Coach",
       milestone: "Win 50 Picks Across all of your accounts",
       rewards: [
         {
@@ -462,7 +462,7 @@ const ProfileMilestone = () => {
       ],
     },
     {
-      title: "Regional Affiliate",
+      title: "Regional Player",
       milestone: "Win 200 Picks Across all of your accounts",
       rewards: [
         {
@@ -522,9 +522,9 @@ const ProfileMilestone = () => {
             {milestone.rewards.map((milestone, index) => (
               <p className=" inline-flex items-center gap-2" key={index}>
                 {milestone.included ? (
-                  <FaCircleCheck className="text-vintage-50 2xl:text-lg" />
+                  <FaCircleCheck className="text-slate-400 2xl:text-lg" />
                 ) : (
-                  <FcCancel className="text-vintage-50 2xl:text-lg" />
+                  <RxCross2 className="text-red-600 bg-slate-400 rounded-full 2xl:text-lg" />
                 )}
                 <span className="text-sm 2xl:text-base capitalize text-gray-700">
                   {milestone.title}
@@ -670,7 +670,7 @@ const AccountsSection = ({ accounts }: { accounts: Account[] }) => {
           </Link>
         </div>
       </div>
-      <div className="flex flex-col  items-center gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-4">
         {filteredData?.length === 0 && (
           <>
             <Image
@@ -694,7 +694,7 @@ const AccountsSection = ({ accounts }: { accounts: Account[] }) => {
         {filteredData?.map((account, index) => (
           <div
             key={index}
-            className="   overflow-hidden relative   w-full  flex flex-col gap-1 "
+            className="   overflow-hidden relative   w-full  flex flex-col gap-1 p-2 md:p-6 "
           >
             <div className=" w-full flex items-center mb-3 justify-between">
               <p className=" text-vintage-50  2xl:text-xl text-lg font-semibold">
@@ -707,27 +707,27 @@ const AccountsSection = ({ accounts }: { accounts: Account[] }) => {
                       ? "  bg-[#0F840C1F] text-green-700 border border-[#0F840C3D] "
                       : account.status === "BREACHED"
                       ? " bg-[#FF00001F] text-[#ff00009e] border border-[#FF00003D] "
-                      : " bg-[#FFA5001F] text-[#ffa600fa] border border-[#FFA5003D] "
+                      : " bg-[#C02FF51F] text-[#c02ff5ad] border border-[#C02FF53D]  "
                   }
               `}
               >
                 {account.status}
               </p>
             </div>
-            <div className=" w-full flex items-center gap-4">
+            <div className=" w-full flex justify-between items-center gap-2 md:gap-4">
               <div className=" w-full p-7 rounded-lg  bg-[#F8F8F8] flex flex-col-reverse items-center justify-between">
-                <p className=" text-xs md:text-sm text-[#848697]   md:mt-1 2xl:text-lg ">
+                <p className=" text-xs md:text-sm text-center text-[#848697]   md:mt-1 2xl:text-lg ">
                   Account Balance
                 </p>
-                <p className=" text-vintage-50 mb-1 mt-4   md:mt-0 2xl:text-2xl text-xl font-semibold">
+                <p className=" text-vintage-50 mb-1 mt-4   md:mt-0 2xl:text-2xl text-xs md:text-xl font-semibold">
                   ${account.balance}
                 </p>
               </div>
               <div className=" w-full p-7 rounded-lg  bg-[#F8F8F8] flex flex-col-reverse items-center justify-between">
-                <p className=" text-xs md:text-sm text-[#848697]   md:mt-1 2xl:text-lg ">
+                <p className=" text-xs md:text-sm text-center text-[#848697]   md:mt-1 2xl:text-lg ">
                   Account Number
                 </p>
-                <p className=" text-vintage-50 mb-1 mt-4   md:mt-0 2xl:text-2xl text-xl font-semibold">
+                <p className=" text-vintage-50 mb-1 truncate mt-4 text-xs  md:mt-0 2xl:text-2xl md:text-xl font-semibold">
                   #{account.accountNumber}
                 </p>
               </div>{" "}

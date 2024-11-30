@@ -110,7 +110,7 @@ const Objectives = () => {
         </div>
       </div>
       <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div className="w-full flex-col bg-[#F4F4F4] rounded-lg p-5    flex items-starth gap-4">
+        {/* <div className="w-full flex-col bg-[#F4F4F4] rounded-lg p-5    flex items-starth gap-4">
           <div className="flex items-start gap-2.5">
             <div className="  font-bold flex flex-col  gap-1">
               <p className=" text-lg textvin 2xl:text-xl ">
@@ -126,7 +126,7 @@ const Objectives = () => {
               </p>
             </div>
           </div>
-          <div className=" w-full hidden md:flex flex-col items-end gap-4">
+          <div className=" w-full flex flex-col items-end gap-4">
             <div className="flex items-center justify-between w-full">
               <span className=" text-xs 2xl:text-base text-slate-500  font-normal text-primary-700">
                 Profit Target
@@ -134,8 +134,14 @@ const Objectives = () => {
               <p className=" text-green-600 font-thin text-sm">
                 {(account.balance - getOriginalAccountValue(account) < 0
                   ? 0
+                  : (account.balance - getOriginalAccountValue(account)) /
+                      (getOriginalAccountValue(account) *
+                        ALL_STEP_CHALLENGES.profitTarget) >
+                    1
+                  ? 100
                   : ((account.balance - getOriginalAccountValue(account)) /
-                      getOriginalAccountValue(account)) *
+                      (getOriginalAccountValue(account) *
+                        ALL_STEP_CHALLENGES.profitTarget)) *
                     100
                 ).toFixed(2)}{" "}
                 %
@@ -147,21 +153,89 @@ const Objectives = () => {
                 className="h-full bg-[#0F840C]  "
                 style={{
                   width: `${
-                    (account.balance - getOriginalAccountValue(account) < 0
+                    account.balance - getOriginalAccountValue(account) < 0
                       ? 0
-                      : ((account.balance - getOriginalAccountValue(account)) /
-                          getOriginalAccountValue(account)) *
-                        100) > 100
+                      : (account.balance - getOriginalAccountValue(account)) /
+                          (getOriginalAccountValue(account) *
+                            ALL_STEP_CHALLENGES.profitTarget) >
+                        1
                       ? 100
                       : ((account.balance - getOriginalAccountValue(account)) /
-                          getOriginalAccountValue(account)) *
+                          (getOriginalAccountValue(account) *
+                            ALL_STEP_CHALLENGES.profitTarget)) *
                         100
                   }%`,
                 }}
               ></div>
             </div>
           </div>
-        </div>
+        </div> */}
+        {account.status !== "FUNDED" && (
+          <div className="w-full flex-col bg-[#F4F4F4] rounded-lg p-5    flex items-starth gap-4">
+            <div className="flex items-start gap-2.5">
+              <div className="  font-bold flex flex-col  gap-1">
+                <p className=" text-lg textvin 2xl:text-xl ">
+                  $
+                  {account.balance - getOriginalAccountValue(account) < 0
+                    ? 0
+                    : (
+                        account.balance - getOriginalAccountValue(account)
+                      ).toFixed(2)}{" "}
+                  / $
+                  {getOriginalAccountValue(account) *
+                    ALL_STEP_CHALLENGES.profitTarget}{" "}
+                </p>
+              </div>
+            </div>
+            <div className=" w-full flex flex-col items-end gap-4">
+              <div className=" w-full flex flex-col items-end gap-4">
+                <div className="flex items-center justify-between w-full">
+                  <span className=" text-xs 2xl:text-base text-slate-500  font-normal text-primary-700">
+                    Profit Target
+                  </span>
+                  <p className=" text-green-600 font-thin text-sm">
+                    {(account.balance - getOriginalAccountValue(account) < 0
+                      ? 0
+                      : (account.balance - getOriginalAccountValue(account)) /
+                          (getOriginalAccountValue(account) *
+                            ALL_STEP_CHALLENGES.profitTarget) >
+                        1
+                      ? 100
+                      : ((account.balance - getOriginalAccountValue(account)) /
+                          (getOriginalAccountValue(account) *
+                            ALL_STEP_CHALLENGES.profitTarget)) *
+                        100
+                    ).toFixed(2)}
+                    %
+                  </p>
+                </div>
+
+                <div className=" w-full h-2 bg-slate-200  border-gray-400">
+                  <div
+                    className="h-full bg-[#0F840C]  "
+                    style={{
+                      width: `${
+                        account.balance - getOriginalAccountValue(account) < 0
+                          ? 0
+                          : (account.balance -
+                              getOriginalAccountValue(account)) /
+                              (getOriginalAccountValue(account) *
+                                ALL_STEP_CHALLENGES.profitTarget) >
+                            1
+                          ? 100
+                          : ((account.balance -
+                              getOriginalAccountValue(account)) /
+                              (getOriginalAccountValue(account) *
+                                ALL_STEP_CHALLENGES.profitTarget)) *
+                            100
+                      }%`,
+                    }}
+                  ></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
         <div className="w-full flex-col bg-[#F4F4F4] rounded-lg p-5    flex items-starth gap-4">
           <div className="flex items-start gap-2.5">
             <div className="  font-bold flex flex-col  gap-1">
@@ -174,7 +248,7 @@ const Objectives = () => {
               </p>
             </div>
           </div>
-          <div className=" w-full hidden md:flex flex-col items-end gap-4">
+          <div className=" w-full flex flex-col items-end gap-4">
             <div className="flex items-center justify-between w-full">
               <span className=" text-xs 2xl:text-base text-slate-500  font-normal text-primary-700">
                 Maximum daily loss
@@ -215,7 +289,7 @@ const Objectives = () => {
               </p>
             </div>
           </div>
-          <div className=" w-full hidden md:flex flex-col items-end gap-4">
+          <div className=" w-full flex flex-col items-end gap-4">
             <div className="flex items-center justify-between w-full">
               <span className=" text-xs 2xl:text-base text-slate-500  font-normal text-primary-700">
                 Maximum loss
@@ -257,7 +331,7 @@ const Objectives = () => {
               </p>
             </div>
           </div>
-          <div className=" w-full hidden md:flex flex-col items-end gap-4">
+          <div className=" w-full flex flex-col items-end gap-4">
             <div className="flex items-center justify-between w-full">
               <span className=" text-xs capitalize 2xl:text-base text-slate-500  font-normal text-primary-700">
                 Minimum number of picks
@@ -295,7 +369,7 @@ const Objectives = () => {
               </p>
             </div>
           </div>
-          <div className=" w-full hidden md:flex flex-col items-end gap-4">
+          <div className=" w-full flex flex-col items-end gap-4">
             <div className="flex items-center justify-between w-full">
               <span className=" text-xs 2xl:text-base text-slate-500  font-normal text-primary-700">
                 Minimum Bet Period
@@ -329,7 +403,7 @@ const Objectives = () => {
               </p>
             </div>
           </div>
-          <div className=" w-full hidden md:flex flex-col items-end gap-4">
+          <div className=" w-full flex flex-col items-end gap-4">
             <div className="flex items-center justify-between w-full">
               <span className=" text-xs 2xl:text-base text-slate-500  font-normal text-primary-700">
                 Time Remaining

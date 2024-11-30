@@ -48,6 +48,7 @@ const page = () => {
 
   const [toggle, setToggle] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [showPass, setShowPass] = useState(false);
   const [AuthError, setAuthError] = useState("");
   interface value {
     email: string;
@@ -109,7 +110,7 @@ const page = () => {
   };
 
   return (
-    <div className=" w-full flex items-start justify-center bg-vintage-50 h-screen overflow-hidden ">
+    <div className=" w-full flex items-start justify-center bg-vintage-50 gap-2  h-screen overflow-hidden ">
       <div className=" w-full bg-[#F8F8F8]  h-svh  flex flex-col items-center justify-center rounded-xl p-2 md:p-8 md:py-8  2xl:p-10 ">
         <div className=" w-fit bg-white px-6 py-12 md:p-12 rounded-3xl shadow-sm max-h-[90svh] overflow-y-auto [scrollbar-width:none] scroll-smooth  ">
           <h2 className=" text-2xl md:text-3xl font-bold text-vintage-50 mb-2">
@@ -155,7 +156,7 @@ const page = () => {
                       <FormControl>
                         <Input
                           placeholder="Enter your password"
-                          type="password"
+                          type={showPass ? "text" : "password"}
                           {...field}
                           className="  border border-[#001E451A] mr-0 md:mr-6   rounded-full  w-full p-4  py-6  2xl:py-7 2xl:px-6 text-[#3E4347] leading-tight "
                         />
@@ -164,11 +165,19 @@ const page = () => {
                     </FormItem>
                   )}
                 />
-                <div className=" w-full flex  justify-end pt-1 pb-3">
+                <div className=" w-full flex flex-row-reverse  justify-between pt-1 pb-3">
+                  <button
+                    type="button"
+                    onClick={() => setShowPass(!showPass)}
+                    className="text-xs 2xl:text-sm text-gray-700   font-thin leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  >
+                    {showPass ? "Hide" : "Show"} Password
+                  </button>
+
                   {!toggle ? (
                     <Link
                       href={"/login/reset-password"}
-                      className="text-xs 2xl:text-sm text-gray-700 ml-auto font-thin leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                      className="text-xs 2xl:text-sm text-gray-700  pl-2 font-thin leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                     >
                       Forgot password?{"  "}
                       <span className="text-vintage-50 font-bold pl-1">
@@ -238,7 +247,7 @@ const page = () => {
           </Form>
         </div>
       </div>
-      <div className="hidden md:flex h-svh relative  flex-col items-center justify-center object-cover object-center   w-full  ">
+      <div className="hidden md:flex h-svh relative rounded-xl  overflow-hidden  flex-col items-center justify-center object-cover object-center   w-full  ">
         <Image
           src="/vintage/images/authBg.webp"
           alt="signup"

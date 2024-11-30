@@ -310,7 +310,7 @@ const GeneralSettings = ({
                       <Input
                         placeholder="Enter your password"
                         {...field}
-                        type="password"
+                        type="text"
                         className="   focus:outline-none  border  focus:border mr-0 md:mr-6  rounded-xl bg-[#F8F8F8] w-full p-4  2xl:py-6 2xl:px-6  leading-tight "
                       />
                     </FormControl>
@@ -326,7 +326,7 @@ const GeneralSettings = ({
                     <FormControl>
                       <Input
                         placeholder="Re-enter your password"
-                        type="password"
+                        type="text"
                         {...field}
                         className="   focus:outline-none  border  focus:border mr-0 md:mr-6  rounded-xl bg-[#F8F8F8] w-full p-4  2xl:py-6 2xl:px-6  leading-tight "
                       />

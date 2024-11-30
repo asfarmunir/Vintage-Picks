@@ -1,7 +1,6 @@
 import { connectToDatabase } from "@/helper/dbconnect";
 import { ALL_STEP_CHALLENGES } from "@/lib/constants";
 import {
-  areStepObjectivesComplete,
   checkObjectivesAndUpgrade,
   getOriginalAccountValue,
 } from "@/lib/utils";
@@ -20,6 +19,29 @@ const decimalToAmericanOdds = (decimalOdds: number) => {
 };
 
 const MAX_BET_AMPLITUDE = 0.1;
+
+
+function getIsHedging(existingBet: any, bet: any) {
+  let isHedging = false;
+  if (existingBet) {
+    // if the team is same as earlier, allow, else reject
+    existingBet.eventId.map((event: string) => {
+      // find the index of this event in bet.eventId
+      const indexInNewBet = bet.eventId.indexOf(event);
+      const indexInExistingBet = existingBet.eventId.indexOf(event);
+      if (indexInNewBet !== -1) {
+        // if the team is same as earlier, allow, else reject
+        if (bet.team[indexInNewBet] === existingBet.team[indexInExistingBet]) {
+          // ignore
+        } else {
+          isHedging = true;
+        }
+      }
+    });
+  }
+  return isHedging;
+}
+
 export async function POST(req: NextRequest) {
   // connect to database
   await connectToDatabase();
@@ -157,9 +179,10 @@ export async function POST(req: NextRequest) {
     },
   });
 
-  if (existingBet) {
-    return NextResponse.json(
-      { error: "Hedging isn't allowed." },
+ const isHedging = getIsHedging(existingBet, bet);
+  if (isHedging) {
+        return NextResponse.json(
+      { error: "Hedging not allowed." },
       { status: 400 }
     );
   }

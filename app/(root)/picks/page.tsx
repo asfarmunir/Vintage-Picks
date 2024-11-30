@@ -341,7 +341,7 @@ const page = () => {
           </>
         )}
 
-        <div className="flex gap-4 items-start">
+        <div className="flex gap-4 flex-col-reverse md:flex-row items-start">
           <div className=" w-full flex gap-4 flex-col rounded-2xl mb-8 items-start">
             <div className="w-full bg-white shadow-inner shadow-gray-200 rounded-xl p-5 py-7 flex-col md:flex-row  flex items-center justify-between gap-4">
               <div className="flex flex-col  items-start justify-start  w-full md:w-fit  ">
@@ -484,7 +484,7 @@ const page = () => {
                   search={search}
                 />
               )}
-              <div className="flex items-center justify-between p-5">
+              {/* <div className="flex items-center justify-between p-5">
                 <h4 className="text-[#848BAC] font-thin text-xs 2xl:text-base ">
                   PAGE 1-5
                 </h4>
@@ -496,7 +496,7 @@ const page = () => {
                     <TiArrowRight />
                   </button>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
           <div
