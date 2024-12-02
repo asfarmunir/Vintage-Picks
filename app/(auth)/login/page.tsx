@@ -233,7 +233,7 @@ const page = () => {
                     )}
                   </Button>
                   <h2 className="text-sm font-bold text-[#3E4347]">
-                    New to VintagePicks?{" "}
+                    New to Vantage Picks?{" "}
                   </h2>
                   <Link
                     href={"/signup"}

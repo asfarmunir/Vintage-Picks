@@ -15,7 +15,7 @@ const roboto = Roboto({
 });
 
 export const metadata: Metadata = {
-  title: "Vintage Picks",
+  title: "Vantage Picks",
   description: "  Best in Prop firms ",
 };
 
