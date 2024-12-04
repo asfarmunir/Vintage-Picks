@@ -99,7 +99,7 @@ export default function Agreements() {
               </span>
             </Button>
             <a
-              href="/agreements/PH Agreement Funded.pdf"
+              href="/agreements/Contract_Agreement_VantagePicks.pdf"
               className="bg-vintage-50 w-full md:w-fit rounded-full hover:bg-slate-600 text-white font-semibold px-6 2xl:text-lg focus:outline-none focus:shadow-outline flex gap-2 justify-center items-center py-4"
               download
             >
@@ -131,7 +131,7 @@ export default function Agreements() {
               </span>
             </Button>
             <a
-              href="/agreements/NDA Funded PH.pdf"
+              href="/agreements/NDA_VantagePicks.pdf"
               className="bg-vintage-50 w-full md:w-fit rounded-full hover:bg-slate-600 text-white font-semibold px-6 2xl:text-lg focus:outline-none focus:shadow-outline flex gap-2 justify-center items-center py-4"
               download
             >

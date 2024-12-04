@@ -57,7 +57,7 @@ const layout = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <>
-      <main className={` flex bg-vintage-default`}>
+      <main className={` flex bg-vintage-default relative`}>
         {status === "authenticated" && (
           <>
             {/* <Sidebar /> */}
@@ -93,6 +93,13 @@ const layout = ({ children }: { children: React.ReactNode }) => {
             </p>
           </div>
         )}
+        <Image
+          src="/images/propicks.svg"
+          alt="bg"
+          width={200}
+          height={200}
+          className="absolute bottom-6 right-7 z-50"
+        />
       </main>
     </>
   );
