@@ -49,13 +49,20 @@ interface Account {
   updatedAt: string; // Same as above, use `Date` if necessary
 }
 
+// type ProfileLevel =
+//   | "NEWBIE"
+//   | "BRONZE"
+//   | "SILVER"
+//   | "GOLD"
+//   | "PLATINUM"
+//   | "HERO";
+
 type ProfileLevel =
-  | "NEWBIE"
-  | "BRONZE"
-  | "SILVER"
-  | "GOLD"
-  | "PLATINUM"
-  | "HERO";
+  | "Beginner"
+  | "Superviser"
+  | "Coach"
+  | "TopTier"
+  | "RegionalPlayer";
 
 const page = () => {
   // Search Params
@@ -137,6 +144,7 @@ const ImageUpload = () => {
   const imageRef = useRef<HTMLInputElement>(null);
   const [image, setImage] = useState<File | null>(null);
   const { data, isPending, refetch } = useGetUser();
+  console.log("🚀 ~ ImageUpload ~ data:", data);
 
   const handleImageUpload = () => {
     imageRef.current?.click();

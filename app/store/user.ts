@@ -16,7 +16,7 @@ const initialUserValues = {
   password: "",
   createdAt: new Date(),
   updatedAt: new Date(),
-  profileLevel: "NEWBIE" as ProfileLevels,
+  profileLevel: "Beginner" as ProfileLevels,
   picksWon: 0,
   kycVerified: false,
 

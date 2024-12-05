@@ -167,31 +167,57 @@ export const picksTabs = [
 ];
 
 // PROFILE LEVELS
+// export const profileLevels = {
+//   NEWBIE: {
+//     icon: "/icons/newbie.svg",
+//     target: 10,
+//   },
+//   BRONZE: {
+//     icon: "/icons/level2.png",
+//     target: 50,
+//   },
+//   SILVER: {
+//     icon: "/images/plan.png",
+//     target: 100,
+//   },
+//   GOLD: {
+//     icon: "/icons/gold.svg",
+//     target: 200,
+//   },
+//   PLATINUM: {
+//     icon: "/icons/level3.png",
+//     target: 350,
+//   },
+//   HERO: {
+//     icon: "/icons/level1.png",
+//     target: 351,
+//   },
+// };
 export const profileLevels = {
-  NEWBIE: {
-    icon: "/icons/newbie.svg",
+  Beginner: {
+    icon: "/vintage/images/1.svg",
     target: 10,
   },
-  BRONZE: {
-    icon: "/icons/level2.png",
+  Superviser: {
+    icon: "/vintage/images/2.svg",
+    target: 25,
+  },
+  Coach: {
+    icon: "/vintage/images/2.svg",
     target: 50,
   },
-  SILVER: {
-    icon: "/images/plan.png",
+  TopTier: {
+    icon: "/vintage/images/2.svg",
     target: 100,
   },
-  GOLD: {
-    icon: "/icons/gold.svg",
+  RegionalPlayer: {
+    icon: "/vintage/images/2.svg",
     target: 200,
   },
-  PLATINUM: {
-    icon: "/icons/level3.png",
-    target: 350,
-  },
-  HERO: {
-    icon: "/icons/level1.png",
-    target: 351,
-  },
+  // HERO: {
+  //   icon: "/icons/level1.png",
+  //   target: 351,
+  // },
 };
 
 export const LEVEL_1_TARGET = 10;

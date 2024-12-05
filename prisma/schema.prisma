@@ -18,13 +18,21 @@ enum AccountStatus {
   BREACHED
 }
 
+// enum ProfileLevels {
+//   NEWBIE
+//   BRONZE
+//   SILVER
+//   GOLD
+//   PLATINUM
+//   HERO
+// }
+
 enum ProfileLevels {
-  NEWBIE
-  BRONZE
-  SILVER
-  GOLD
-  PLATINUM
-  HERO
+  Beginner
+  Superviser
+  Coach
+  TopTier
+  RegionalPlayer
 }
 
 model User {
@@ -37,7 +45,7 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  profileLevel ProfileLevels @default(NEWBIE)
+  profileLevel ProfileLevels @default(Beginner)
   picksWon     Int           @default(0)
   kycVerified  Boolean       @default(false)
 

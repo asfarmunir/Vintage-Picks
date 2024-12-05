@@ -33,13 +33,20 @@ import ReactCountryFlag from "react-country-flag";
 import { profileLevels } from "@/lib/constants";
 import Link from "next/link";
 
+// type profileLevelName =
+//   | "NEWBIE"
+//   | "BRONZE"
+//   | "SILVER"
+//   | "GOLD"
+//   | "PLATINUM"
+//   | "HERO";
+
 type profileLevelName =
-  | "NEWBIE"
-  | "BRONZE"
-  | "SILVER"
-  | "GOLD"
-  | "PLATINUM"
-  | "HERO";
+  | "Beginner"
+  | "Superviser"
+  | "Coach"
+  | "TopTier"
+  | "RegionalPlayer";
 
 const page = () => {
   const { data, isPending: loading } = useGetLeaderboard();
