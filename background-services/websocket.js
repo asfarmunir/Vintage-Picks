@@ -274,21 +274,39 @@ function sendNotification(userId, message) {
   }
 }
 
+// function getNewUserLevel(picksWon) {
+//   if (picksWon < 10) {
+//     return "NEWBIE";
+//   } else if (picksWon < 50) {
+//     return "BRONZE";
+//   } else if (picksWon < 100) {
+//     return "SILVER";
+//   } else if (picksWon < 200) {
+//     return "GOLD";
+//   } else if (picksWon < 350) {
+//     return "PLATINUM";
+//   } else {
+//     return "HERO";
+//   }
+// }
+
+
 function getNewUserLevel(picksWon) {
   if (picksWon < 10) {
-    return "NEWBIE";
+    return "Beginner";
+  } else if (picksWon < 25) {
+    return "Superviser";
   } else if (picksWon < 50) {
-    return "BRONZE";
+    return "Coach";
   } else if (picksWon < 100) {
-    return "SILVER";
+    return "TopTier";
   } else if (picksWon < 200) {
-    return "GOLD";
-  } else if (picksWon < 350) {
-    return "PLATINUM";
+    return "RegionalPlayer";
   } else {
-    return "HERO";
+    return "Beginner";
   }
 }
+
 
 // Function to check for match updates and send to clients
 async function checkForUpdates(wss) {
