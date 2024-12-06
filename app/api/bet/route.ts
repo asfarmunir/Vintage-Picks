@@ -2,7 +2,7 @@ import { connectToDatabase } from "@/helper/dbconnect";
 import { ALL_STEP_CHALLENGES } from "@/lib/constants";
 import {
   checkObjectivesAndUpgrade,
-  getOriginalAccountValue,
+  getOriginalAccountValue
 } from "@/lib/utils";
 import prisma from "@/prisma/client";
 import { getServerSession } from "next-auth";
@@ -20,6 +20,30 @@ const decimalToAmericanOdds = (decimalOdds: number) => {
 
 const MAX_BET_AMPLITUDE = 0.1;
 
+
+function calculateMoneyline(decimalOdds: number, pickAmount: number) {
+  if (decimalOdds <= 1) {
+    throw new Error("Decimal odds must be greater than 1.");
+  }
+
+  let moneyline: number;
+
+  if (decimalOdds >= 2.0) {
+    // Positive moneyline odds
+    moneyline = (decimalOdds - 1) * 100;
+  } else {
+    // Negative moneyline odds
+    moneyline = -100 / (decimalOdds - 1);
+  }
+
+  // Calculate potential payout based on pick amount
+  const potentialPayout = pickAmount * decimalOdds;
+
+  return {
+    moneyline: Math.round(moneyline),
+    potentialPayout: parseFloat(potentialPayout.toFixed(2)),
+  };
+}
 
 function getIsHedging(existingBet: any, bet: any) {
   let isHedging = false;
@@ -147,25 +171,27 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  // reject if money line is >+2500
-  const calculateMoneyLine = (odds: number, oddsFormat: "decimal" | "american", pick: number) => {
-    let americanOdds = odds;
-    if(oddsFormat.toLowerCase() === "decimal") {
-      americanOdds = decimalToAmericanOdds(odds);
-    }
-    if(americanOdds > 0) {
-      return `+${((pick)*(americanOdds/100)).toFixed(2)}`;
-    } else {
-      return `-${((pick)*(100/Math.abs(americanOdds))).toFixed(2)}`;
+  // reject if american parlay odds are >+2500
+  const isParlay = bet.eventId.length > 1;
+  if (isParlay) {
+    const americanOdds = decimalToAmericanOdds(bet.odds);
+    if (americanOdds > 2500) {
+      return NextResponse.json(
+        { error: "Parlay's odds must be less than +2500" },
+        { status: 400 }
+      );
     }
   }
-  const moneyLine = calculateMoneyLine(bet.odds, bet.oddsFormat.toLowerCase(), bet.pick);
-  if (Number(moneyLine)>2500) {
-    return NextResponse.json(
-      { error: "Parlay's money line must be less than +2500" },
-      { status: 400 }
-    );
-  }
+
+  // NO MONEY LINE VALIDATION
+  // // reject if money line is >+2500
+  // const { moneyline, potentialPayout } = calculateMoneyline(bet.odds, bet.pick);
+  // if (moneyline>2500) {
+  //   // return NextResponse.json(
+  //   //   { error: "Bet's money line must be less than +2500" },
+  //   //   { status: 400 }
+  //   // );
+  // }
 
 
   // select if bet already exists
@@ -179,10 +205,12 @@ export async function POST(req: NextRequest) {
     },
   });
 
- const isHedging = getIsHedging(existingBet, bet);
+  
+  // Hedging validation
+  const isHedging = getIsHedging(existingBet, bet);
   if (isHedging) {
-        return NextResponse.json(
-      { error: "Hedging not allowed." },
+    return NextResponse.json(
+      { error: "Hedging not allowed" },
       { status: 400 }
     );
   }
@@ -250,12 +278,10 @@ export async function POST(req: NextRequest) {
         }
       );
       if (!response.ok) {
-        // throw new Error(await response.text());
-          console.error(await response.text());
+        console.error(await response.text());
       }
     }
 
-    // After transaction, check objectives
     await checkObjectivesAndUpgrade(prisma, updatedAccount);
 
     // If the transaction is successful, return success response
