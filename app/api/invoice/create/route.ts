@@ -1,7 +1,7 @@
 import { generateCustomId } from "@/helper/keyGenerator";
 import { connectToDatabase } from "@/lib/database";
 import prisma from "@/prisma/client";
-// import { NotificationType } from "@prisma/client";
+import { NotificationType } from "@prisma/client";
 import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
 const coinbase = require("coinbase-commerce-node");
@@ -134,24 +134,23 @@ export async function POST(req: NextRequest) {
   
       const charge = await Charge.create(chargeData);
   
-      await prisma.accountInvoices.create({
-        data: {
-          userId: user.id,
-          invoiceId: charge.id, // Coinbase charge ID
-          amount: Number(invoice.amount.replace("$", "")),
-          status: "pending",
-          invoiceNumber: generateCustomId(false, false),
-          paymentMethod: "BTC",
-          paymentDate: new Date(),
-        },
-      });
+      // await prisma.accountInvoices.create({
+      //   data: {
+      //     userId: user.id,
+      //     invoiceId: charge.id, // Coinbase charge ID
+      //     amount: Number(invoice.amount.replace("$", "")),
+      //     invoiceNumber: generateCustomId(false, false),
+      //     paymentMethod: "BTC",
+      //     paymentDate: new Date(),
+      //   },
+      // });
   
       // Create notification for the user
-    //   await createNotification(
-    //     "Invoice created successfully. Awaiting payment confirmation.",
-    //     "UPDATE",
-    //     user.id
-    //   );
+      // await createNotification(
+      //   "Invoice created successfully. Awaiting payment confirmation.",
+      //   "UPDATE",
+      //   user.id
+      // );
   
       return NextResponse.json(charge);
     } catch (error:any) {
@@ -163,36 +162,36 @@ export async function POST(req: NextRequest) {
     }
   }
 
-// const createNotification = async (message: string, type: NotificationType, userId: string) => {
-//     try {
-//         const notification = await prisma.notification.create({
-//             data: {
-//                 content: message,
-//                 type,
-//                 userId: userId,
-//                 read: false,
-//             }
-//         });
+  export const createNotification = async (message: string, type: NotificationType, userId: string) => {
+    try {
+        const notification = await prisma.notification.create({
+            data: {
+                content: message,
+                type,
+                userId: userId,
+                read: false,
+            }
+        });
 
-//         const response = await fetch(`${process.env.BG_SERVICES_URL}/generate-notification`, {
-//             method: "POST",
-//             headers: {
-//                 "Content-Type": "application/json",
-//             },
-//             body: JSON.stringify({
-//                 userId,
-//                 message: notification.content,
-//             }),
-//         })
+        const response = await fetch(`${process.env.BG_SERVICES_URL}/generate-notification`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                userId,
+                message: notification.content,
+            }),
+        })
 
-//         if (!response.ok) {
-//             console.log(await response.text());
-//             throw new Error("Failed to create notification");
-//         }
+        if (!response.ok) {
+            console.log(await response.text());
+            throw new Error("Failed to create notification");
+        }
         
-//     }
-//     catch (error) {
-//         console.error(error);
-//         throw new Error("Failed to create notification");
-//     }
-// }
+    }
+    catch (error) {
+        console.error(error);
+        throw new Error("Failed to create notification");
+    }
+}

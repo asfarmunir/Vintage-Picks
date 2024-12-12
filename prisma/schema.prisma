@@ -177,20 +177,22 @@ model PaymentCard {
 model AccountInvoices {
   id            String  @id @default(auto()) @map("_id") @db.ObjectId
   accountId     String? @db.ObjectId
-  userId        String  @db.ObjectId
+  userId        String? @db.ObjectId
   paymentCardId String? @db.ObjectId
 
-  invoiceId     String
-  invoiceNumber String
-  amount        Float
-  status        String
-  paymentMethod String
-  paymentDate   DateTime
+  coinBaseEventId String?
+  invoiceId      String?
+  invoiceNumber  String?
+  amount         Float?
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  User      User     @relation(fields: [userId], references: [id])
-  Account   Account? @relation(fields: [accountId], references: [id])
+  status         String?
+  paymentMethod  String?
+  paymentDate    DateTime?
+
+  createdAt DateTime? @default(now())
+  updatedAt DateTime? @updatedAt
+  User      User?     @relation(fields: [userId], references: [id])
+  Account   Account?  @relation(fields: [accountId], references: [id])
 
   @@map("accountinvoices")
 }
