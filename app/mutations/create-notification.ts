@@ -1,4 +1,4 @@
-export const createNotification = async (data: any) => {
+export const createNotification = async (data: any, p0: string, id: any) => {
     const response = await fetch("/api/notification", {
         method: "POST",
         headers: {
