@@ -8,11 +8,11 @@ const { Webhook } = coinbase;
 
 const webhookSecret = process.env.COINBASE_COMMERCE_SHARED_SECRET;
 
-export const config = {
-  api: {
-    bodyParser: false,
-  },
-};
+// export const config = {
+//   api: {
+//     bodyParser: false,
+//   },
+// };
 
 export async function POST(req: NextRequest,res:NextApiResponse) {
   try {
