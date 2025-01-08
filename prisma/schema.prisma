@@ -18,22 +18,22 @@ enum AccountStatus {
   BREACHED
 }
 
-// enum ProfileLevels {
-//   NEWBIE
-//   BRONZE
-//   SILVER
-//   GOLD
-//   PLATINUM
-//   HERO
-// }
-
 enum ProfileLevels {
-  Beginner
-  Superviser
-  Coach
-  TopTier
-  RegionalPlayer
+  NEWBIE
+  BRONZE
+  SILVER
+  GOLD
+  PLATINUM
+  HERO
 }
+
+// enum ProfileLevels {
+//   Beginner
+//   Superviser
+//   Coach
+//   TopTier
+//   RegionalPlayer
+// }
 
 model User {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
@@ -45,7 +45,8 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  profileLevel ProfileLevels @default(Beginner)
+  // profileLevel ProfileLevels @default(Beginner)
+  profileLevel ProfileLevels @default(NEWBIE)
   picksWon     Int           @default(0)
   kycVerified  Boolean       @default(false)
 
@@ -189,13 +190,13 @@ model AccountInvoices {
   paymentCardId String? @db.ObjectId
 
   coinBaseEventId String?
-  invoiceId      String?
-  invoiceNumber  String?
-  amount         Float?
+  invoiceId       String?
+  invoiceNumber   String?
+  amount          Float?
 
-  status         String?
-  paymentMethod  String?
-  paymentDate    DateTime?
+  status        String?
+  paymentMethod String?
+  paymentDate   DateTime?
 
   createdAt DateTime? @default(now())
   updatedAt DateTime? @updatedAt
@@ -226,22 +227,23 @@ model Bets {
   userId    String @db.ObjectId
   accountId String @db.ObjectId
 
-  sportKey String[]
-  sport    String[]
-  eventId  String[]
-  event    String[] // home vs away teams
-  league   String[]
-
-  team     String[]
-  odds     Float
-  pick     Float
-  winnings Float
-
+  sportKey   String[] // League or sport category
+  sport      String[] // Sport name
+  eventId    String[] // Fixture IDs
+  event      String[] // Home vs Away teams
+  league     String[] // League names
+  team       String[] // Participating teams
+  odds       Float
+  pick       Float
+  winnings   Float
   oddsFormat OddsFormat
-  betStatus  BetStatus
-  betResult  BetResult?
-  betDate    DateTime
-  gameDate   DateTime[]
+
+  bets Json // JSON field to store detailed bet information
+
+  betStatus BetStatus
+  betResult BetResult?
+  betDate   DateTime
+  gameDate  DateTime[] // Array to accommodate multiple game dates
 
   user    User    @relation(fields: [userId], references: [id])
   account Account @relation(fields: [accountId], references: [id])

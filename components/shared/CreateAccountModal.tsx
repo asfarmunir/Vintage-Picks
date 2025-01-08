@@ -7,7 +7,7 @@ export default function CreateAccountModal() {
   const pathname = usePathname();
 
   return (
-    (pathname === "/dashboard" || pathname === "/picks") && (
+    (pathname === "/dashboard" || pathname === "/place-pick") && (
       <div className="absolute w-full inset-0 flex justify-center  items-start pt-16 2xl:pt-12 backdrop-blur-sm bg-black/50 z-50">
         <div
           className="text-white flex flex-col justify-end items-center relative border-none p-8 md:pb-10 overflow-hidden min-h-[75svh] 2xl:min-h-[80svh] rounded-2xl w-[95%] md:w-[30%] max-w-screen-xl bg-primary-100  gap-3 [&_button:has(svg)]:hidden"

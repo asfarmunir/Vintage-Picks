@@ -10,6 +10,7 @@ export const config = {
   matcher: [
     "/dashboard",
     "/picks",
+    "/place-pick",
     // "/profile",
     // "/settings",
     "/refer-and-earn",

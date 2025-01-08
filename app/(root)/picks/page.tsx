@@ -395,27 +395,6 @@ const page = () => {
             <div className=" w-full transition-all border border-gray-200 rounded-xl bg-[#F8F8F8]  flex flex-col">
               <div className="flex flex-col md:flex-row  mb-4 w-full items-center justify-between">
                 <div className="flex  items-center gap-3 w-full p-2 md:p-6 md:pr-32 ">
-                  {/* <DropdownMenu>
-                  <DropdownMenuTrigger className=" bg-[#393C53]    justify-center text-nowrap w-fit  text-xs md:text-sm px-3 md:px-4 py-3 font-bold rounded-lg inline-flex items-center gap-2">
-                    TOP EARNERS
-                    <FaAngleDown className=" text-lg" />
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent className="w-48  bg-white text-vintage-50 border-none  mt-1  p-3 rounded-lg shadow-sm">
-                    <DropdownMenuItem className="flex items-center justify-between ">
-                      <p>TOP EARNERS</p>
-
-                      <MdOutlineArrowUpward className="text-lg" />
-                    </DropdownMenuItem>
-
-                    <DropdownMenuItem className="flex items-center justify-between ">
-                      <p>AVERAGE</p>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem className="flex items-center justify-between ">
-                      <p>BOTTOM EARNERS</p>
-                      <MdOutlineArrowUpward className="text-lg rotate-180" />
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>{" "} */}
                   {!isPending && (
                     <LeaguesTabs
                       leagues={leagues}
@@ -484,19 +463,6 @@ const page = () => {
                   search={search}
                 />
               )}
-              {/* <div className="flex items-center justify-between p-5">
-                <h4 className="text-[#848BAC] font-thin text-xs 2xl:text-base ">
-                  PAGE 1-5
-                </h4>
-                <div className="flex gap-2 items-center">
-                  <button className="text-[#848BAC] text-2xl">
-                    <TiArrowLeft />
-                  </button>
-                  <button className="text-[white] text-2xl">
-                    <TiArrowRight />
-                  </button>
-                </div>
-              </div> */}
             </div>
           </div>
           <div

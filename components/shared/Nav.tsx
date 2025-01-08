@@ -223,19 +223,21 @@ const Sidebar = () => {
                 </div>
               )}
 
-              {!isPending && data.notifications?.length === 0 && (
-                <div className="flex hover:bg-[#333547]/20 items-center justify-start my-4 py-3 px-3.5">
-                  <Image
-                    src="/images/notification.svg"
-                    alt="Client"
-                    width={50}
-                    height={50}
-                  />
-                  <div className="flex flex-col ml-3">
-                    <p className="font-bold">No new notifications</p>
+              {!isPending &&
+                data.notifications &&
+                data.notifications?.length === 0 && (
+                  <div className="flex hover:bg-[#333547]/20 items-center justify-start my-4 py-3 px-3.5">
+                    <Image
+                      src="/images/notification.svg"
+                      alt="Client"
+                      width={50}
+                      height={50}
+                    />
+                    <div className="flex flex-col ml-3">
+                      <p className="font-bold">No new notifications</p>
+                    </div>
                   </div>
-                </div>
-              )}
+                )}
 
               {!isPending &&
                 data.notifications?.map((notification: Notification) => (

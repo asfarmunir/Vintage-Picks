@@ -33,7 +33,7 @@ export const navlinks = [
         src: "/icons/pick-off.svg",
       },
     ],
-    link: "/picks",
+    link: "/place-pick",
   },
   {
     title: "community",
