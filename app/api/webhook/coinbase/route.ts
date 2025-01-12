@@ -29,9 +29,9 @@ export async function POST(req: NextRequest,res:NextApiResponse) {
     console.log("event", event);
 
     
-    const existingEvent = await prisma.accountInvoices.findUnique({
+    const existingEvent = await prisma.accountInvoices.findFirst({
       where: {
-        coinBaseEventId: event?.id
+        coinBaseEventId: event?.id.toString()
       }
   });
     if (existingEvent) {
