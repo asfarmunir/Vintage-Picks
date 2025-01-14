@@ -72,7 +72,7 @@ export async function POST(req: Request) {
     // Construct the payload
     const data: PaymentPayload = {
       terminal: {
-        id: 24, // Terminal ID
+        id: 522799, // Replace with your terminal ID
       },
       amount: body.amount,
       source: "Internet",
@@ -96,13 +96,17 @@ export async function POST(req: Request) {
       sendReceipt: "Yes",
     };
 
-    // Axios configuration
+    // Axios configuration with Bearer Token
     const config: AxiosRequestConfig = {
       method: "post",
       maxBodyLength: Infinity,
       url: "https://gateway.zendashboard.com/payment/auth",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${process.env.ZENPAYMENT_BEARER_TOKEN}`,
+        "User-Agent":
+          "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
+        Accept: "application/json",
       },
       data: data,
     };

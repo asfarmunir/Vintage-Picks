@@ -1,6 +1,7 @@
 "use client";
 import { useCreateAccount } from "@/app/hooks/useCreateAccount";
-import { useCreateConfirmoInvoice } from "@/app/hooks/useCreateConfirmoInvoice";
+// import { useCreateConfirmoInvoice } from "@/app/hooks/useCreateConfirmoInvoice";
+import { useCreateCoinbaseInvoice } from "@/app/hooks/useCreateCoinbaseInvoice";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -93,23 +94,26 @@ const CheckoutPayment: React.FC<CheckoutPaymentProps> = ({
 
   // mutation
   const { mutate: createPaymentInvoice, isPending: loadingInvoice } =
-    useCreateConfirmoInvoice({
+    useCreateCoinbaseInvoice({
       onSuccess: async (data: any) => {
+        // console.log("data", data?.hosted_url);
+
         toast.success("Invoice created successfully");
-        const invoice_url = `https://confirmo.net/public/invoice/${data.id}`;
-        const { Invoice } = await import("@confirmo/overlay");
-        const overlay = Invoice.open(
-          invoice_url,
-          () => {
-            toast.success(
-              "Payment under review. You will be notified via email once payment is confirmed"
-            );
-            router.push("/");
-          },
-          {
-            closeAfterPaid: true,
-          }
-        );
+        window.open(data?.hosted_url, "_blank");
+        // const invoice_url = `https://confirmo.net/public/invoice/${data.id}`;
+        // const { Invoice } = await import("@confirmo/overlay");
+        // const overlay = Invoice.open(
+        //   invoice_url,
+        //   () => {
+        //     toast.success(
+        //       "Payment under review. You will be notified via email once payment is confirmed"
+        //     );
+        //     router.push("/");
+        //   },
+        //   {
+        //     closeAfterPaid: true,
+        //   }
+        // );
       },
       onError: (error) => {
         console.error(error);
