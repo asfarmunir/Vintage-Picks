@@ -512,6 +512,31 @@ const CheckoutPayment: React.FC<CheckoutPaymentProps> = ({
                             <span className=" capitalize">Next</span>
                           )}
                         </Button>
+                        <Button
+                          type="submit"
+                          className="bg-vintage-50 mb-4   rounded-full mt-4 text-white font-semibold py-6 px-12 w-full 2xl:text-base text-sm   focus:outline-none focus:shadow-outline"
+                          disabled={loadingInvoice}
+                        >
+                          {loadingInvoice ? (
+                            <ColorRing
+                              visible={true}
+                              height="35"
+                              width="35"
+                              ariaLabel="color-ring-loading"
+                              wrapperStyle={{}}
+                              wrapperClass="color-ring-wrapper"
+                              colors={[
+                                "#ffffff",
+                                "#ffffff",
+                                "#ffffff",
+                                "#ffffff",
+                                "#ffffff",
+                              ]}
+                            />
+                          ) : (
+                            <span className=" capitalize">Pay With Crypto</span>
+                          )}
+                        </Button>
                       </div>
                     </form>
                   </div>
@@ -653,6 +678,7 @@ const CheckoutPayment: React.FC<CheckoutPaymentProps> = ({
                             <span className=" capitalize">Let's Go</span>
                           )}
                         </Button>
+                        
                       </div>
                     </form>
                   </div>
