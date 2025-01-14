@@ -108,73 +108,113 @@ export async function POST(req: NextRequest, res: NextApiResponse) {
     if (event.type === "charge:confirmed") {
       console.log("🚀 ~ charge confirmed", event);
 
-      await prisma.accountInvoices.create({
-        data: {
-          coinBaseEventId: event?.id,
-          invoiceNumber: event.data.name(false, false),
-          userId: event.data.metadata.accountDetails,
-          amount: Number(event.data.metadata.amount.replace("$", "")),
-          paymentMethod: "BTC",
-          paymentDate: new Date(),
-        },
-      });
-
-      await createNotification(
-        "Invoice created successfully. Awaiting payment confirmation.",
-        "UPDATE",
-        "user.id"
-      );
-
-      const newAccount = await createUserAccount(event.reference);
-
-      await prisma.accountInvoices.updateMany({
-        where: {
-          invoiceId: event.invoiceId,
-        },
-        data: {
-          status: "paid",
-        },
-      });
-
-      const sevenday_cron_job: cronJob = {
-        jobName: `${newAccount.id}_MIN_BET_PERIOD`,
-        time: dateToFullCronString(newAccount.minBetPeriod),
-        type: "objectiveMin",
-        accountId: newAccount.id,
-      };
-      const objectiveMinJob = await fetch(
-        `${process.env.BG_SERVICES_URL}/add-cron-job`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
+      try {
+        // Create account invoice
+        await prisma.accountInvoices.create({
+          data: {
+            coinBaseEventId: event?.id,
+            invoiceNumber: event.data.name(false, false),
+            userId: event.data.metadata.accountDetails,
+            amount: Number(event.data.metadata.amount.replace("$", "")),
+            paymentMethod: "BTC",
+            paymentDate: new Date(),
           },
-          body: JSON.stringify(sevenday_cron_job),
-        }
-      );
-      if (!objectiveMinJob.ok) {
-        throw new Error(await objectiveMinJob.text());
+        });
+      } catch (error) {
+        console.error("Error creating account invoice:", error);
+        throw new Error("Failed to create account invoice");
       }
 
-      // set CRON job for maximum Bet Period
-      const thirtyday_cron_job: cronJob = {
-        jobName: `${newAccount.id}_MAX_BET_PERIOD`,
-        time: dateToFullCronString(newAccount.maxBetPeriod),
-        type: "objectiveMax",
-        accountId: newAccount.id,
-      };
-      const objectiveMaxJob = await fetch(
-        `${process.env.BG_SERVICES_URL}/add-cron-job`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
+      try {
+        // Create notification
+        await createNotification(
+          "Invoice created successfully. Awaiting payment confirmation.",
+          "UPDATE",
+          "user.id"
+        );
+      } catch (error) {
+        console.error("Error creating notification:", error);
+        throw new Error("Failed to create notification");
+      }
+
+      let newAccount;
+      try {
+        // Create user account
+        newAccount = await createUserAccount(event.reference);
+      } catch (error) {
+        console.error("Error creating user account:", error);
+        throw new Error("Failed to create user account");
+      }
+
+      try {
+        // Update account invoices
+        await prisma.accountInvoices.updateMany({
+          where: {
+            invoiceId: event.invoiceId,
           },
-          body: JSON.stringify(thirtyday_cron_job),
+          data: {
+            status: "paid",
+          },
+        });
+      } catch (error) {
+        console.error("Error updating account invoices:", error);
+        throw new Error("Failed to update account invoices");
+      }
+
+      try {
+        // Set CRON job for minimum bet period
+        const sevenday_cron_job = {
+          jobName: `${newAccount.id}_MIN_BET_PERIOD`,
+          time: dateToFullCronString(newAccount.minBetPeriod),
+          type: "objectiveMin",
+          accountId: newAccount.id,
+        };
+
+        const objectiveMinJob = await fetch(
+          `${process.env.BG_SERVICES_URL}/add-cron-job`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(sevenday_cron_job),
+          }
+        );
+
+        if (!objectiveMinJob.ok) {
+          throw new Error(await objectiveMinJob.text());
         }
-      );
-      if (!objectiveMaxJob.ok) {
-        throw new Error(await objectiveMaxJob.text());
+      } catch (error) {
+        console.error("Error setting CRON job for minimum bet period:", error);
+        throw new Error("Failed to set CRON job for minimum bet period");
+      }
+
+      try {
+        // Set CRON job for maximum bet period
+        const thirtyday_cron_job = {
+          jobName: `${newAccount.id}_MAX_BET_PERIOD`,
+          time: dateToFullCronString(newAccount.maxBetPeriod),
+          type: "objectiveMax",
+          accountId: newAccount.id,
+        };
+
+        const objectiveMaxJob = await fetch(
+          `${process.env.BG_SERVICES_URL}/add-cron-job`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(thirtyday_cron_job),
+          }
+        );
+
+        if (!objectiveMaxJob.ok) {
+          throw new Error(await objectiveMaxJob.text());
+        }
+      } catch (error) {
+        console.error("Error setting CRON job for maximum bet period:", error);
+        throw new Error("Failed to set CRON job for maximum bet period");
       }
     }
 
