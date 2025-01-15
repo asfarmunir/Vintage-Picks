@@ -8,6 +8,7 @@ import { connectToDatabase } from "@/lib/database";
 import prisma from "@/prisma/client";
 import { NextApiResponse } from "next";
 
+
 const { Webhook } = coinbase;
 
 const webhookSecret = process.env.COINBASE_COMMERCE_SHARED_SECRET;
@@ -77,7 +78,7 @@ async function createUserAccount(reference: any) {
   return newAcc;
 }
 
-export async function POST(req: NextRequest, res: NextApiResponse) {
+export async function POST(req: NextRequest) {
   try {
     const rawBody = await req.text();
     const signature = req.headers.get("x-cc-webhook-signature");
@@ -98,7 +99,7 @@ export async function POST(req: NextRequest, res: NextApiResponse) {
     });
     if (existingEvent) {
       console.log("Duplicate event received. Skipping...");
-      return res.status(200).send("Event already processed");
+      return NextResponse.json("Event already processed");
     }
 
     if (event.type === "charge:pending") {
@@ -113,9 +114,9 @@ export async function POST(req: NextRequest, res: NextApiResponse) {
         await prisma.accountInvoices.create({
           data: {
             coinBaseEventId: event?.id,
-            invoiceNumber: event.data.name(false, false),
+            invoiceNumber: event.data.name,
             userId: event.data.metadata.accountDetails,
-            amount: Number(event.data.metadata.amount.replace("$", "")),
+            amount: Number(event.data.metadata.amount),
             paymentMethod: "BTC",
             paymentDate: new Date(),
           },
