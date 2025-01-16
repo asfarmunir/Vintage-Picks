@@ -6,7 +6,6 @@ import { sendNotification } from "@/helper/notifications";
 import { AccountStatus, AccountType } from "@prisma/client";
 import { connectToDatabase } from "@/lib/database";
 import prisma from "@/prisma/client";
-import { NextApiResponse } from "next";
 
 
 const { Webhook } = coinbase;
@@ -94,7 +93,7 @@ export async function POST(req: NextRequest) {
 
     const existingEvent = await prisma.accountInvoices.findFirst({
       where: {
-        coinBaseEventId: event?.id.toString(),
+        coinBaseEventId: event?.data?.id.toString(),
       },
     });
     if (existingEvent) {
@@ -113,10 +112,12 @@ export async function POST(req: NextRequest) {
         // Create account invoice
         await prisma.accountInvoices.create({
           data: {
-            coinBaseEventId: event?.id,
+            coinBaseEventId: event?.data?.id,
+            invoiceId: event.data.code,
             invoiceNumber: event.data.name,
-            userId: event.data.metadata.accountDetails,
-            amount: Number(event.data.metadata.amount),
+            userId: event.data.metadata.accountDetails?.userId,
+            amount: Number(event.data.pricing?.local?.amount),
+            status: "paid",
             paymentMethod: "BTC",
             paymentDate: new Date(),
           },
@@ -232,3 +233,5 @@ export async function POST(req: NextRequest) {
     );
   }
 }
+
+
