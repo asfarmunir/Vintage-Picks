@@ -93,7 +93,7 @@ export async function POST(req: NextRequest) {
 
     const existingEvent = await prisma.accountInvoices.findFirst({
       where: {
-        coinBaseEventId: event?.data?.id.toString(),
+        coinBaseEventId: event?.data?.id
       },
     });
     if (existingEvent) {
