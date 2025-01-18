@@ -1,52 +1,45 @@
-import type { NextApiRequest, NextApiResponse } from 'next';
+import prisma from '@/prisma/client';
 import * as ApiContracts from 'authorizenet/lib/apicontracts';
 import * as ApiControllers from 'authorizenet/lib/apicontrollers';
-import * as SDKConstants from 'authorizenet/lib/constants';
+import { getServerSession } from 'next-auth';
+import { NextRequest, NextResponse } from 'next/server';
 
-type ChargeCreditCardRequest = {
-  cardNumber: string;
-  expirationDate: string;
-  cardCode: string;
-  amount: number;
-  paymentPlan?: string;
-  couponCodeUsed?: string;
-  planName?: string;
-  login?: boolean;
-};
-
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  if (req.method !== 'POST') {
-    return res.status(405).json({ success: false, message: 'Method Not Allowed' });
-  }
-
+export async function POST(req: NextRequest) {
   try {
     const {
       cardNumber,
       expirationDate,
       cardCode,
       amount,
-      paymentPlan,
-      couponCodeUsed,
-      planName,
-      login,
-    } = req.body as ChargeCreditCardRequest;
+      email,
+      account,
+      billingDetails
+    } = await req.json();
 
-    // Simulated User ID and Email (No DB)
-    const userID = 'mock-user-id';
-    const email = 'mock-user@example.com';
-
-    // Calculate amount based on login
-    let amountPayable = amount;
-    if (login) {
-      amountPayable = 97; // Example logic for amount adjustment
-    }
+    
+    let amountPayable
+      amountPayable = amount; // Example logic for amount adjustment
+      // const session = await getServerSession();
+      // if (!session) {
+      //   return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+      // }
+  
+      // const user = await prisma.user.findFirst({
+      //   where: {
+      //     email: session.user?.email,
+      //   },
+      // });
+      // if (!user) {
+      //   return NextResponse.json({ error: "User not found" }, { status: 404 });
+      // }
+  
 
     console.log('Processing credit card transaction...');
 
     // Authorize.Net Authentication
     const merchantAuthenticationType = new ApiContracts.MerchantAuthenticationType();
-    merchantAuthenticationType.setName(process.env.AUTHORIZENET_LOGIN_ID!);
-    merchantAuthenticationType.setTransactionKey(process.env.AUTHORIZENET_TRANSACTION_KEY!);
+    merchantAuthenticationType.setName(process.env.AUTHORIZENET_LOGIN_ID_SANDBOX);
+    merchantAuthenticationType.setTransactionKey(process.env.AUTHORIZENET_TRANSACTION_KEY_SANDBOX);
 
     // Credit Card Information
     const creditCard = new ApiContracts.CreditCardType();
@@ -71,9 +64,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     createRequest.setTransactionRequest(transactionRequestType);
 
     const ctrl = new ApiControllers.CreateTransactionController(createRequest.getJSON());
-    ctrl.setEnvironment(SDKConstants.endpoint.production); // Use sandbox for testing
+    ctrl.setEnvironment('https://apitest.authorize.net/xml/v1/request.api'); 
 
-    let response;
+    let response: any;
     await new Promise<void>((resolve, reject) => {
       ctrl.execute(() => {
         const apiResponse = ctrl.getResponse();
@@ -117,7 +110,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
 
     if (responseCode === '1') {
-      return res.status(200).json({
+      return NextResponse.json({
         success: true,
         message,
         transactionId: transactionResponse.getTransId(),
@@ -125,7 +118,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         email,
       });
     } else {
-      return res.status(400).json({
+      return NextResponse.json({
         success: false,
         message: `Transaction ${message}`,
         details: transactionResponse,
@@ -133,7 +126,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
   } catch (error: any) {
     console.error('Error processing transaction:', error.message);
-    return res.status(500).json({
+    return NextResponse.json({
       success: false,
       message: 'Something went wrong during the transaction process.',
       error: error.message,
