@@ -8,9 +8,5 @@ export const createCreditCardInvoice = async (data: any) => {
         throw new Error("Failed to create credit card invoice");
     }
     return response.json();
-
-
-
-
 }
 

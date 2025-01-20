@@ -164,6 +164,7 @@ const CheckoutPayment: React.FC<CheckoutPaymentProps> = ({
 
   const [step, setStep] = useState<number>(1);
   const [actionType, setActionType] = useState("");
+  const [billingDetailsData, setBillingDetailsData] = useState({});
 
   useMemo(() => {
     if (typeof window === "undefined") return;
@@ -207,6 +208,7 @@ const CheckoutPayment: React.FC<CheckoutPaymentProps> = ({
       createPaymentInvoice(data);
     } else if (actionType === "next") {
       // Navigate to the next modal
+      setBillingDetailsData({...values})
       setStep(2);
     }
   }
@@ -254,10 +256,11 @@ const CheckoutPayment: React.FC<CheckoutPaymentProps> = ({
         status: "CHALLENGE",
         accountPrice: accountPrice,
       },
-      billingDetails: billing,
+      billingDetailsData,
       cardNumber: values?.cardNumber,
       cardCode: values?.cardCode,
-      expirationDate: values?.cardCode,
+      expirationDate: values?.expirationDate,
+      email: session?.user?.email,
       userId: session?.user ? session?.user.id ?? "" : "",
     };
 
@@ -676,6 +679,12 @@ const CheckoutPayment: React.FC<CheckoutPaymentProps> = ({
                       </p>
 
                       <div className="flex w-full mt-2 gap-2 items-center justify-center">
+                        <button
+                          className="bg-[#001E451A]  mb-4  border border-slate-100 rounded-full  mt-4 text-vintage-50 font-semibold py-3  px-12 w-full 2xl:text-base text-sm   focus:outline-none focus:shadow-outline"
+                          onClick={() => setStep(1)}
+                        >
+                          Back
+                        </button>
                         <Button
                           type="submit"
                           className="bg-vintage-50 mb-4  w-full rounded-full mt-4 text-white font-semibold py-6 px-10 2xl:text-base text-sm   focus:outline-none focus:shadow-outline"
