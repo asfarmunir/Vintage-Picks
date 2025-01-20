@@ -1,7 +1,8 @@
 "use client";
-import { useCreateAccount } from "@/app/hooks/useCreateAccount";
+// import { useCreateAccount } from "@/app/hooks/useCreateAccount";
 // import { useCreateConfirmoInvoice } from "@/app/hooks/useCreateConfirmoInvoice";
 import { useCreateCoinbaseInvoice } from "@/app/hooks/useCreateCoinbaseInvoice";
+import { useCreditCardInvoice } from "@/app/hooks/useCreditCardInvoice";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -67,18 +68,18 @@ const cardSchema = z.object({
     message: "Please enter a valid card number",
   }),
 
-  cardExpiry: z.string().min(4, {
+  cardExpiryDate: z.string().min(4, {
     message: "Please enter a valid card expiry",
   }),
   cardCvv: z.string().min(3, {
     message: "Please enter a valid card cvv",
   }),
-  country: z.string().min(2, {
-    message: "Please enter a your country name",
-  }),
-  zipCode: z.string().min(4, {
-    message: "Please enter a valid postal code",
-  }),
+  // country: z.string().min(2, {
+  //   message: "Please enter a your country name",
+  // }),
+  // zipCode: z.string().min(4, {
+  //   message: "Please enter a valid postal code",
+  // }),
 });
 
 interface CheckoutPaymentProps {
@@ -121,6 +122,17 @@ const CheckoutPayment: React.FC<CheckoutPaymentProps> = ({
       },
     });
 
+  const { mutate: createCreditInvoice } = useCreditCardInvoice({
+    onSuccess: async (data: any) => {
+      console.log("data", data);
+      toast.success("Credit Card Invoice created successfully");
+    },
+    onError: (error) => {
+      console.error(error);
+      toast.error("Failed to create credit card invoice");
+    },
+  });
+
   // user details
   const { status, data: session } = useSession();
 
@@ -143,14 +155,15 @@ const CheckoutPayment: React.FC<CheckoutPaymentProps> = ({
     resolver: zodResolver(cardSchema),
     defaultValues: {
       cardNumber: "",
-      cardExpiry: "",
+      cardExpiryDate: "",
       cardCvv: "",
-      country: "",
-      zipCode: "",
+      // country: "",
+      // zipCode: "",
     },
   });
 
   const [step, setStep] = useState<number>(1);
+  const [actionType, setActionType] = useState("");
 
   useMemo(() => {
     if (typeof window === "undefined") return;
@@ -168,7 +181,7 @@ const CheckoutPayment: React.FC<CheckoutPaymentProps> = ({
   async function onSubmit(values: any) {
     // localStorage.setItem("billing", JSON.stringify(values));
     // setStep(2);
-    scrollTo(0, 0);
+    // scrollTo(0, 0);
 
     // const billing = JSON.parse(localStorage.getItem("billing") || "{}");
     const data = {
@@ -190,7 +203,12 @@ const CheckoutPayment: React.FC<CheckoutPaymentProps> = ({
       },
     };
 
-    createPaymentInvoice(data);
+    if (actionType === "crypto") {
+      createPaymentInvoice(data);
+    } else if (actionType === "next") {
+      // Navigate to the next modal
+      setStep(2);
+    }
   }
 
   // go back
@@ -216,10 +234,10 @@ const CheckoutPayment: React.FC<CheckoutPaymentProps> = ({
   };
 
   // Mutation
-  const { mutate: submitAccount, isPending } = useCreateAccount({
-    onSuccess: handleSuccess,
-    onError: handleError,
-  });
+  // const { mutate: submitAccount, isPending } = useCreateAccount({
+  //   onSuccess: handleSuccess,
+  //   onError: handleError,
+  // });
 
   async function onSubmitCard(values: any) {
     // create account
@@ -242,7 +260,7 @@ const CheckoutPayment: React.FC<CheckoutPaymentProps> = ({
     };
 
     // submit to api
-    submitAccount(data);
+    createCreditInvoice(data);
   }
 
   // url search params
@@ -489,10 +507,11 @@ const CheckoutPayment: React.FC<CheckoutPaymentProps> = ({
                         </button>
                         <Button
                           type="submit"
+                          onClick={() => setActionType("next")}
                           className="bg-vintage-50 mb-4   rounded-full mt-4 text-white font-semibold py-6 px-12 w-full 2xl:text-base text-sm   focus:outline-none focus:shadow-outline"
-                          disabled={loadingInvoice}
+                          // disabled={loadingInvoice}
                         >
-                          {loadingInvoice ? (
+                          {/* {loadingInvoice ? (
                             <ColorRing
                               visible={true}
                               height="35"
@@ -508,12 +527,13 @@ const CheckoutPayment: React.FC<CheckoutPaymentProps> = ({
                                 "#ffffff",
                               ]}
                             />
-                          ) : (
+                          ) : ( */}
                             <span className=" capitalize">Next</span>
-                          )}
+                          {/* )} */}
                         </Button>
                         <Button
                           type="submit"
+                          onClick={() => setActionType("crypto")}
                           className="bg-vintage-50 mb-4   rounded-full mt-4 text-white font-semibold py-6 px-12 w-full 2xl:text-base text-sm   focus:outline-none focus:shadow-outline"
                           disabled={loadingInvoice}
                         >
@@ -541,7 +561,7 @@ const CheckoutPayment: React.FC<CheckoutPaymentProps> = ({
                     </form>
                   </div>
                 </Form>
-              ) : (
+              ) : step === 2 ? (
                 <Form {...cardForm}>
                   <div
                     id="first"
@@ -572,13 +592,13 @@ const CheckoutPayment: React.FC<CheckoutPaymentProps> = ({
                       <div className="flex flex-col md:flex-row items-center justify-between w-full gap-2 md:gap-4">
                         <FormField
                           control={cardForm.control}
-                          name="cardExpiry"
+                          name="cardExpiryDate"
                           render={({ field }) => (
                             <FormItem className="mb-4 w-full">
                               <FormControl>
                                 <Input
                                   required
-                                  placeholder=" enter card expiry"
+                                  placeholder=" enter card expiry date"
                                   {...field}
                                   className="  focus:outline-none  focus:border mr-0 md:mr-6  rounded-lg bg-[#F2F2F2] w-full p-4  2xl:py-6 2xl:px-6 text-vintage-50 leading-tight "
                                 />
@@ -595,7 +615,7 @@ const CheckoutPayment: React.FC<CheckoutPaymentProps> = ({
                               <FormControl>
                                 <Input
                                   required
-                                  placeholder=" enter your last name"
+                                  placeholder=" enter your Cvv"
                                   {...field}
                                   className="  focus:outline-none  focus:border mr-0 md:mr-6  rounded-lg bg-[#F2F2F2] w-full p-4  2xl:py-6 2xl:px-6 text-vintage-50 leading-tight "
                                 />
@@ -606,7 +626,7 @@ const CheckoutPayment: React.FC<CheckoutPaymentProps> = ({
                         />
                       </div>
 
-                      <div className="flex flex-col md:flex-row items-center justify-between w-full gap-2 md:gap-4">
+                      {/* <div className="flex flex-col md:flex-row items-center justify-between w-full gap-2 md:gap-4">
                         <FormField
                           control={cardForm.control}
                           name="country"
@@ -645,7 +665,7 @@ const CheckoutPayment: React.FC<CheckoutPaymentProps> = ({
                             </FormItem>
                           )}
                         />
-                      </div>
+                      </div> */}
 
                       <p className="text-xs  2xl:text-sm text-[#848BAC]  font-medium  peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
                         By providing your card information, you allow Vintage
@@ -658,7 +678,7 @@ const CheckoutPayment: React.FC<CheckoutPaymentProps> = ({
                           type="submit"
                           className="bg-vintage-50 mb-4  w-full rounded-full mt-4 text-white font-semibold py-6 px-10 2xl:text-base text-sm   focus:outline-none focus:shadow-outline"
                         >
-                          {isPending ? (
+                          {/* {isPending ? (
                             <ColorRing
                               visible={true}
                               height="35"
@@ -674,16 +694,15 @@ const CheckoutPayment: React.FC<CheckoutPaymentProps> = ({
                                 "#ffffff",
                               ]}
                             />
-                          ) : (
-                            <span className=" capitalize">Let's Go</span>
-                          )}
+                          ) : ( */}
+                          <span className=" capitalize">Let's Go</span>
+                          {/* )} */}
                         </Button>
-                        
                       </div>
                     </form>
                   </div>
                 </Form>
-              )}
+              ) : null}
             </div>
             <div className="flex flex-col  gap-3   w-full md:max-w-[40%]">
               <div className=" bg-[#F8F8F8] p-5 h-[90%] 2xl:p-6 rounded-2xl border border-[#001E451A]">
