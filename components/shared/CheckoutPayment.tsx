@@ -68,10 +68,10 @@ const cardSchema = z.object({
     message: "Please enter a valid card number",
   }),
 
-  cardExpiryDate: z.string().min(4, {
+  expirationDate: z.string().min(4, {
     message: "Please enter a valid card expiry",
   }),
-  cardCvv: z.string().min(3, {
+  cardCode: z.string().min(3, {
     message: "Please enter a valid card cvv",
   }),
   // country: z.string().min(2, {
@@ -155,8 +155,8 @@ const CheckoutPayment: React.FC<CheckoutPaymentProps> = ({
     resolver: zodResolver(cardSchema),
     defaultValues: {
       cardNumber: "",
-      cardExpiryDate: "",
-      cardCvv: "",
+      expirationDate: "",
+      cardCode: "",
       // country: "",
       // zipCode: "",
     },
@@ -592,7 +592,7 @@ const CheckoutPayment: React.FC<CheckoutPaymentProps> = ({
                       <div className="flex flex-col md:flex-row items-center justify-between w-full gap-2 md:gap-4">
                         <FormField
                           control={cardForm.control}
-                          name="cardExpiryDate"
+                          name="expirationDate"
                           render={({ field }) => (
                             <FormItem className="mb-4 w-full">
                               <FormControl>
@@ -609,7 +609,7 @@ const CheckoutPayment: React.FC<CheckoutPaymentProps> = ({
                         />
                         <FormField
                           control={cardForm.control}
-                          name="cardCvv"
+                          name="cardCode"
                           render={({ field }) => (
                             <FormItem className="mb-4 w-full">
                               <FormControl>
