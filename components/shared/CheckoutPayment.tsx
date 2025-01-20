@@ -255,7 +255,9 @@ const CheckoutPayment: React.FC<CheckoutPaymentProps> = ({
         accountPrice: accountPrice,
       },
       billingDetails: billing,
-      card: values,
+      cardNumber: values?.cardNumber,
+      cardCode: values?.cardCode,
+      expirationDate: values?.cardCode,
       userId: session?.user ? session?.user.id ?? "" : "",
     };
 
@@ -528,7 +530,7 @@ const CheckoutPayment: React.FC<CheckoutPaymentProps> = ({
                               ]}
                             />
                           ) : ( */}
-                            <span className=" capitalize">Next</span>
+                          <span className=" capitalize">Next</span>
                           {/* )} */}
                         </Button>
                         <Button
