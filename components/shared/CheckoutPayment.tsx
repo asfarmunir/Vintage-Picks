@@ -621,6 +621,7 @@ const CheckoutPayment: React.FC<CheckoutPaymentProps> = ({
                             <FormItem className="mb-4 w-full">
                               <FormControl>
                                 <Input
+                                 type="number"
                                   required
                                   placeholder="  enter cvv"
                                   {...field}

@@ -189,7 +189,7 @@ model AccountInvoices {
   userId        String? @db.ObjectId
   paymentCardId String? @db.ObjectId
 
-  coinBaseEventId String?
+  eventId         String?
   invoiceId       String?
   invoiceNumber   String?
   amount          Float?

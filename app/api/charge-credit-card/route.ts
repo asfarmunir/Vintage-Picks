@@ -1,48 +1,30 @@
-import { NextApiRequest, NextApiResponse } from "next";
 import * as ApiContracts from "authorizenet/lib/apicontracts";
 import * as ApiControllers from "authorizenet/lib/apicontrollers";
 import { NextRequest, NextResponse } from "next/server";
 
-interface RawData {
-  account: {
-    accountSize: string;
-    accountType: string;
-    status: string;
-    accountPrice: string;
-  };
-  billingDetailsData: {
-    firstName: string;
-    lastName: string;
-    country: string;
-    phone: string;
-    state: string;
-    city: string;
-    address: string;
-    postalCode: string;
-  };
-  cardCode: string;
-  cardNumber: string;
-  email: string;
-  expirationDate: string;
-  userId: string;
-}
 
-export async function POST(
-  req: NextRequest,
-  res: NextApiResponse
-) {
+export async function POST(req: NextRequest) {
   if (req.method !== "POST") {
     return NextResponse.json({ message: "Method Not Allowed" });
   }
 
-  // const rawData: RawData = req.body;
-
   try {
-    const { account, billingDetailsData, cardCode, cardNumber, email, expirationDate } = await req.json();
+    const {
+      account,
+      billingDetailsData,
+      cardCode,
+      cardNumber,
+      email,
+      expirationDate,
+      userId,
+    } = await req.json();
 
     // Authorize.Net Authentication
-    const merchantAuthentication = new ApiContracts.MerchantAuthenticationType();
-    merchantAuthentication.setName(process.env.AUTHORIZENET_LOGIN_ID_SANDBOX || "");
+    const merchantAuthentication =
+      new ApiContracts.MerchantAuthenticationType();
+    merchantAuthentication.setName(
+      process.env.AUTHORIZENET_LOGIN_ID_SANDBOX || ""
+    );
     merchantAuthentication.setTransactionKey(
       process.env.AUTHORIZENET_TRANSACTION_KEY_SANDBOX || ""
     );
@@ -52,6 +34,7 @@ export async function POST(
     creditCard.setCardNumber(cardNumber);
     creditCard.setExpirationDate(expirationDate);
     creditCard.setCardCode(cardCode);
+    
 
     const paymentType = new ApiContracts.PaymentType();
     paymentType.setCreditCard(creditCard);
@@ -74,8 +57,11 @@ export async function POST(
     );
     transactionRequest.setPayment(paymentType);
     transactionRequest.setBillTo(billTo);
-    transactionRequest.setAmount(parseFloat(account.accountPrice.replace("$", "")));
+    transactionRequest.setAmount(
+      parseFloat(account.accountPrice.replace("$", ""))
+    );
 
+    
     // API Request
     const createRequest = new ApiContracts.CreateTransactionRequest();
     createRequest.setMerchantAuthentication(merchantAuthentication);
@@ -85,20 +71,25 @@ export async function POST(
     const controller = new ApiControllers.CreateTransactionController(
       createRequest.getJSON()
     );
-    controller.setEnvironment("https://apitest.authorize.net/xml/v1/request.api");
+    controller.setEnvironment(
+      "https://apitest.authorize.net/xml/v1/request.api"
+    );
 
     const response = await new Promise<ApiContracts.CreateTransactionResponse>(
       (resolve, reject) => {
         controller.execute(() => {
           const apiResponse = controller.getResponse();
-          const transactionResponse = new ApiContracts.CreateTransactionResponse(apiResponse);
+          const transactionResponse =
+            new ApiContracts.CreateTransactionResponse(apiResponse);
           if (
             transactionResponse.getMessages().getResultCode() ===
             ApiContracts.MessageTypeEnum.OK
           ) {
             resolve(transactionResponse);
           } else {
-            const error = transactionResponse.getMessages()?.getMessage()?.[0]?.getText() || "Error";
+            const error =
+              transactionResponse.getMessages()?.getMessage()?.[0]?.getText() ||
+              "Error";
             reject(new Error(error));
           }
         });
@@ -110,6 +101,9 @@ export async function POST(
     const transactionId = transactionResponse.getTransId();
     const responseCode = transactionResponse.getResponseCode();
 
+    // console.log("responseCode", responseCode);
+    // console.log("transactionResponse", transactionResponse);
+
     if (responseCode === "1") {
       return NextResponse.json({
         success: true,
@@ -117,6 +111,8 @@ export async function POST(
         transactionId,
         amount: account.accountPrice,
         email,
+        billingDetailsData,
+        account,
       });
     } else {
       return NextResponse.json({
