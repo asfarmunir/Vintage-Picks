@@ -48,7 +48,9 @@ const formSchema = z.object({
   country: z.string().min(2, {
     message: "Please enter a your country name",
   }),
-  phone: z.string(),
+  phone: z.string().min(8, {
+    message: "Phone Number is required",
+  }),
   state: z.string().min(2, {
     message: "Please enter a valid state name",
   }),
@@ -71,9 +73,9 @@ const cardSchema = z.object({
   expirationDate: z.string().min(4, {
     message: "Please enter a valid card expiry",
   }),
-  cardCode: z.string().min(3, {
-    message: "Please enter a valid card cvv",
-  }),
+  // cvv: z.string().min(3, {
+  //   message: "Please enter a valid card cvv",
+  // }),
   // country: z.string().min(2, {
   //   message: "Please enter a your country name",
   // }),
@@ -156,7 +158,7 @@ const CheckoutPayment: React.FC<CheckoutPaymentProps> = ({
     defaultValues: {
       cardNumber: "",
       expirationDate: "",
-      cardCode: "",
+      cvv: "",
       // country: "",
       // zipCode: "",
     },
@@ -208,7 +210,7 @@ const CheckoutPayment: React.FC<CheckoutPaymentProps> = ({
       createPaymentInvoice(data);
     } else if (actionType === "next") {
       // Navigate to the next modal
-      setBillingDetailsData({...values})
+      setBillingDetailsData({ ...values });
       setStep(2);
     }
   }
@@ -612,15 +614,15 @@ const CheckoutPayment: React.FC<CheckoutPaymentProps> = ({
                             </FormItem>
                           )}
                         />
-                        <FormField
+                        {/* <FormField
                           control={cardForm.control}
-                          name="cardCode"
+                          name="cvv"
                           render={({ field }) => (
                             <FormItem className="mb-4 w-full">
                               <FormControl>
                                 <Input
                                   required
-                                  placeholder=" enter your Cvv"
+                                  placeholder="  enter cvv"
                                   {...field}
                                   className="  focus:outline-none  focus:border mr-0 md:mr-6  rounded-lg bg-[#F2F2F2] w-full p-4  2xl:py-6 2xl:px-6 text-vintage-50 leading-tight "
                                 />
@@ -628,7 +630,7 @@ const CheckoutPayment: React.FC<CheckoutPaymentProps> = ({
                               <FormMessage />
                             </FormItem>
                           )}
-                        />
+                        /> */}
                       </div>
 
                       {/* <div className="flex flex-col md:flex-row items-center justify-between w-full gap-2 md:gap-4">

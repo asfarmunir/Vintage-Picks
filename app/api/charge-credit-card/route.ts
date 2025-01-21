@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import * as ApiContracts from "authorizenet/lib/apicontracts";
 import * as ApiControllers from "authorizenet/lib/apicontrollers";
+import { NextRequest, NextResponse } from "next/server";
 
 interface RawData {
   account: {
@@ -27,17 +28,17 @@ interface RawData {
 }
 
 export async function POST(
-  req: NextApiRequest,
+  req: NextRequest,
   res: NextApiResponse
 ) {
   if (req.method !== "POST") {
-    return res.status(405).json({ message: "Method Not Allowed" });
+    return NextResponse.json({ message: "Method Not Allowed" });
   }
 
-  const rawData: RawData = req.body;
+  // const rawData: RawData = req.body;
 
   try {
-    const { account, billingDetailsData, cardCode, cardNumber, email, expirationDate } = rawData;
+    const { account, billingDetailsData, cardCode, cardNumber, email, expirationDate } = await req.json();
 
     // Authorize.Net Authentication
     const merchantAuthentication = new ApiContracts.MerchantAuthenticationType();
@@ -110,7 +111,7 @@ export async function POST(
     const responseCode = transactionResponse.getResponseCode();
 
     if (responseCode === "1") {
-      return res.status(200).json({
+      return NextResponse.json({
         success: true,
         message: "Transaction Approved",
         transactionId,
@@ -118,7 +119,7 @@ export async function POST(
         email,
       });
     } else {
-      return res.status(400).json({
+      return NextResponse.json({
         success: false,
         message: "Transaction Failed",
         responseCode,
@@ -126,7 +127,7 @@ export async function POST(
     }
   } catch (error: any) {
     console.error("Transaction Error:", error.message);
-    return res.status(500).json({
+    return NextResponse.json({
       success: false,
       message: "Internal Server Error",
       error: error.message,
