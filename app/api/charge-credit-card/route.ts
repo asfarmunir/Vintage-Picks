@@ -1,13 +1,70 @@
 import * as ApiContracts from "authorizenet/lib/apicontracts";
 import * as ApiControllers from "authorizenet/lib/apicontrollers";
 import { NextRequest, NextResponse } from "next/server";
+import { dateToFullCronString } from "@/lib/utils";
+import { sendNotification } from "@/helper/notifications";
+import { AccountStatus, AccountType, NotificationType } from "@prisma/client";
+import { connectToDatabase } from "@/lib/database";
+import prisma from "@/prisma/client";
 
+async function createUserAccount(
+  accountDetails: any,
+  billingDetails: any,
+  userId: string
+) {
+  console.log("accountDetails", accountDetails);
+
+  const newAcc = await prisma.$transaction(async (prisma) => {
+    // Step 1: Create the new account
+    const createdAccount = await prisma.account.create({
+      data: {
+        accountType: accountDetails.accountType as AccountType,
+        accountSize: accountDetails.accountSize,
+        status: accountDetails.status as AccountStatus,
+        balance: parseInt(accountDetails.accountSize.replace("K", "000")),
+        accountNumber: accountDetails.accountNumber,
+        userId: userId,
+        minBetPeriod: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7 days from now
+        maxBetPeriod: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), // 30 days from now
+      },
+    });
+
+    // Step 2: Create the billing address linked to the account
+    await prisma.billingAddress.create({
+      data: {
+        address: billingDetails.address,
+        city: billingDetails.city,
+        country: billingDetails.country,
+        email: billingDetails.email,
+        firstName: billingDetails.firstName,
+        lastName: billingDetails.lastName,
+        phone: billingDetails.phone,
+        zipCode: billingDetails.postalCode,
+        state: billingDetails.state,
+        accountId: createdAccount.id,
+      },
+    });
+
+    return createdAccount;
+  });
+
+  try {
+    await sendNotification("Account created successfully", "UPDATE", userId);
+  } catch (error) {
+    console.error("Error sending notification:", error);
+  }
+
+  return newAcc;
+}
 
 export async function POST(req: NextRequest) {
   if (req.method !== "POST") {
-    return NextResponse.json({ message: "Method Not Allowed" });
+    return NextResponse.json(
+      { message: "Method Not Allowed" },
+      { status: 405 }
+    );
   }
-
+  // await connectToDatabase();
   try {
     const {
       account,
@@ -34,7 +91,6 @@ export async function POST(req: NextRequest) {
     creditCard.setCardNumber(cardNumber);
     creditCard.setExpirationDate(expirationDate);
     creditCard.setCardCode(cardCode);
-    
 
     const paymentType = new ApiContracts.PaymentType();
     paymentType.setCreditCard(creditCard);
@@ -61,7 +117,6 @@ export async function POST(req: NextRequest) {
       parseFloat(account.accountPrice.replace("$", ""))
     );
 
-    
     // API Request
     const createRequest = new ApiContracts.CreateTransactionRequest();
     createRequest.setMerchantAuthentication(merchantAuthentication);
@@ -89,44 +144,143 @@ export async function POST(req: NextRequest) {
           } else {
             const error =
               transactionResponse.getMessages()?.getMessage()?.[0]?.getText() ||
-              "Error";
+              "Transaction Failed";
             reject(new Error(error));
           }
         });
       }
     );
 
-    // Extract Response Details
     const transactionResponse = response.getTransactionResponse();
     const transactionId = transactionResponse.getTransId();
-    const responseCode = transactionResponse.getResponseCode();
 
-    // console.log("responseCode", responseCode);
-    // console.log("transactionResponse", transactionResponse);
+    if (transactionResponse.getResponseCode() === "1") {
+      // Create Account Invoice
+      await prisma.accountInvoices.create({
+        data: {
+          invoiceNumber: `Invoice-${Date.now()}`,
+          userId: userId,
+          amount: parseFloat(account.accountPrice.replace("$", "")),
+          status: "paid",
+          paymentMethod: "CreditCard",
+          paymentDate: new Date(),
+        },
+      });
 
-    if (responseCode === "1") {
+      // try {
+      //   // Create notification
+      //   await createNotification(
+      //     "Invoice created successfully. Awaiting payment confirmation.",
+      //     "UPDATE",
+      //     userId
+      //   );
+      // } catch (error) {
+      //   console.error("Error creating notification:", error);
+      //   throw new Error("Failed to create notification");
+      // }
+
+      // Create User Account
+      const newAccount = await createUserAccount(
+        account,
+        billingDetailsData,
+        userId
+      );
+
+      // Set CRON Jobs
+      const cronJobs = [
+        {
+          jobName: `${newAccount.id}_MIN_BET_PERIOD`,
+          time: dateToFullCronString(newAccount.minBetPeriod),
+          type: "objectiveMin",
+          accountId: newAccount.id,
+        },
+        {
+          jobName: `${newAccount.id}_MAX_BET_PERIOD`,
+          time: dateToFullCronString(newAccount.maxBetPeriod),
+          type: "objectiveMax",
+          accountId: newAccount.id,
+        },
+      ];
+
+      for (const job of cronJobs) {
+        const cronResponse = await fetch(
+          `${process.env.BG_SERVICES_URL}/add-cron-job`,
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(job),
+          }
+        );
+
+        if (!cronResponse.ok) {
+          throw new Error(
+            `Failed to create cron job: ${await cronResponse.text()}`
+          );
+        }
+      }
+
       return NextResponse.json({
         success: true,
         message: "Transaction Approved",
         transactionId,
-        amount: account.accountPrice,
-        email,
-        billingDetailsData,
-        account,
+        accountId: newAccount.id,
       });
     } else {
       return NextResponse.json({
         success: false,
         message: "Transaction Failed",
-        responseCode,
       });
     }
   } catch (error: any) {
     console.error("Transaction Error:", error.message);
-    return NextResponse.json({
-      success: false,
-      message: "Internal Server Error",
-      error: error.message,
-    });
+    return NextResponse.json(
+      {
+        success: false,
+        message: "Internal Server Error",
+        error: error.message,
+      },
+      { status: 500 }
+    );
   }
 }
+
+// export const createNotification = async (
+//   message: string,
+//   type: NotificationType,
+//   userId: string
+// ) => {
+//   console.log("userId", userId);
+
+//   try {
+//     const notification = await prisma.notification.create({
+//       data: {
+//         content: message,
+//         type,
+//         userId: userId,
+//         read: false,
+//       },
+//     });
+
+//     const response = await fetch(
+//       `${process.env.BG_SERVICES_URL}/generate-notification`,
+//       {
+//         method: "POST",
+//         headers: {
+//           "Content-Type": "application/json",
+//         },
+//         body: JSON.stringify({
+//           userId,
+//           message: notification.content,
+//         }),
+//       }
+//     );
+
+//     if (response.ok) {
+//       console.log(await response.text());
+//       throw new Error("Notification Created Successfully");
+//     }
+//   } catch (error) {
+//     console.error(error);
+//     throw new Error("Failed to create notification");
+//   }
+// };

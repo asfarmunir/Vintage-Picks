@@ -132,7 +132,7 @@ export async function POST(req: NextRequest) {
         await createNotification(
           "Invoice created successfully. Awaiting payment confirmation.",
           "UPDATE",
-          "user.id"
+          event.data.metadata.accountDetails?.userId
         );
       } catch (error) {
         console.error("Error creating notification:", error);
