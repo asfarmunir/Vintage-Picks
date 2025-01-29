@@ -23,7 +23,7 @@ export async function sendGreetingEmail(to: string, name: string) {
     to,
     from: FROM_EMAIL,
     subject: getSignupEmailTemplate(name).title,
-    text: `Hello ${name},\n\nThank you for signing up to PicksHero. We're excited to have you on board!`,
+    text: `Hello ${name},\n\nThank you for signing up to Vantage Picks. We're excited to have you on board!`,
     html: getSignupEmailTemplate(name).template,
   };
 

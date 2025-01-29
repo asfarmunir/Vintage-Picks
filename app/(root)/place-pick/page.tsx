@@ -349,7 +349,7 @@ const page = () => {
 
   return (
     <>
-      <div className=" w-full p-2 md:p-3 rounded-2xl bg-vintage-50 space-y-4">
+      <div className=" w-full p-2 md:p-3 rounded-2xl bg-vintage-50 space-y-4 min-h-svh">
         <div className=" w-full flex md:hidden items-center justify-between">
           <UserAccount />
         </div>
@@ -512,6 +512,16 @@ const page = () => {
                   /> */}
                 </>
               )}
+              {!account ||
+                !tab ||
+                (!newLeagueTab && (
+                  <div className="flex items-center justify-center h-48 pb-12 w-full">
+                    <p className="text-[#848BAC] text-sm 2xl:text-base text-center  ">
+                      We are unable to fetch games at the moment. <br /> Please
+                      try again later.
+                    </p>
+                  </div>
+                ))}
             </div>
           ) : (
             <MorePicks

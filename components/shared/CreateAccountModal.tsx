@@ -2,15 +2,16 @@ import { signOut } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { IoClose } from "react-icons/io5";
 
 export default function CreateAccountModal() {
   const pathname = usePathname();
 
   return (
     (pathname === "/dashboard" || pathname === "/place-pick") && (
-      <div className="absolute w-full inset-0 flex justify-center  items-start pt-16 2xl:pt-12 backdrop-blur-sm bg-black/50 z-50">
+      <div className="absolute w-full inset-0 flex justify-center  items-start pt-16  backdrop-blur-sm bg-black/50 z-50">
         <div
-          className="text-white flex flex-col justify-end items-center relative border-none p-8 md:pb-10 overflow-hidden min-h-[75svh] 2xl:min-h-[80svh] rounded-2xl w-[95%] md:w-[30%] max-w-screen-xl bg-primary-100  gap-3 [&_button:has(svg)]:hidden"
+          className="text-white flex  flex-col justify-end items-center relative border-none p-8 md:pb-10 overflow-hidden min-h-[75svh] 2xl:min-h-[80svh] rounded-2xl w-[95%] md:w-[30%] max-w-screen-xl bg-primary-100  gap-3 [&_button:has(svg)]:hidden"
           style={{
             backgroundImage: "url('/vintage/images/2.webp')",
             backgroundSize: "cover",
@@ -18,6 +19,13 @@ export default function CreateAccountModal() {
             backgroundRepeat: "no-repeat",
           }}
         >
+          <Link
+            href={"/"}
+            className="
+          absolute top-4 right-4"
+          >
+            <IoClose className="text-lg" />
+          </Link>
           <h1 className="text-xl 2xl:text-2xl font-bold text-vintage-50 text-pretty">
             BET SPORTS WITH OUR
           </h1>

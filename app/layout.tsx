@@ -7,6 +7,8 @@ import AuthProvider from "./api/auth/AuthProvider";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Providers } from "./providers";
+import Image from "next/image";
+import Link from "next/link";
 
 const roboto = Roboto({
   subsets: ["latin"],
@@ -44,6 +46,15 @@ export default function RootLayout({
             <ToastContainer />
 
             <Toaster position="top-center" />
+            {/* <Link href={"https://proppicks.com/"} target="_blank">
+              <Image
+                src="/images/propicks.svg"
+                alt="bg"
+                width={200}
+                height={200}
+                className="absolute bottom-4 right-2 z-50"
+              />
+            </Link> */}
           </body>
         </AuthProvider>
       </Providers>

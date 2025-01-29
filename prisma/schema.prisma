@@ -18,22 +18,22 @@ enum AccountStatus {
   BREACHED
 }
 
-enum ProfileLevels {
-  NEWBIE
-  BRONZE
-  SILVER
-  GOLD
-  PLATINUM
-  HERO
-}
-
 // enum ProfileLevels {
-//   Beginner
-//   Superviser
-//   Coach
-//   TopTier
-//   RegionalPlayer
+//   NEWBIE
+//   BRONZE
+//   SILVER
+//   GOLD
+//   PLATINUM
+//   HERO
 // }
+
+enum ProfileLevels {
+  Beginner
+  Superviser
+  Coach
+  TopTier
+  RegionalPlayer
+}
 
 model User {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
@@ -45,8 +45,8 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  // profileLevel ProfileLevels @default(Beginner)
-  profileLevel ProfileLevels @default(NEWBIE)
+  profileLevel ProfileLevels @default(Beginner)
+  // profileLevel ProfileLevels @default(NEWBIE)
   picksWon     Int           @default(0)
   kycVerified  Boolean       @default(false)
 
@@ -189,10 +189,10 @@ model AccountInvoices {
   userId        String? @db.ObjectId
   paymentCardId String? @db.ObjectId
 
-  eventId         String?
-  invoiceId       String?
-  invoiceNumber   String?
-  amount          Float?
+  eventId       String?
+  invoiceId     String?
+  invoiceNumber String?
+  amount        Float?
 
   status        String?
   paymentMethod String?

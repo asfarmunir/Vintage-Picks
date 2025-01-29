@@ -11,10 +11,12 @@ import { useGetUser } from "../hooks/useGetUser";
 import { userStore } from "../store/user";
 import { Account } from "@prisma/client";
 import CreateAccountModal from "@/components/shared/CreateAccountModal";
+import Intercom from "@intercom/messenger-js-sdk";
+
 import Nav from "@/components/shared/Nav";
 const layout = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
-  const { status, data: session } = useSession();
+  const { status } = useSession();
 
   // User Details
   const { data: user, isPending: loadingUser } = useGetUser();
@@ -55,9 +57,18 @@ const layout = ({ children }: { children: React.ReactNode }) => {
     }
   }, [accounts, isPending, pathname]);
 
+  var APP_ID = "u765e7qk";
+
+  Intercom({
+    app_id: APP_ID,
+    alignment: "right",
+    horizontal_padding: 40,
+    vertical_padding: 20,
+  });
+
   return (
     <>
-      <main className={` flex bg-vintage-default relative`}>
+      <main className={` flex bg-vintage-default relative `}>
         {status === "authenticated" && (
           <>
             {/* <Sidebar /> */}
@@ -93,13 +104,15 @@ const layout = ({ children }: { children: React.ReactNode }) => {
             </p>
           </div>
         )}
-        <Image
-          src="/images/propicks.svg"
-          alt="bg"
-          width={200}
-          height={200}
-          className="absolute bottom-6 right-7 z-50"
-        />
+        <Link href={"https://proppicks.com/"} target="_blank">
+          <Image
+            src="/images/propicks.svg"
+            alt="bg"
+            width={150}
+            height={150}
+            className="absolute bottom-6 left-6 z-50 2xl:w-[200px] "
+          />
+        </Link>
       </main>
     </>
   );

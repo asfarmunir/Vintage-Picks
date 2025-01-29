@@ -124,15 +124,29 @@ const CheckoutPayment: React.FC<CheckoutPaymentProps> = ({
       },
     });
 
-  const { mutate: createCreditInvoice } = useCreditCardInvoice({
-    onSuccess: async (data: any) => {
-      console.log("data", data);
-      toast.success("Credit Card Invoice created successfully");
-    },
-    onError: (error) => {
-      console.error(error);
-      toast.error("Failed to create credit card invoice");
-    },
+  const handleSuccess = (data: any) => {
+    localStorage.removeItem("billing");
+    localStorage.removeItem("step");
+    toast.success("Account created successfully!");
+    // router.push("/dashboard");
+  };
+
+  const handleError = (error: Error) => {
+    console.error(error);
+    toast.error("Failed to create account");
+  };
+  const { mutate: createCreditInvoice, isPending } = useCreditCardInvoice({
+    onSuccess: handleSuccess,
+    onError: handleError,
+
+    // onSuccess: async (data: any) => {
+    //   console.log("data", data);
+    //   toast.success("Credit Card Invoice created successfully");
+    // },
+    // onError: (error) => {
+    //   console.error(error);
+    //   toast.error("Failed to create credit card invoice");
+    // },
   });
 
   // user details
@@ -210,7 +224,10 @@ const CheckoutPayment: React.FC<CheckoutPaymentProps> = ({
       createPaymentInvoice(data);
     } else if (actionType === "next") {
       // Navigate to the next modal
-      setBillingDetailsData({ ...values });
+      setBillingDetailsData({
+        ...values,
+        email: session?.user?.email,
+      });
       setStep(2);
     }
   }
@@ -224,18 +241,6 @@ const CheckoutPayment: React.FC<CheckoutPaymentProps> = ({
   };
 
   // card form submit
-
-  const handleSuccess = (data: any) => {
-    localStorage.removeItem("billing");
-    localStorage.removeItem("step");
-    toast.success("Account created successfully");
-    router.push("/dashboard");
-  };
-
-  const handleError = (error: Error) => {
-    console.error(error);
-    toast.error("Failed to create account");
-  };
 
   // Mutation
   // const { mutate: submitAccount, isPending } = useCreateAccount({
@@ -689,10 +694,11 @@ const CheckoutPayment: React.FC<CheckoutPaymentProps> = ({
                           Back
                         </button>
                         <Button
+                          disabled={isPending}
                           type="submit"
                           className="bg-vintage-50 mb-4  w-full rounded-full mt-4 text-white font-semibold py-6 px-10 2xl:text-base text-sm   focus:outline-none focus:shadow-outline"
                         >
-                          {/* {isPending ? (
+                          {isPending ? (
                             <ColorRing
                               visible={true}
                               height="35"
@@ -708,9 +714,9 @@ const CheckoutPayment: React.FC<CheckoutPaymentProps> = ({
                                 "#ffffff",
                               ]}
                             />
-                          ) : ( */}
-                          <span className=" capitalize">Let's Go</span>
-                          {/* )} */}
+                          ) : (
+                            <span className=" capitalize">Let's Go</span>
+                          )}
                         </Button>
                       </div>
                     </form>

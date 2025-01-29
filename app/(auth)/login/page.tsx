@@ -93,6 +93,7 @@ const page = () => {
       setAuthError("Incorrect credentials please try again!");
     } else {
       router.push("/");
+      setAuthError("");
       setToggle(false);
     }
     setIsLoading(false);
@@ -173,31 +174,29 @@ const page = () => {
                   >
                     {showPass ? "Hide" : "Show"} Password
                   </button>
-
-                  {!toggle ? (
-                    <Link
-                      href={"/login/reset-password"}
-                      className="text-xs 2xl:text-sm text-gray-700  pl-2 font-thin leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                    >
-                      Forgot password?{"  "}
-                      <span className="text-vintage-50 font-bold pl-1">
-                        Reset it
-                      </span>
-                      .
-                    </Link>
-                  ) : (
-                    <p className="text-xs inline-flex w-full bg-[#F74418]/15 rounded-xl gap-3 border border-[#F74418]/20 py-2 px-3 items-center 2xl:text-sm text-[#F74418] font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-                      <Image
-                        src="/icons/alert.svg"
-                        alt="line"
-                        width={20}
-                        height={20}
-                        className=""
-                      />
-                      <span className=" text-[#F74418]">{AuthError}</span>
-                    </p>
-                  )}
+                  <Link
+                    href={"/login/reset-password"}
+                    className="text-xs 2xl:text-sm text-gray-700  pl-2 font-thin leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  >
+                    Forgot password?{"  "}
+                    <span className="text-vintage-50 font-bold pl-1">
+                      Reset it
+                    </span>
+                    .
+                  </Link>
                 </div>
+                {AuthError && (
+                  <p className="text-xs inline-flex mb-2 w-full bg-[#F74418]/15 rounded-xl gap-3 border border-[#F74418]/20 py-2 px-3 items-center 2xl:text-sm text-[#F74418] font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                    <Image
+                      src="/icons/alert.svg"
+                      alt="line"
+                      width={20}
+                      height={20}
+                      className=""
+                    />
+                    <span className=" text-[#F74418]">{AuthError}</span>
+                  </p>
+                )}
 
                 {/* <ReCAPTCHA
                 ref={recaptchaRef}
@@ -255,9 +254,9 @@ const page = () => {
           width={400}
           height={400}
         />
-        <div className=" absolute bottom-20">
+        <div className=" absolute bottom-14">
           <Carousel orientation="horizontal">
-            <CarouselContent className=" w-[300px] 2xl:w-[400px]  ">
+            <CarouselContent className=" w-[320px] 2xl:w-[400px]  ">
               <CarouselItem>
                 <Image
                   src="/vintage/images/feature1.svg"

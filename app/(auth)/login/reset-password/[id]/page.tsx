@@ -193,9 +193,9 @@ const Page = ({ params: { id }, searchParams: { token } }: props) => {
           width={400}
           height={400}
         />
-        <div className=" absolute bottom-20">
+        <div className=" absolute bottom-14">
           <Carousel orientation="horizontal">
-            <CarouselContent className=" w-[300px] 2xl:w-[400px]  ">
+            <CarouselContent className=" w-[320px] 2xl:w-[400px]  ">
               <CarouselItem>
                 <Image
                   src="/vintage/images/feature1.svg"

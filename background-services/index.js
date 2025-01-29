@@ -50,6 +50,8 @@ app.post("/backend/add-cron-job", async (req, res) => {
 
   try {
     await addCronJob(jobName, time, type, accountId);
+  console.log('added cron job');
+
     return res.status(201).json({ message: "Cron job added successfully" });
   } catch (error) {
     return res.status(400).json({ error: error.message });

@@ -77,9 +77,10 @@ const settingTabs = [
 interface SettingsProps {
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
+  user: any;
 }
 
-const Settings: React.FC<SettingsProps> = ({ isOpen, setIsOpen }) => {
+const Settings: React.FC<SettingsProps> = ({ isOpen, setIsOpen, user }) => {
   const router = useRouter();
   const modalRef = useRef<HTMLButtonElement>(null);
   const [tab, setTab] = useState<string>("general");
@@ -156,8 +157,12 @@ const Settings: React.FC<SettingsProps> = ({ isOpen, setIsOpen }) => {
           {/* <Verification /> */}
           {
             {
-              general: <GeneralSettings modalRef={modalRef} tab={tab} />,
-              password: <GeneralSettings modalRef={modalRef} tab={tab} />,
+              general: (
+                <GeneralSettings modalRef={modalRef} tab={tab} user={user} />
+              ),
+              password: (
+                <GeneralSettings modalRef={modalRef} tab={tab} user={user} />
+              ),
               preferences: (
                 <PreferenceSettings
                   preferences={preferences}

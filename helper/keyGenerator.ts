@@ -1,6 +1,6 @@
 export function generateCustomId(includePrefix=true, includeSuffix=true) {
     // Fixed prefix and suffix
-    const prefix = "PH";
+    const prefix = "VP";
     const suffix = "-22";
 
     // Generate a random sequence of 7 digits

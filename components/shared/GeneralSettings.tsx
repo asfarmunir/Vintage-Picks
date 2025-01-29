@@ -1,5 +1,4 @@
 "use client";
-import Image from "next/image";
 import React, { useState } from "react";
 import {
   Form,
@@ -11,16 +10,13 @@ import {
 } from "@/components/ui/form";
 import toast from "react-hot-toast";
 import { Input } from "@/components/ui/input";
-import Link from "next/link";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
 import { useSession } from "next-auth/react";
 import axios from "axios";
-import { accountStore } from "@/app/store/account";
 import { userStore } from "@/app/store/user";
-import { AlertDialogCancel } from "../ui/alert-dialog";
 
 const formSchema = z.object({
   firstName: z
@@ -70,23 +66,23 @@ const passFormSchema = z.object({
 const GeneralSettings = ({
   modalRef,
   tab,
+  user,
 }: {
   modalRef: React.RefObject<HTMLButtonElement>;
   tab: string;
+  user: any;
 }) => {
   const updateUser = userStore((state) => state.setUser);
-  const { status, data: session }: any = useSession();
-  console.log("🚀 ~ session:", session);
-
+  const { data: session }: any = useSession();
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
       email: session?.user?.email || undefined,
-      firstName: session?.user?.firstName || undefined,
-      lastName: session?.user?.lastName || undefined,
-      phone: session?.user?.phoneNumber || undefined,
-      address: session?.user?.address || undefined,
-      dateOfBirth: session?.user?.dateOfBirth || undefined,
+      firstName: user?.firstName || undefined,
+      lastName: user?.lastName || undefined,
+      phone: user?.phoneNumber || undefined,
+      address: user?.address || undefined,
+      dateOfBirth: user?.dateOfBirth || undefined,
     },
   });
 

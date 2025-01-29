@@ -6,12 +6,23 @@ import { sendNotification } from "@/helper/notifications";
 import { AccountStatus, AccountType, NotificationType } from "@prisma/client";
 import { connectToDatabase } from "@/lib/database";
 import prisma from "@/prisma/client";
+import { generateCustomId } from "@/helper/keyGenerator";
+
+type cronJobTypes = "objectiveMin" | "objectiveMax" | "inactivity";
+interface cronJob {
+  jobName: string;
+  time: string;
+  type: cronJobTypes;
+  accountId: string;
+}
+
 
 async function createUserAccount(
   accountDetails: any,
   billingDetails: any,
   userId: string
 ) {
+  console.log("🚀 ~ billingDetails:", billingDetails)
   console.log("accountDetails", accountDetails);
 
   const newAcc = await prisma.$transaction(async (prisma) => {
@@ -22,7 +33,8 @@ async function createUserAccount(
         accountSize: accountDetails.accountSize,
         status: accountDetails.status as AccountStatus,
         balance: parseInt(accountDetails.accountSize.replace("K", "000")),
-        accountNumber: accountDetails.accountNumber,
+        // accountNumber: accountDetails.accountNumber,
+        accountNumber: generateCustomId(),
         userId: userId,
         minBetPeriod: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7 days from now
         maxBetPeriod: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), // 30 days from now
@@ -48,6 +60,7 @@ async function createUserAccount(
     return createdAccount;
   });
 
+  // enable it 
   try {
     await sendNotification("Account created successfully", "UPDATE", userId);
   } catch (error) {
@@ -75,7 +88,6 @@ export async function POST(req: NextRequest) {
       expirationDate,
       userId,
     } = await req.json();
-
     // Authorize.Net Authentication
     const merchantAuthentication =
       new ApiContracts.MerchantAuthenticationType();
@@ -126,25 +138,32 @@ export async function POST(req: NextRequest) {
     const controller = new ApiControllers.CreateTransactionController(
       createRequest.getJSON()
     );
+
+    // https://api.authorize.net/xml/v1/request.api  // Production
     controller.setEnvironment(
       "https://apitest.authorize.net/xml/v1/request.api"
     );
-
     const response = await new Promise<ApiContracts.CreateTransactionResponse>(
       (resolve, reject) => {
         controller.execute(() => {
+
           const apiResponse = controller.getResponse();
           const transactionResponse =
             new ApiContracts.CreateTransactionResponse(apiResponse);
+
           if (
             transactionResponse.getMessages().getResultCode() ===
             ApiContracts.MessageTypeEnum.OK
           ) {
+
             resolve(transactionResponse);
           } else {
+
             const error =
               transactionResponse.getMessages()?.getMessage()?.[0]?.getText() ||
               "Transaction Failed";
+              // if(transactionResponse.TransactionResponse)
+              
             reject(new Error(error));
           }
         });
@@ -167,18 +186,6 @@ export async function POST(req: NextRequest) {
         },
       });
 
-      // try {
-      //   // Create notification
-      //   await createNotification(
-      //     "Invoice created successfully. Awaiting payment confirmation.",
-      //     "UPDATE",
-      //     userId
-      //   );
-      // } catch (error) {
-      //   console.error("Error creating notification:", error);
-      //   throw new Error("Failed to create notification");
-      // }
-
       // Create User Account
       const newAccount = await createUserAccount(
         account,
@@ -186,44 +193,82 @@ export async function POST(req: NextRequest) {
         userId
       );
 
-      // Set CRON Jobs
-      const cronJobs = [
-        {
-          jobName: `${newAccount.id}_MIN_BET_PERIOD`,
-          time: dateToFullCronString(newAccount.minBetPeriod),
-          type: "objectiveMin",
-          accountId: newAccount.id,
-        },
-        {
-          jobName: `${newAccount.id}_MAX_BET_PERIOD`,
-          time: dateToFullCronString(newAccount.maxBetPeriod),
-          type: "objectiveMax",
-          accountId: newAccount.id,
-        },
-      ];
+      // // Set CRON Jobs
+      // const cronJobs = [
+      //   {
+      //     jobName: `${newAccount.id}_MIN_BET_PERIOD`,
+      //     time: dateToFullCronString(newAccount.minBetPeriod),
+      //     type: "objectiveMin",
+      //     accountId: newAccount.id,
+      //   },
+      //   {
+      //     jobName: `${newAccount.id}_MAX_BET_PERIOD`,
+      //     time: dateToFullCronString(newAccount.maxBetPeriod),
+      //     type: "objectiveMax",
+      //     accountId: newAccount.id,
+      //   },
+      // ];
 
-      for (const job of cronJobs) {
-        const cronResponse = await fetch(
-          `${process.env.BG_SERVICES_URL}/add-cron-job`,
-          {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(job),
-          }
-        );
+      // for (const job of cronJobs) {
+      //   const cronResponse = await fetch(
+      //     `${process.env.BG_SERVICES_URL}/add-cron-job`,
+      //     {
+      //       method: "POST",
+      //       headers: { "Content-Type": "application/json" },
+      //       body: JSON.stringify(job),
+      //     }
+      //   );
 
-        if (!cronResponse.ok) {
-          throw new Error(
-            `Failed to create cron job: ${await cronResponse.text()}`
-          );
-        }
-      }
+      //   if (!cronResponse.ok) {
+      //     throw new Error(
+      //       `Failed to create cron job: ${await cronResponse.text()}`
+      //     );
+      //   }
+      // }
 
+      // set CRON job for minimum Bet Period
+              const sevenday_cron_job: cronJob = {
+                jobName: `${newAccount.id}_MIN_BET_PERIOD`,
+                time: dateToFullCronString(newAccount.minBetPeriod),
+                type: "objectiveMin",
+                accountId: newAccount.id,
+              };
+              const objectiveMinJob =  await fetch(`${process.env.BG_SERVICES_URL}/add-cron-job`, {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify(sevenday_cron_job),
+              });
+              if (!objectiveMinJob.ok) {
+                throw new Error(await objectiveMinJob.text());
+              }
+      
+              // set CRON job for maximum Bet Period
+              const thirtyday_cron_job: cronJob = {
+                jobName: `${newAccount.id}_MAX_BET_PERIOD`,
+                time: dateToFullCronString(newAccount.maxBetPeriod),
+                type: "objectiveMax",
+                accountId: newAccount.id,
+              };
+              const objectiveMaxJob = await fetch(`${process.env.BG_SERVICES_URL}/add-cron-job`, {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify(thirtyday_cron_job),
+              });
+              if (!objectiveMaxJob.ok) {
+                throw new Error(await objectiveMaxJob.text());
+              }
+
+
+      console.log("Transaction Approved");
       return NextResponse.json({
         success: true,
         message: "Transaction Approved",
-        transactionId,
-        accountId: newAccount.id,
+        // transactionId,
+        // accountId: newAccount.id,
       });
     } else {
       return NextResponse.json({
@@ -232,7 +277,7 @@ export async function POST(req: NextRequest) {
       });
     }
   } catch (error: any) {
-    console.error("Transaction Error:", error.message);
+    console.error("Transaction Error occured:", error.message);
     return NextResponse.json(
       {
         success: false,
