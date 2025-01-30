@@ -140,17 +140,30 @@ export async function POST(req: NextRequest) {
     //     invoiceId: charge.id, // Coinbase charge ID
     //     amount: Number(invoice.amount.replace("$", "")),
     //     invoiceNumber: generateCustomId(false, false),
-    //     paymentMethod: "BTC",
+    //     paymentMethod: "Crypto",
     //     paymentDate: new Date(),
     //   },
     // });
 
+     await prisma.accountInvoices.create({
+          data: {
+            eventId: charge.id,
+            invoiceId: charge.code,
+            invoiceNumber: charge.name,
+            userId: user.id,
+            amount: Number(charge.pricing?.local?.amount),
+            status: "pending",
+            paymentMethod: "Crypto",
+            paymentDate: new Date(),
+          },
+        });
+
     // Create notification for the user
-    // await createNotification(
-    //   "Invoice created successfully. Awaiting payment confirmation.",
-    //   "UPDATE",
-    //   user.id
-    // );
+    await createNotification(
+      "Invoice created successfully. Awaiting payment confirmation.",
+      "UPDATE",
+      user.id
+    );
 
     return NextResponse.json(charge);
   } catch (error: any) {

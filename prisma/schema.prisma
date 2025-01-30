@@ -238,7 +238,7 @@ model Bets {
   winnings   Float
   oddsFormat OddsFormat
 
-  bets Json // JSON field to store detailed bet information
+  bets Json? // JSON field to store detailed bet information
 
   betStatus BetStatus
   betResult BetResult?

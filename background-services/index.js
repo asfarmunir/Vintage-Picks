@@ -33,7 +33,7 @@ app.get("/backend/", (req, res) => {
 
 // Route to add a new cron job
 app.post("/backend/add-cron-job", async (req, res) => {
-    const { jobName, time, type, accountId } = req.body;
+  const { jobName, time, type, accountId } = req.body;
 
   if (!jobName || !time || !type || !accountId) {
     return res.status(400).json({ error: "Missing required fields" });
@@ -50,8 +50,6 @@ app.post("/backend/add-cron-job", async (req, res) => {
 
   try {
     await addCronJob(jobName, time, type, accountId);
-  console.log('added cron job');
-
     return res.status(201).json({ message: "Cron job added successfully" });
   } catch (error) {
     return res.status(400).json({ error: error.message });
@@ -84,7 +82,7 @@ app.delete("/backend/delete-cron-job", async (req, res) => {
 
 
 app.post("/backend/generate-notification", async (req, res) => {
-    const { userId, message } = req.body;
+  const { userId, message } = req.body;
 
   if (!userId || !message) {
     return res.status(400).json({ error: "Missing required fields" });
@@ -97,6 +95,7 @@ app.post("/backend/generate-notification", async (req, res) => {
 // Start the server
 const server = app.listen(PORT, () => {
   console.log(`Express server running on http://localhost:${PORT}`);
+  
 });
 
 // Initialize CRON jobs
@@ -104,4 +103,8 @@ init();
 scheduleOldCronJobs();
 
 // Initialize WebSocket
-websocket.init(server);
+const wss = websocket.init(server);
+
+//for new sports API
+// setInterval(() => websocket.checkForSettlements(wss), 1000 * 60);
+setInterval(() => websocket.checkForUpdates(wss), 1000 * 60);

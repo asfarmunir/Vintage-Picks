@@ -187,7 +187,7 @@ const page = () => {
             ))}
           </div>
           <Link
-            href={"/place-pick"}
+            href={"/picks"}
             className=" px-7 py-2.5 font-semibold text-white text-center text-sm w-full md:w-fit 2xl:text-base  rounded-full bg-vintage-50 "
           >
             Place Pick

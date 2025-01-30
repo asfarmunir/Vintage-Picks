@@ -550,6 +550,7 @@ async function checkForUpdates(wss) {
 
     // 2. Fetch the match results from the third-party API
     const winners = await fetchMatchResults(bets);
+    console.log("🚀 ~ checkForUpdates ~ winners:", winners)
 
     const betIds = bets.map((bet) => bet.id);
 

@@ -45,14 +45,13 @@ async function createUserAccount(accountDetails: any, billingDetails: any) {
 
   try {
     await sendNotification(
-      "Account created successfully",
+      "Account created successfully!",
       "UPDATE",
       accountDetails.userId
     );
   } catch (error) {
     console.error("Error sending notification:", error);
   }
-
   return newAcc;
 }
 
@@ -73,15 +72,6 @@ export async function POST(req: NextRequest) {
     const invoiceId = data?.code;
     const userId = data?.metadata?.accountDetails?.userId;
 
-    // Check if invoice already exists
-    const existingEvent = await prisma.accountInvoices.findFirst({
-      where: { eventId },
-    });
-
-    if (existingEvent) {
-      console.log("🚀 Duplicate event received. Skipping...");
-      return NextResponse.json("Event already processed");
-    }
 
     // Only process successful payments
     if (event.type === "charge:confirmed") {
@@ -93,25 +83,22 @@ export async function POST(req: NextRequest) {
 
       try {
         // Create account invoice
-        await prisma.accountInvoices.create({
-          data: {
-            eventId,
-            invoiceId,
-            invoiceNumber: data.name,
-            userId,
-            amount: Number(data.pricing?.local?.amount),
-            status: "paid",
-            paymentMethod: "BTC",
-            paymentDate: new Date(),
-          },
-        });
+        // await prisma.accountInvoices.create({
+        //   data: {
+        //     eventId,
+        //     invoiceId,
+        //     invoiceNumber: data.name,
+        //     userId,
+        //     amount: Number(data.pricing?.local?.amount),
+        //     status: "paid",
+        //     paymentMethod: "BTC",
+        //     paymentDate: new Date(),
+        //   },
+        // });
 
+         
         // Send notification
-        await createNotification(
-          "Invoice created successfully. Awaiting payment confirmation.",
-          "UPDATE",
-          userId
-        );
+        
 
         // Create user account
         const newAccount = await createUserAccount(accountDetails, billingDetails);
@@ -167,6 +154,11 @@ export async function POST(req: NextRequest) {
 
     if (event.type === "charge:failed") {
       console.log("🚀 ~ Charge Failed", event);
+      
+      await prisma.accountInvoices.updateMany({
+        where: { invoiceId },
+        data: { status: "failed" },
+      });
     }
 
     return NextResponse.json({ success: true, id: event.id });

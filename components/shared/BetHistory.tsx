@@ -241,9 +241,9 @@ const BetHistory = () => {
             <TableHead className="  capitalize font-bold text-center text-xs 2xl:text-sm">
               event
             </TableHead>
-            <TableHead className="  capitalize font-bold text-center text-xs 2xl:text-sm">
+            {/* <TableHead className="  capitalize font-bold text-center text-xs 2xl:text-sm">
               market name
-            </TableHead>
+            </TableHead> */}
             <TableHead className="  capitalize font-bold text-center text-xs 2xl:text-sm">
               odds
             </TableHead>
@@ -334,8 +334,7 @@ const BetHistory = () => {
                   <TableCell className=" font-semibold max-w-[120px] capitalize text-xs 2xl:text-sm text-center truncate">
                     {bet.event?.join(", ")}
                   </TableCell>
-                  <TableCell className="font-semibold  capitalize text-xs 2xl:text-sm text-center truncate">
-                    {/* Check if bets exist */}
+                  {/* <TableCell className="font-semibold  capitalize text-xs 2xl:text-sm text-center truncate">
                     {bet.bets && bet.bets.length > 0 ? (
                       <table className="table-auto w-full border-collapse border border-gray-700 mx-auto text-xs">
                         <thead>
@@ -371,7 +370,7 @@ const BetHistory = () => {
                     ) : (
                       <span className="text-gray-500">No bets available</span>
                     )}
-                  </TableCell>
+                  </TableCell> */}
 
                   {/* <TableCell className=" font-semibold max-w-[120px] capitalize text-xs 2xl:text-sm text-center truncate">
                       {bet.team?.join(", ")}
