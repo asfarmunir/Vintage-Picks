@@ -74,7 +74,7 @@ async function sendBreachedEmail(status, accountId) {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      accountId: account.id,
+      accountId: accountId,
       status: "BREACHED",
     }),
   })
@@ -145,6 +145,7 @@ async function sendAppNotification(userId, type, message) {
       message,
     }),
   })
+
   if (!emailResponse.ok) {
     throw new Error(`Email request failed with status ${emailResponse.status}`);
   }

@@ -302,7 +302,7 @@ function getNewUserLevel(picksWon) {
   } else if (picksWon < 200) {
     return "RegionalPlayer";
   } else {
-    return "Beginner";
+    return "RegionalPlayer";
   }
 }
 
@@ -342,13 +342,15 @@ async function handleWin(bet, account) {
       },
     },
   });
-
+  console.log("🚀 ~ yaha hain" )
   await sendAppNotification(
     bet.userId,
-    "WIN",
-    `Congratulations! You won ${bet.winnings} picks.`
+    "ALERT",
+    `Congratulations! You won $${
+      Number(bet.winnings.toFixed(2))
+    } Pick.`
   );
-  await sendPickResultEmail(bet.userId, "WIN");
+  await sendPickResultEmail(bet.accountId, "WIN");
 
   if (account.status === "CHALLENGE") {
     const objectivesComplete = areObjectivesComplete(updatedAccount);
@@ -424,7 +426,7 @@ async function handleLoss() {
       },
     },
   });
-  await sendPickResultEmail(bet.userId, "LOSS");
+  await sendPickResultEmail(bet.accountId, "LOSS");
   if (account.dailyLoss + bet.pick >= getOriginalBalance(account) * 0.15) {
     await prisma.account.update({
       where: {
@@ -518,15 +520,22 @@ async function fetchMatchResults(bets) {
       }
     })
   );
+  console.log("🚀 ~ fetchMatchResults ~ results:", results)
 
-  const completedResults = results.filter((result) => result.length);
-
+  // const completedResults = results.filter((result) => result.length);
+  const completedResults = results
+  .flat() // Flatten the array of arrays into a single array
+  .filter((game) => game.completed); // Filter only completed games
+  
+  console.log("🚀 ~ fetchMatchResults ~ completedResults:", completedResults)
   if(!completedResults.length) {
     return [];
   }
 
   const winners = [];
   completedResults.forEach((game) => {
+    console.log("🚀 ~ completedResults.forEach ~ game:", game)
+    // const game = gameArray[0]; // Access the first element of the game array
     const winner = getWinner(game);
     winners.push({
       eventId: game.id,
@@ -547,6 +556,7 @@ async function checkForUpdates(wss) {
         betStatus: "OPENED",
       },
     });
+    console.log("🚀 ~ checkForUpdates ~ bets:", bets)
 
     // 2. Fetch the match results from the third-party API
     const winners = await fetchMatchResults(bets);
